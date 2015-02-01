@@ -8,4 +8,5 @@ public class TestClass {
 		}
 	}
 	// Christian's test comment
+	//Coleman's test comment
 }
