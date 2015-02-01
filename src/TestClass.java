@@ -7,5 +7,5 @@ public class TestClass {
 			System.out.println("Hey guys");
 		}
 	}
-	
+	// Christian's test comment
 }
