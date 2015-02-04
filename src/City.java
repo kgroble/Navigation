@@ -1,4 +1,3 @@
-
 /**
  * A simplistic representation of a city on a 2-d coordinate system.
  */
@@ -60,5 +59,4 @@ public class City{
 	public double distanceTo(City c){
 		return Math.sqrt(Math.pow(c.xCoord - this.xCoord, 2) + Math.pow(c.yCoord - this.yCoord, 2));
 	}
-	
 }
