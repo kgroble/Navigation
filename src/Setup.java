@@ -8,13 +8,13 @@ import java.util.Scanner;
  *
  */
 public class Setup {
-	//private Graph g;
+	private Graph g;
 	
-//	public Setup(Graph g){
-//		this.g = g;
-//		addCities();
-//		addLinks();
-//	}
+	public Setup(Graph g){
+		this.g = g;
+		addCities();
+		addLinks();
+	}
 	
 	/**
 	 * Loads cities from file.
@@ -46,7 +46,24 @@ public class Setup {
 	 * Loads links from file.
 	 */
 	public void addLinks(){
-		
+		Scanner sc;
+		try{
+			sc = new Scanner(new File("links.txt"));
+			while(sc.hasNextLine()){
+				String cityLink = sc.nextLine();
+				String[] cityNames = cityLink.split("--");
+				if(cityNames.length != 2){
+					System.out.println("The line \"" + cityLink + "\" is of invalid format.");
+					System.out.println("Please use format: startCity--stopCity");
+				} else {
+					String startCity = cityNames[0];
+					String endCity = cityNames[1];
+				}
+			}
+
+		} catch (FileNotFoundException e) {
+			System.out.println("links.txt does not exist.");
+		}
 	}
 	
 	/**
