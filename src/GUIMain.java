@@ -8,7 +8,7 @@ public class GUIMain {
 	
 	public static void main(String[] args){
 		JFrame myFrame = new JFrame();
-		MyPanel j = new MyPanel();
+		MyPanel j = new MyPanel(FRAME_WIDTH, FRAME_HEIGHT);
 		myFrame.add(j);
 		myFrame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
