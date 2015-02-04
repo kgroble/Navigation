@@ -1,4 +1,14 @@
+import java.awt.BorderLayout;
+
+import javax.swing.BorderFactory;
+import javax.swing.JButton;
+import javax.swing.JComponent;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.border.BevelBorder;
+import javax.swing.border.TitledBorder;
 
 
 public class GUIMain {
@@ -14,5 +24,6 @@ public class GUIMain {
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
 	}
+
 	
 }
