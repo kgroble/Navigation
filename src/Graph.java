@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
-public class Graph<T, L, K> implements Iterable<Graph.Node> {
+public class Graph<T, L, K> {
 
 	HashMap<K, Node> nodes;
 
@@ -54,6 +55,21 @@ public class Graph<T, L, K> implements Iterable<Graph.Node> {
 		throw new UnsupportedOperationException();
 	}
 
+	public Collection<Node> getNodes() {
+		return nodes.values();
+	}
+
+	/**
+	 * gets an element from the graph
+	 * 
+	 * @param key
+	 *            The key of the element
+	 * @return the element
+	 */
+	public T get(K key) {
+		return nodes.get(key).element;
+	}
+
 	public class Node {
 		ArrayList<Link> links;
 		T element;
@@ -67,6 +83,13 @@ public class Graph<T, L, K> implements Iterable<Graph.Node> {
 			links.add(link);
 			throw new UnsupportedOperationException();
 		}
+
+		/**
+		 * @return All the links from this node
+		 */
+		public ArrayList<Link> getLinks() {
+			return links;
+		}
 	}
 
 	public class Link {
@@ -77,11 +100,5 @@ public class Graph<T, L, K> implements Iterable<Graph.Node> {
 			this.connection = connection;
 			this.link = link;
 		}
-	}
-
-	@Override
-	public Iterator<Graph.Node> iterator() {
-		// TODO Auto-generated method stub
-		return null;
 	}
 }
