@@ -8,6 +8,7 @@ public class AStar
 	//  where the algorithm will actually be located
 	public Path findShortestPathBetween(City start, City end)
 	{
+		
 		//add possible paths to a priority queue. Do not check if they are
 		//  a correct path.
 		//Do some other stuff. 
