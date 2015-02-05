@@ -69,8 +69,7 @@ public class Graph<T, L, K> {
 	 * @return the element
 	 */
 	public T get(K key) {
-		if (nodes.containsKey(key))
-		{
+		if (nodes.containsKey(key)) {
 			return nodes.get(key).element;
 		}
 		return null;
@@ -95,7 +94,7 @@ public class Graph<T, L, K> {
 				s += "\n";
 				i++;
 			}
-			s+="\n";
+			s += "\n";
 		}
 		return s;
 	}
@@ -111,7 +110,7 @@ public class Graph<T, L, K> {
 
 		private boolean addLink(Link link) {
 			links.add(link);
-			//throw new UnsupportedOperationException();
+			// throw new UnsupportedOperationException();
 			return true;
 		}
 
@@ -120,6 +119,10 @@ public class Graph<T, L, K> {
 		 */
 		public ArrayList<Link> getLinks() {
 			return links;
+		}
+
+		public String toString() {
+			return element.toString();
 		}
 	}
 
