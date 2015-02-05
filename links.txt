@@ -1,2 +1,2 @@
-Chicago--Indianapolis--20
-Indianapolis--Chicago--20
+Chicago--New York--40
+New York--Chicago--40
