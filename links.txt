@@ -1,2 +1,2 @@
-Chicago--Indianapolis
-Indianapolis--Chicago
+Chicago--Indianapolis--20
+Indianapolis--Chicago--20
