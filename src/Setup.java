@@ -57,8 +57,8 @@ public class Setup {
 					System.out.println("The line \"" + cityLink + "\" is of invalid format.");
 					System.out.println("Please use format: startCity--stopCity--distance");
 				} else {
-					City startCity = g.get(linkInfo[0]);
-					City endCity = g.get(linkInfo[1]);
+					String startCity = linkInfo[0];
+					String endCity = linkInfo[1];
 					double distance = Double.parseDouble(linkInfo[3]);
 					addLink(startCity, endCity, distance);
 				}
@@ -88,7 +88,8 @@ public class Setup {
 	 * @param c1
 	 * @param c2
 	 */
-	public void addLink(City c1, City c2, double distance){
-		
+	public void addLink(String start, String end, double distance){
+		Connection c = new Connection(distance);
+		g.addLink(start, end, c);
 	}
 }
