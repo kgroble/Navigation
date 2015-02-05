@@ -59,7 +59,7 @@ public class Setup {
 				} else {
 					String startCity = linkInfo[0];
 					String endCity = linkInfo[1];
-					double distance = Double.parseDouble(linkInfo[3]);
+					double distance = Double.parseDouble(linkInfo[2]);
 					addLink(startCity, endCity, distance);
 				}
 			}
