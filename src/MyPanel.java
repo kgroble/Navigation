@@ -1,5 +1,9 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseWheelEvent;
+import java.awt.event.MouseWheelListener;
 
 import javax.swing.JComponent;
 import javax.swing.border.BevelBorder;
@@ -19,28 +23,32 @@ public class MyPanel extends JComponent {
 
 	public MyPanel(int width, int height) {
 		super();
+		
+		MouseHandler aHandler = new MouseHandler();
+		this.addMouseListener(aHandler);
+		this.addMouseWheelListener(aHandler);
 
 		this.height = height;
 		this.width = width;
 
 		from = new JTextArea();
-		from.setBounds(240, MARGIN, 100, 20);
+		from.setBounds(240, this.height+MARGIN, 100, 20);
 		from.setBorder(new BevelBorder(1));
 
 		fromLabel = new JLabel();
-		fromLabel.setBounds(135, MARGIN, 100, 20);
+		fromLabel.setBounds(135, this.height+MARGIN, 100, 20);
 		fromLabel.setText("FROM CITY NAME:");
 
 		to = new JTextArea();
-		to.setBounds(450, MARGIN, 100, 20);
+		to.setBounds(450, this.height+MARGIN, 100, 20);
 		to.setBorder(new BevelBorder(1));
 
 		toLabel = new JLabel();
-		toLabel.setBounds(350, MARGIN, 100, 20);
+		toLabel.setBounds(350, this.height+MARGIN, 100, 20);
 		toLabel.setText("     TO CITY NAME:");
 
 		enter = new JButton();
-		enter.setBounds(MARGIN, 5, 100, 30);
+		enter.setBounds(MARGIN, this.height+5, 100, 30);
 		enter.setText("ENTER");
 
 		this.add(enter);
@@ -48,5 +56,48 @@ public class MyPanel extends JComponent {
 		this.add(to);
 		this.add(fromLabel);
 		this.add(toLabel, BorderLayout.SOUTH);
+	}
+	
+	public class MouseHandler implements MouseListener, MouseWheelListener{
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			System.out.println(e.getX()+", "+e.getY());
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseWheelMoved(MouseWheelEvent arg0) {
+			// TODO Auto-generated method stub
+			if(arg0.getScrollType()==MouseWheelEvent.WHEEL_UNIT_SCROLL){
+				System.out.println("ok");
+			}
+			
+		}
+		
 	}
 }
