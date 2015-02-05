@@ -3,6 +3,8 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.Iterator;
 
+import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
+
 public class Graph<T, L, K> {
 
 	HashMap<K, Node> nodes;
@@ -68,6 +70,29 @@ public class Graph<T, L, K> {
 	 */
 	public T get(K key) {
 		return nodes.get(key).element;
+	}
+
+	public String toString() {
+		String s = "";
+		String linkStr = " ---> ";
+
+		for (Node node : nodes.values()) {
+			s += node.toString();
+			s += linkStr;
+			int spaceLen = node.toString().length() + linkStr.length();
+			int i = 0;
+			for (Link link : node.getLinks()) {
+				if (i != 0) {
+					for (int k = 0; k < spaceLen; k++) {
+						s += " ";
+					}
+				}
+				s += link.connection.toString();
+				s += "\n";
+				i++;
+			}
+		}
+		return s;
 	}
 
 	public class Node {

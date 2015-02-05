@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 /**
  * A simplistic representation of a city on a 2-d coordinate system.
  */
@@ -6,6 +8,7 @@ public class City{
 	private int population;
 	private double xCoord;
 	private double yCoord;
+	private ArrayList<Connection> connections;
 	
 	/**
 	 * Constructs a new city from the given parameters.
@@ -15,11 +18,12 @@ public class City{
 	 * @param xCoord
 	 * @param yCoord
 	 */
-	public City(String name, int population, double xCoord, double yCoord){
+	public City(String name, int population, double xCoord, double yCoord, ArrayList<Connection> connections){
 		this.name = name;
 		this.population = population;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		this.connections = connections;
 	}
 	
 	/**
@@ -60,7 +64,13 @@ public class City{
 		return Math.sqrt(Math.pow(c.xCoord - this.xCoord, 2) + Math.pow(c.yCoord - this.yCoord, 2));
 	}
 	
+<<<<<<< HEAD
 	public String toString(){
 		return name;
+=======
+	public ArrayList<Connection> getConnections()
+	{
+		return this.connections;
+>>>>>>> b16d4e0d7253c5cc13080625466f8c4ed4d63c44
 	}
 }
