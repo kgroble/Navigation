@@ -10,8 +10,7 @@ public class SetupTest {
 		
 		Graph g = new Graph();
 		Setup setup = new Setup(g);
-		setup.addCities();
-		setup.addLinks();
+
 		
 		System.out.println(g.toString());
 	}
