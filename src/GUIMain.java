@@ -18,8 +18,12 @@ public class GUIMain {
 	
 	public static void main(String[] args){
 		JFrame myFrame = new JFrame();
-		MyPanel j = new MyPanel(FRAME_WIDTH, FRAME_HEIGHT);
-		myFrame.add(j);
+		MyPanel j = new MyPanel(100, FRAME_HEIGHT);
+//		j.setBounds(0, 0, FRAME_WIDTH, (int)(FRAME_HEIGHT*.1));
+		MyPanel i = new MyPanel(100, 1);
+//		i.setBounds(0, (int)(FRAME_HEIGHT*.1), FRAME_WIDTH, (int)(FRAME_HEIGHT*.9));
+		myFrame.add(j,BorderLayout.NORTH);
+		myFrame.add(i,BorderLayout.CENTER);
 		myFrame.setSize(FRAME_WIDTH,FRAME_HEIGHT);
 		myFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		myFrame.setVisible(true);
