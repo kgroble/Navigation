@@ -1,5 +1,6 @@
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 /**
@@ -8,7 +9,7 @@ import java.util.Scanner;
  *
  */
 public class Setup {
-	private Graph g;
+	private Graph<City, Connection, String> g;
 	
 	public Setup(Graph g){
 		this.g = g;
@@ -51,13 +52,15 @@ public class Setup {
 			sc = new Scanner(new File("links.txt"));
 			while(sc.hasNextLine()){
 				String cityLink = sc.nextLine();
-				String[] cityNames = cityLink.split("--");
-				if(cityNames.length != 2){
+				String[] linkInfo = cityLink.split("--");
+				if(linkInfo.length != 3){
 					System.out.println("The line \"" + cityLink + "\" is of invalid format.");
-					System.out.println("Please use format: startCity--stopCity");
+					System.out.println("Please use format: startCity--stopCity--distance");
 				} else {
-					String startCity = cityNames[0];
-					String endCity = cityNames[1];
+					City startCity = g.get(linkInfo[0]);
+					City endCity = g.get(linkInfo[1]);
+					double distance = Double.parseDouble(linkInfo[3]);
+					addLink(startCity, endCity, distance);
 				}
 			}
 
@@ -76,7 +79,7 @@ public class Setup {
 	 */
 	public void addCity(String name, int pop, double xCoord, double yCoord){
 		//System.out.println("Adding city: " + name + ", population " + pop + " at (" + xCoord + ", " + yCoord + ").");
-		g.add(new City(name, pop, xCoord, yCoord), name);
+		g.add(new City(name, pop, xCoord, yCoord, new ArrayList<Connection>()), name);
 	}
 	
 	/**
@@ -85,7 +88,7 @@ public class Setup {
 	 * @param c1
 	 * @param c2
 	 */
-	public void addLink(City c1, City c2){
+	public void addLink(City c1, City c2, double distance){
 		
 	}
 }

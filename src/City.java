@@ -64,7 +64,10 @@ public class City{
 		return Math.sqrt(Math.pow(c.xCoord - this.xCoord, 2) + Math.pow(c.yCoord - this.yCoord, 2));
 	}
 	
-	public ArrayList<Connection> getConnections()
+	public String toString(){
+		return name;
+	}
+		public ArrayList<Connection> getConnections()
 	{
 		return this.connections;
 	}
