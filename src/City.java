@@ -64,13 +64,11 @@ public class City{
 		return Math.sqrt(Math.pow(c.xCoord - this.xCoord, 2) + Math.pow(c.yCoord - this.yCoord, 2));
 	}
 	
-<<<<<<< HEAD
 	public String toString(){
 		return name;
-=======
-	public ArrayList<Connection> getConnections()
+	}
+		public ArrayList<Connection> getConnections()
 	{
 		return this.connections;
->>>>>>> b16d4e0d7253c5cc13080625466f8c4ed4d63c44
 	}
 }
