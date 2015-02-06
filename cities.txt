@@ -1,3 +1,20 @@
-Chicago--123456--23.4--45.9 
-New York--999999--56.2--71.3
-Indianapolis--34.6--21.8
+Oradea--0--121--27
+Zerind--0--85--89
+Arad--0--59--149
+Timisorara--0--67--267
+Sibiu--0--233--195
+Fagaras--0--383--209
+Lugoj--0--173--311
+Mehadia--0--177--371
+Drobeta--0--179--431
+Rimnicu Vilcea--0--271--268
+Craiova--0--301--448
+Pitesti--0--403--328
+Bucharest--0--520--388
+Giurgiu--0--481--474
+Urziceni--0--603--356
+Vaslui--0--683--214
+Hirsova--0--721--358
+Eforie--0--760--440
+Iasi--0--631--122
+Neamt--0--529--78

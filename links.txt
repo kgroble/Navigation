@@ -1,2 +1,46 @@
-Chicago--New York--40
-New York--Chicago--40
+Oradea--Zerind--71
+Zerind--Oradea--71
+Oradea--Sibiu--151
+Sibiu--Oradea--151
+Zerind--Arad--75
+Arad--Zerind--75
+Arad--Sibiu--140
+Sibiu--Arad--140
+Arad--Timisorara--118
+Timisorara--Arad--118
+Timisorara--Lugoj--111
+Lugoj--Timisorara--111
+Sibiu--Fagaras--99
+Fagaras--Sibiu--99
+Sibiu--Rimnicu Vilcea--80
+Rimnicu Vilcea--Sibiu--80
+Fagaras--Bucharest--211
+Bucharest--Fagaras--211
+Lugoj--Mehadia--70
+Mehadia--Lugoj--70
+Mehadia--Drobeta--75
+Drobeta--Mehadia--75
+Drobeta--Craiova--120
+Craiova--Drobeta--120
+Rimnicu Vilcea--Pitesti--97
+Pitesti--Rimnicu Vilcea--97
+Rimnicu Vilcea--Craiova--146
+Craiova--Rimnicu Vilcea--146
+Craiova--Pitesti--138
+Pitesti--Craiova--138
+Pitesti--Bucharest--101
+Bucharest--Pitesti--101
+Bucharest--Urziceni--85
+Urziceni--Bucharest--85
+Bucharest--Giurgiu--90
+Giurgiu--Bucharest--90
+Urziceni--Vaslui--142
+Vaslui--Urziceni--142
+Urziceni--Hirsova--98
+Hirsova--Urziceni--98
+Hirsova--Eforie--86
+Eforie--Hirsova--86
+Vaslui--Iasi--92
+Iasi--Vaslui--92
+Iasi--Neamt--87
+Neamt--Iasi--87
