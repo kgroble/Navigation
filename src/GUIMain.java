@@ -23,10 +23,12 @@ public class GUIMain {
 	public static void main(String[] args){
 		JFrame myFrame = new JFrame();
 		
+		//make container
 		Container contentContainer = myFrame.getContentPane();
 		BorderLayout jBorderLayout = new BorderLayout();
 		
-		MyPanel j = new MyPanel(100, 0);
+		//
+		MyPanel j = new MyPanel(0);
 		contentContainer.add(j,jBorderLayout.CENTER);
 		
 		MapPanel i = new MapPanel(new Graph<City,Connection,String>());

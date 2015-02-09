@@ -18,15 +18,11 @@ public class MyPanel extends JComponent {
 	private JButton enter;
 	private JTextArea from, to;
 	private JLabel toLabel, fromLabel;
-	private int width, height;
+	private int height;
 	private final static int MARGIN = 25;
 
-	public MyPanel(int width, int height) {
+	public MyPanel(int height) {
 		super();
-		
-		MouseHandler aHandler = new MouseHandler();
-		this.addMouseListener(aHandler);
-		this.addMouseWheelListener(aHandler);
 		
 		TitledBorder border = BorderFactory.createTitledBorder(
 				BorderFactory.createLoweredBevelBorder(), "Control Panel");
@@ -35,7 +31,6 @@ public class MyPanel extends JComponent {
 
 		
 		this.height = height;
-		this.width = width;
 
 		from = new JTextArea();
 		from.setBounds(240, this.height+MARGIN, 100, 20);
@@ -62,48 +57,5 @@ public class MyPanel extends JComponent {
 		this.add(to);
 		this.add(fromLabel);
 		this.add(toLabel, BorderLayout.SOUTH);
-	}
 	
-	public class MouseHandler implements MouseListener, MouseWheelListener{
-
-		@Override
-		public void mouseClicked(MouseEvent e) {
-			// TODO Auto-generated method stub
-			System.out.println(e.getX()+", "+e.getY());
-		}
-
-		@Override
-		public void mouseEntered(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseExited(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mousePressed(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseReleased(MouseEvent e) {
-			// TODO Auto-generated method stub
-			
-		}
-
-		@Override
-		public void mouseWheelMoved(MouseWheelEvent arg0) {
-			// TODO Auto-generated method stub
-			if(arg0.getScrollType()==MouseWheelEvent.WHEEL_UNIT_SCROLL){
-				System.out.println("ok");
-			}
-			
-		}
-		
-	}
 }
