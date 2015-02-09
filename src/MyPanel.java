@@ -19,7 +19,7 @@ public class MyPanel extends JComponent {
 	private JTextArea from, to;
 	private JLabel toLabel, fromLabel;
 	private int width, height;
-	private final static int MARGIN = 10;
+	private final static int MARGIN = 25;
 
 	public MyPanel(int width, int height) {
 		super();
@@ -27,7 +27,13 @@ public class MyPanel extends JComponent {
 		MouseHandler aHandler = new MouseHandler();
 		this.addMouseListener(aHandler);
 		this.addMouseWheelListener(aHandler);
+		
+		TitledBorder border = BorderFactory.createTitledBorder(
+				BorderFactory.createLoweredBevelBorder(), "Control Panel");
+		border.setTitleJustification(TitledBorder.LEFT);
+		this.setBorder(border);
 
+		
 		this.height = height;
 		this.width = width;
 
@@ -48,7 +54,7 @@ public class MyPanel extends JComponent {
 		toLabel.setText("     TO CITY NAME:");
 
 		enter = new JButton();
-		enter.setBounds(MARGIN, this.height+5, 100, 30);
+		enter.setBounds(MARGIN, this.height+MARGIN-5, 100, 30);
 		enter.setText("ENTER");
 
 		this.add(enter);
