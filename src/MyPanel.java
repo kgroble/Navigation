@@ -57,5 +57,6 @@ public class MyPanel extends JComponent {
 		this.add(to);
 		this.add(fromLabel);
 		this.add(toLabel, BorderLayout.SOUTH);
+	}
 	
 }
