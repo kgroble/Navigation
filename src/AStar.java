@@ -7,6 +7,22 @@ public class AStar
 	
 	//probably return an arraylist of paths.
 	//  where the algorithm will actually be located
+	
+	/*
+	 * To get paths:
+	 * 	graph.getConnectedElements(String cityName)
+	 * 	gives back array of connected cities
+	 * 	graph.getConnectionBetween(String city1, String city2)
+	 * 	gives connection object
+	 *
+	 */
+	private Graph graph;
+	
+	public AStar(Graph graph)
+	{
+		this.graph = graph;
+	}
+	
 	public Path findShortestPathBetween(City start, City end)
 	{
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
@@ -41,6 +57,4 @@ public class AStar
 		
 	}
 	
-	//I think it would make sense to have the distanceBetweenCities method in 
-	//  the city class. So I am not currently going to add it here.
 }
