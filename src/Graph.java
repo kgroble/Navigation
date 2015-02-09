@@ -74,6 +74,28 @@ public class Graph<T, L, K> {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * @return an arrayList of the elements that are linked to e
+	 */
+	public ArrayList<T> getConnectedElements(K key)
+	{
+		return null;
+	}
+	
+	/**
+	 * 
+	 * throws an 
+	 * 
+	 * @param element1 the 'from' element
+	 * @param element2 the 'to' element
+	 * @return L object that links the two elements
+	 */
+	public L getConnectionBetween(K element1, K element2)
+	{
+		return null;
+	}
 
 	public String toString() {
 		String s = "";
