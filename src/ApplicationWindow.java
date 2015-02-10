@@ -46,6 +46,7 @@ public class ApplicationWindow extends JFrame {
             	FRAME_WIDTH=getWidth();
             	FRAME_HEIGHT=getHeight();
             	myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
+            	mapPanel.setBounds(0, 75, FRAME_WIDTH,FRAME_HEIGHT-75);
             	repaint();
             }
         });
