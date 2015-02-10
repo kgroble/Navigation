@@ -17,6 +17,12 @@ public class Path implements Comparable<Path>
 		this.pathLength = 0;
 	}
 	
+	public Path()
+	{
+		this.path = new ArrayList<City>();
+		this.pathLength = 0;
+	}
+	
 	public double getPathLength()
 	{
 		return this.pathLength;
@@ -62,5 +68,24 @@ public class Path implements Comparable<Path>
 	public City getEndpoint()
 	{
 		return this.path.get(this.path.size()-1);
+	}
+	
+	
+	
+	//Copy experiment
+	//TODO I guaruntee there is a better way to do this nonsense.
+	private void addToPathForCopyingPurposes(City nextCity)
+	{
+		this.path.add(nextCity);
+	}
+	
+	//mostly a test
+	public Path copy()
+	{
+		Path copy = new Path();
+		for (City city : this.path)
+			copy.addToPathForCopyingPurposes(city);
+		copy.pathLength = this.pathLength;
+		return copy;
 	}
 }

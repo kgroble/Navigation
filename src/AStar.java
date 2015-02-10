@@ -4,19 +4,6 @@ import java.util.PriorityQueue;
 
 public class AStar
 {
-	//This will be in the graph class I believe
-	
-	//probably return an arraylist of paths.
-	//  where the algorithm will actually be located
-	
-	/*
-	 * To get paths:
-	 * 	graph.getConnectedElements(String cityName)
-	 * 	gives back array of connected cities
-	 * 	graph.getConnectionBetween(String city1, String city2)
-	 * 	gives connection object
-	 *
-	 */
 	private Graph<City, Connection, String> graph;
 	
 	public AStar(Graph<City, Connection, String> graph)
@@ -40,30 +27,20 @@ public class AStar
 		HashMap<City, Connection> connections;
 		
 		while (!open.isEmpty())
-		{
-			System.out.println("Iteration");
-			
+		{			
 			current = open.remove();
-			System.out.println(current);
-//			System.out.println(current.getEndpoint());
-//			System.out.println(endCity);
 			if (current.getEndpoint().equals(endCity))
 			{
-				//path found. What to do exactly?
 				System.out.println("Path found.");
 				return current;
 			}
 			
 			//get the links of the city
 			connections = this.graph.getConnectedElements(current.getEndpoint().getName());
-//			System.out.println(connections.keySet());
 			
-//			for (Connection link : connections)
 			for (City city : connections.keySet())
 			{
-//				System.out.println(city);
-				newPath = current;
-//				newPath.addToPath(link);
+				newPath = current.copy(); // TODO fix this
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathLength(endCity);
 				open.add(newPath);
