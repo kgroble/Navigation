@@ -10,6 +10,7 @@ import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 
 import javafx.scene.shape.Circle;
+import javafx.scene.transform.Translate;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -100,16 +101,25 @@ public class MapPanel extends JPanel {
     	Graphics2D g2d = (Graphics2D)g;
         super.paintComponent(g);
         
+        // Translate for pan
+        g2d.translate(xPos, yPos);
+        
         ArrayList<City> cities = map.getElements();
         for (City city : cities)
         {
         	Ellipse2D.Double circle = new Ellipse2D.Double();
         	circle.height = 10;
         	circle.width = 10;
-        	g2d.translate(city.getXCoord() * zoom, city.getYCoord() * zoom);
+        	double translateX = city.getXCoord() * zoom;
+        	double translateY = city.getYCoord() * zoom;
+        	g2d.translate(translateX, translateY);
         	g2d.fill(circle);
-        	g2d.translate(-city.getXCoord() * zoom, -city.getYCoord() * zoom);
+        	g2d.drawString(city.getName(), 0, 20);
+        	g2d.translate(-translateX, -translateY);
         }
+        
+        // Translate for pan
+        g2d.translate(-xPos, -yPos);
     }
 	
 }
