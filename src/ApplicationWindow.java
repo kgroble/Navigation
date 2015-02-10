@@ -12,8 +12,6 @@ import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
-import org.omg.CORBA.PUBLIC_MEMBER;
-
 
 public class ApplicationWindow extends JFrame {
 

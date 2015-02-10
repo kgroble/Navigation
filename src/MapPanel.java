@@ -84,4 +84,7 @@ public class MapPanel extends JPanel {
 		}
 		
 	}
+	
+	public chrome
+	
 }
