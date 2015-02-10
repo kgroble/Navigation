@@ -1,9 +1,15 @@
+import java.awt.Graphics;
+import java.awt.Graphics2D;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+
+import javafx.scene.shape.Circle;
 
 import javax.swing.BorderFactory;
 import javax.swing.JPanel;
@@ -20,6 +26,10 @@ public class MapPanel extends JPanel {
 
 	private static final long serialVersionUID = 1L;
 	private Graph<City,Connection,String> map;
+	
+	double zoom = 1.0;
+	double xPos = 0.0;
+	double yPos = 0.0;
 
 	public MapPanel(Graph<City, Connection, String> map) {
 		super();
@@ -85,6 +95,21 @@ public class MapPanel extends JPanel {
 		
 	}
 	
-	public chrome
+    public void paintComponent(Graphics g)
+    { 
+    	Graphics2D g2d = (Graphics2D)g;
+        super.paintComponent(g);
+        
+        ArrayList<City> cities = map.getElements();
+        for (City city : cities)
+        {
+        	Ellipse2D.Double circle = new Ellipse2D.Double();
+        	circle.height = 10;
+        	circle.width = 10;
+        	g2d.translate(city.getXCoord() * zoom, city.getYCoord() * zoom);
+        	g2d.fill(circle);
+        	g2d.translate(-city.getXCoord() * zoom, -city.getYCoord() * zoom);
+        }
+    }
 	
 }
