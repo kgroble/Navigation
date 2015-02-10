@@ -6,10 +6,12 @@ public class Path implements Comparable<Path>
 	private ArrayList<City> path;
 	private double pathLength;
 	private double approximatedPathLength;
-	//for comparing to other paths, for use in the priority queue
-	//base off distance, use another form of ranking to pick after 
-	//  shortest routes are found
 	
+	/**
+	 * Creates the beginning of a path.
+	 * 
+	 * @param startPoint the starting point
+	 */
 	public Path(City startPoint)
 	{
 		this.path = new ArrayList<City>();
@@ -17,7 +19,11 @@ public class Path implements Comparable<Path>
 		this.pathLength = 0;
 	}
 	
-	public Path()
+	/**
+	 * Creates an empty Path. Will really only be used if a copy
+	 * is being made. See copy method.
+	 */
+	private Path()
 	{
 		this.path = new ArrayList<City>();
 		this.pathLength = 0;
@@ -72,14 +78,12 @@ public class Path implements Comparable<Path>
 	
 	
 	
-	//Copy experiment
 	//TODO I guaruntee there is a better way to do this nonsense.
 	private void addToPathForCopyingPurposes(City nextCity)
 	{
 		this.path.add(nextCity);
 	}
 	
-	//mostly a test
 	public Path copy()
 	{
 		Path copy = new Path();
