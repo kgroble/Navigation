@@ -42,9 +42,17 @@ public class Graph<T, L, K> {
 	 * @return True if the link is added
 	 */
 	public boolean addLink(K from, K to, L connection) {
+		
+		System.out.println(nodes);
+		System.out.println(from);
+		System.out.println(to);
+		System.out.println(nodes.containsKey(from));
+		System.out.println(nodes.containsKey(to));
+		
 		if (nodes.containsKey(from) && nodes.containsKey(to)) {
 			Link link = new Link(nodes.get(to), connection);
 			nodes.get(from).addLink(link);
+			return true; //I assume this should be here, it was not earlier.
 		}
 		return false;
 	}
@@ -99,6 +107,7 @@ public class Graph<T, L, K> {
 		{
 			HashMap<T, L> connectedElements = new HashMap<T, L>();
 			Node node = nodes.get(key);
+			
 			for (Link L : node.links)
 			{
 				connectedElements.put(L.connection.element, L.link);

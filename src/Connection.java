@@ -1,4 +1,3 @@
-
 public class Connection
 {
 	private double connectionLength;

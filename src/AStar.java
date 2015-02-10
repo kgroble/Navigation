@@ -17,9 +17,9 @@ public class AStar
 	 * 	gives connection object
 	 *
 	 */
-	private Graph graph;
+	private Graph<City, Connection, String> graph;
 	
-	public AStar(Graph graph)
+	public AStar(Graph<City, Connection, String> graph)
 	{
 		this.graph = graph;
 	}
@@ -30,14 +30,18 @@ public class AStar
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
 		ArrayList<Path> closed = new ArrayList<Path>();
-		Path current;
+		Path current = new Path(startCity);
 		Path newPath;
+		
+		open.add(current);
 		
 		//Not sure about this
 		HashMap<String, City> connections;
 		
 		while (!open.isEmpty())
 		{
+			System.out.println("Iteration");
+			
 			current = open.remove();
 			if (current.getEndpoint().equals(end))
 			{
@@ -47,10 +51,12 @@ public class AStar
 			
 			//get the links of the city
 			connections = this.graph.getConnectedElements(current.getEndpoint().getName());
+			System.out.println(connections);
 			
 //			for (Connection link : connections)
 			for (City city : connections.values())
 			{
+				System.out.println(city);
 				newPath = current;
 //				newPath.addToPath(link);
 				newPath.addToPath(city, 

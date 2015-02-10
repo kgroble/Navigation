@@ -10,6 +10,13 @@ public class Path implements Comparable<Path>
 	//base off distance, use another form of ranking to pick after 
 	//  shortest routes are found
 	
+	public Path(City startPoint)
+	{
+		this.path = new ArrayList<City>();
+		this.path.add(startPoint);
+		this.pathLength = 0;
+	}
+	
 	public double getPathLength()
 	{
 		return this.pathLength;
