@@ -8,7 +8,6 @@ public class City{
 	private int population;
 	private double xCoord;
 	private double yCoord;
-	private ArrayList<Connection> connections;
 	
 	/**
 	 * Constructs a new city from the given parameters.
@@ -18,12 +17,11 @@ public class City{
 	 * @param xCoord
 	 * @param yCoord
 	 */
-	public City(String name, int population, double xCoord, double yCoord, ArrayList<Connection> connections){
+	public City(String name, int population, double xCoord, double yCoord){
 		this.name = name;
 		this.population = population;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
-		this.connections = connections;
 	}
 	
 	/**
@@ -66,9 +64,5 @@ public class City{
 	
 	public String toString(){
 		return name;
-	}
-		public ArrayList<Connection> getConnections()
-	{
-		return this.connections;
 	}
 }

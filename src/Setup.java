@@ -79,7 +79,7 @@ public class Setup {
 	 */
 	public void addCity(String name, int pop, double xCoord, double yCoord){
 		//System.out.println("Adding city: " + name + ", population " + pop + " at (" + xCoord + ", " + yCoord + ").");
-		g.add(new City(name, pop, xCoord, yCoord, new ArrayList<Connection>()), name);
+		g.add(new City(name, pop, xCoord, yCoord), name);
 	}
 	
 	/**
