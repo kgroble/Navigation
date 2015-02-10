@@ -43,12 +43,6 @@ public class Graph<T, L, K> {
 	 */
 	public boolean addLink(K from, K to, L connection) {
 		
-		System.out.println(nodes);
-		System.out.println(from);
-		System.out.println(to);
-		System.out.println(nodes.containsKey(from));
-		System.out.println(nodes.containsKey(to));
-		
 		if (nodes.containsKey(from) && nodes.containsKey(to)) {
 			Link link = new Link(nodes.get(to), connection);
 			nodes.get(from).addLink(link);

@@ -65,4 +65,9 @@ public class City{
 	public String toString(){
 		return name;
 	}
+	
+	public boolean equals(City otherCity)
+	{
+		return this.getName().equals(otherCity.getName());
+	}
 }

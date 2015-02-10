@@ -53,6 +53,12 @@ public class Path implements Comparable<Path>
 		return (int)(this.approximatedPathLength - otherPath.getApproximatedPathLength());
 	}
 	
+	@Override
+	public String toString()
+	{
+		return this.path.toString();
+	}
+	
 	public City getEndpoint()
 	{
 		return this.path.get(this.path.size()-1);

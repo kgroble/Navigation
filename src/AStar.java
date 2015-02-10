@@ -26,6 +26,7 @@ public class AStar
 	
 	public Path findShortestPathBetween(String start, String end)
 	{
+		System.out.printf("Searching for path between %s and %s.%n", start, end);
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
@@ -36,32 +37,34 @@ public class AStar
 		open.add(current);
 		
 		//Not sure about this
-		HashMap<String, City> connections;
+		HashMap<City, Connection> connections;
 		
 		while (!open.isEmpty())
 		{
 			System.out.println("Iteration");
 			
 			current = open.remove();
-			if (current.getEndpoint().equals(end))
+			System.out.println(current);
+//			System.out.println(current.getEndpoint());
+//			System.out.println(endCity);
+			if (current.getEndpoint().equals(endCity))
 			{
 				//path found. What to do exactly?
+				System.out.println("Path found.");
 				return current;
 			}
 			
 			//get the links of the city
 			connections = this.graph.getConnectedElements(current.getEndpoint().getName());
-			System.out.println(connections);
+//			System.out.println(connections.keySet());
 			
 //			for (Connection link : connections)
-			for (City city : connections.values())
+			for (City city : connections.keySet())
 			{
-				System.out.println(city);
+//				System.out.println(city);
 				newPath = current;
 //				newPath.addToPath(link);
-				newPath.addToPath(city, 
-						(Connection)this.graph.getConnectionBetween(
-								newPath.getEndpoint().getName(), city));
+				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathLength(endCity);
 				open.add(newPath);
 			}
@@ -69,7 +72,6 @@ public class AStar
 		}
 		 
 		throw new RuntimeException("Connection not found");
-		
 	}
 	
 }
