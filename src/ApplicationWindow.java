@@ -2,6 +2,8 @@ import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -15,8 +17,8 @@ import javax.swing.border.TitledBorder;
 
 public class ApplicationWindow extends JFrame {
 
-	private static final int FRAME_WIDTH=1000;
-	private static final int FRAME_HEIGHT=600;
+	private static int FRAME_WIDTH=1000;
+	private static int FRAME_HEIGHT=600;
 	private MapPanel mapPanel;
 	private MyPanel myPanel;
 	
@@ -28,14 +30,25 @@ public class ApplicationWindow extends JFrame {
 		myPanel = new MyPanel(0);
 		contentContainer.add(myPanel,jBorderLayout.CENTER);
 		
-		mapPanel = new MapPanel(map);
-		mapPanel.setBounds(0, (int)(FRAME_HEIGHT*.1), FRAME_WIDTH,FRAME_HEIGHT-(int)(FRAME_HEIGHT*.1));
-		contentContainer.add(mapPanel,jBorderLayout.SOUTH);
+//		mapPanel = new MapPanel(map);
+//		mapPanel.setBounds(0, (int)(FRAME_HEIGHT*.1), FRAME_WIDTH,FRAME_HEIGHT-(int)(FRAME_HEIGHT*.1));
+//		contentContainer.add(mapPanel,jBorderLayout.SOUTH);
 		
 		setLayout(jBorderLayout);
 		myPanel.setBounds(0, 0, FRAME_WIDTH, (int)(FRAME_HEIGHT*.1));
 		
 		setSize(FRAME_WIDTH,FRAME_HEIGHT);
+		
+		this.addComponentListener(new ComponentAdapter() {
+
+            @Override
+            public void componentResized(ComponentEvent e) {
+            	System.out.println(FRAME_WIDTH);
+            	FRAME_WIDTH=getWidth();
+            	System.out.println(FRAME_WIDTH);
+            }
+        });
+	
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
