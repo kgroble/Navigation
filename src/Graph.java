@@ -57,8 +57,21 @@ public class Graph<T, L, K> {
 		throw new UnsupportedOperationException();
 	}
 
-	public Collection<Node> getNodes() {
-		return nodes.values();
+//	public Collection<Node> getNodes() {
+//		return nodes.values();
+//	}
+	
+	/**
+	 * 
+	 * @return an arrayList of all the elements stored in this graph
+	 */
+	public ArrayList<T> getElements() {
+		ArrayList<T> elements = new ArrayList<T>();
+		for (Node node : nodes.values())
+		{
+			elements.add(node.element);
+		}
+		return elements;
 	}
 
 	/**
