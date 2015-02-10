@@ -74,6 +74,51 @@ public class Graph<T, L, K> {
 		}
 		return null;
 	}
+	
+	
+	/**
+	 * @return an arrayList of the elements that are linked to e
+	 */
+	public ArrayList<T> getConnectedElements(K key)
+	{
+		if (nodes.containsKey(key))
+		{
+			ArrayList<T> connectedElement = new ArrayList<T>();
+			Node node = nodes.get(key);
+			for (Link L : node.links)
+			{
+				connectedElement.add(L.connection.element);
+			}
+			return connectedElement;
+		}
+		return null;
+	}
+	
+	//TODO: This search is slow.  Might want to improve prerformance here
+	/**
+	 * 
+	 * throws an exception if there is no link between those two nodes if if one of the nodes doesn't exist
+	 * 
+	 * @param element1 the 'from' element
+	 * @param element2 the 'to' element
+	 * @return L object that links the two elements
+	 */
+	public L getConnectionBetween(K element1, K element2)
+	{
+		if (nodes.containsKey(element1) && nodes.containsKey(element2))
+		{
+			Node node1 = nodes.get(element1);
+			Node node2 = nodes.get(element2);
+			for (Link link : node1.links)
+			{
+				if (link.connection == node2)
+				{
+					return link.link;
+				}
+			}
+		}
+		throw new RuntimeException("No link between elements");
+	}
 
 	public String toString() {
 		String s = "";
