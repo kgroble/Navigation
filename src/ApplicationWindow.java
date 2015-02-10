@@ -46,6 +46,8 @@ public class ApplicationWindow extends JFrame {
             	System.out.println(FRAME_WIDTH);
             	FRAME_WIDTH=getWidth();
             	System.out.println(FRAME_WIDTH);
+            	repaint();
+            	myPanel.repaint();
             }
         });
 	
