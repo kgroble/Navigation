@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseWheelEvent;
@@ -35,6 +37,10 @@ public class MapPanel extends JPanel {
 		this.setBorder(border);
 	}
 	
+	public String fromTo(String fromCity, String toCity){
+		//add code to make stuff change in the map to highlight route, then transfer data to myPanel in a string
+		return null;
+	}
 
 	public class MouseHandler implements MouseListener, MouseWheelListener{
 
