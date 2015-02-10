@@ -11,9 +11,9 @@ import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
-
 
 public class ApplicationWindow extends JFrame {
 
@@ -26,7 +26,6 @@ public class ApplicationWindow extends JFrame {
 		Container contentContainer = getContentPane();
 		BorderLayout jBorderLayout = new BorderLayout();
 		
-		//
 		myPanel = new MyPanel(0);
 		contentContainer.add(myPanel,jBorderLayout.CENTER);
 		
@@ -59,6 +58,7 @@ public class ApplicationWindow extends JFrame {
 		private JButton enter;
 		private JTextArea from, to;
 		private JLabel toLabel, fromLabel;
+		private JTextField distance, time;
 		private final static int MARGIN = 25;
 
 		public MyPanel(int height) {
@@ -68,6 +68,11 @@ public class ApplicationWindow extends JFrame {
 					BorderFactory.createLoweredBevelBorder(), "Control Panel");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
+			
+			distance=new JTextField();
+			
+			
+			time = new JTextField();
 
 			from = new JTextArea();
 			from.setBounds(240, height+MARGIN, 100, 20);
