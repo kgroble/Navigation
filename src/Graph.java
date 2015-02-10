@@ -90,19 +90,20 @@ public class Graph<T, L, K> {
 	
 	
 	/**
-	 * @return an arrayList of the elements that are linked to e
+	 * @return a Hashmap of keys and links of elements connected to 
+	 * the element corresponding to the key passed
 	 */
-	public ArrayList<T> getConnectedElements(K key)
+	public HashMap<T, L> getConnectedElements(K key)
 	{
 		if (nodes.containsKey(key))
 		{
-			ArrayList<T> connectedElement = new ArrayList<T>();
+			HashMap<T, L> connectedElements = new HashMap<T, L>();
 			Node node = nodes.get(key);
 			for (Link L : node.links)
 			{
-				connectedElement.add(L.connection.element);
+				connectedElements.put(L.connection.element, L.link);
 			}
-			return connectedElement;
+			return connectedElements;
 		}
 		return null;
 	}
