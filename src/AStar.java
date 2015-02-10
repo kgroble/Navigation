@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.PriorityQueue;
 
 public class AStar
@@ -23,13 +24,17 @@ public class AStar
 		this.graph = graph;
 	}
 	
-	public Path findShortestPathBetween(City start, City end)
+	public Path findShortestPathBetween(String start, String end)
 	{
+		City startCity = (City) this.graph.get(start);
+		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
 		ArrayList<Path> closed = new ArrayList<Path>();
 		Path current;
 		Path newPath;
-		ArrayList<Connection> connections;
+		
+		//Not sure about this
+		HashMap<String, City> connections;
 		
 		while (!open.isEmpty())
 		{
@@ -41,13 +46,17 @@ public class AStar
 			}
 			
 			//get the links of the city
-			connections = current.getEndpoint().getConnections();
+			connections = this.graph.getConnectedElements(current.getEndpoint().getName());
 			
-			for (Connection link : connections)
+//			for (Connection link : connections)
+			for (City city : connections.values())
 			{
 				newPath = current;
-				newPath.addToPath(link);
-				newPath.setApproximatedPathLength(end);
+//				newPath.addToPath(link);
+				newPath.addToPath(city, 
+						(Connection)this.graph.getConnectionBetween(
+								newPath.getEndpoint().getName(), city));
+				newPath.setApproximatedPathLength(endCity);
 				open.add(newPath);
 			}
 			

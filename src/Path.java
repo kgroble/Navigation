@@ -31,9 +31,9 @@ public class Path implements Comparable<Path>
 	 * @param link
 	 * @param city
 	 */
-	public void addToPath(Connection link)
+	public void addToPath(City nextCity, Connection link)
 	{
-		//this.path.add(link.getEndPoint());
+		this.path.add(nextCity);
 		this.pathLength += link.getConnectionDistance();
 	}
 
