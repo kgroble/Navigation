@@ -30,12 +30,12 @@ public class ApplicationWindow extends JFrame {
 		myPanel = new MyPanel(0);
 		contentContainer.add(myPanel,jBorderLayout.CENTER);
 		
-//		mapPanel = new MapPanel(map);
-//		mapPanel.setBounds(0, (int)(FRAME_HEIGHT*.1), FRAME_WIDTH,FRAME_HEIGHT-(int)(FRAME_HEIGHT*.1));
-//		contentContainer.add(mapPanel,jBorderLayout.SOUTH);
+		mapPanel = new MapPanel(map);
+		mapPanel.setBounds(0, 75, FRAME_WIDTH,FRAME_HEIGHT-75);
+		contentContainer.add(mapPanel,jBorderLayout.SOUTH);
 		
 		setLayout(jBorderLayout);
-		myPanel.setBounds(0, 0, FRAME_WIDTH, (int)(FRAME_HEIGHT*.1));
+		myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
 		
 		setSize(FRAME_WIDTH,FRAME_HEIGHT);
 		
@@ -43,11 +43,10 @@ public class ApplicationWindow extends JFrame {
 
             @Override
             public void componentResized(ComponentEvent e) {
-            	System.out.println(FRAME_WIDTH);
             	FRAME_WIDTH=getWidth();
-            	System.out.println(FRAME_WIDTH);
+            	FRAME_HEIGHT=getHeight();
+            	myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
             	repaint();
-            	myPanel.repaint();
             }
         });
 	
@@ -59,7 +58,6 @@ public class ApplicationWindow extends JFrame {
 		private JButton enter;
 		private JTextArea from, to;
 		private JLabel toLabel, fromLabel;
-		private int height;
 		private final static int MARGIN = 25;
 
 		public MyPanel(int height) {
@@ -70,23 +68,20 @@ public class ApplicationWindow extends JFrame {
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
 
-			
-			this.height = height;
-
 			from = new JTextArea();
-			from.setBounds(240, this.height+MARGIN, 100, 20);
+			from.setBounds(240, height+MARGIN, 100, 20);
 			from.setBorder(new BevelBorder(1));
 
 			fromLabel = new JLabel();
-			fromLabel.setBounds(135, this.height+MARGIN, 100, 20);
+			fromLabel.setBounds(135, height+MARGIN, 100, 20);
 			fromLabel.setText("FROM CITY NAME:");
 
 			to = new JTextArea();
-			to.setBounds(450, this.height+MARGIN, 100, 20);
+			to.setBounds(450, height+MARGIN, 100, 20);
 			to.setBorder(new BevelBorder(1));
 
 			toLabel = new JLabel();
-			toLabel.setBounds(350, this.height+MARGIN, 100, 20);
+			toLabel.setBounds(350, height+MARGIN, 100, 20);
 			toLabel.setText("     TO CITY NAME:");
 
 			enter = new JButton();
@@ -102,7 +97,7 @@ public class ApplicationWindow extends JFrame {
 				}
 			
 			});
-			enter.setBounds(MARGIN, this.height+MARGIN-5, 100, 30);
+			enter.setBounds(MARGIN, height+MARGIN-5, 100, 30);
 			enter.setText("ENTER");
 
 			this.add(enter);
