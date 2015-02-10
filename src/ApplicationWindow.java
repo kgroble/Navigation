@@ -57,7 +57,7 @@ public class ApplicationWindow extends JFrame {
 	public class MyPanel extends JComponent {
 		private JButton enter;
 		private JTextArea from, to;
-		private JLabel toLabel, fromLabel;
+		private JLabel toLabel, fromLabel, distanceLabel, timeLabel;
 		private JTextField distance, time;
 		private final static int MARGIN = 25;
 
@@ -70,47 +70,63 @@ public class ApplicationWindow extends JFrame {
 			this.setBorder(border);
 			
 			distance=new JTextField();
+			distance.setBorder(new BevelBorder(1));
+			distance.setBounds(850,height+MARGIN,100,20);
+			this.add(distance);
 			
+			distanceLabel= new JLabel();
+			distanceLabel.setText("Distance in ...:");
+			distanceLabel.setBounds(765,height+MARGIN,100,20);
+			this.add(distanceLabel);
 			
 			time = new JTextField();
+			time.setBorder(new BevelBorder(1));
+			time.setBounds(650,height+MARGIN,100,20);
+			this.add(time);
+			
+			timeLabel = new JLabel();
+			timeLabel.setText("Time in ... rate:");
+			timeLabel.setBounds(565,height+MARGIN,100,20);
+			this.add(timeLabel);
 
 			from = new JTextArea();
 			from.setBounds(240, height+MARGIN, 100, 20);
 			from.setBorder(new BevelBorder(1));
+			this.add(from);
 
 			fromLabel = new JLabel();
 			fromLabel.setBounds(135, height+MARGIN, 100, 20);
 			fromLabel.setText("FROM CITY NAME:");
+			this.add(fromLabel);
 
 			to = new JTextArea();
 			to.setBounds(450, height+MARGIN, 100, 20);
 			to.setBorder(new BevelBorder(1));
+			this.add(to);
 
 			toLabel = new JLabel();
 			toLabel.setBounds(350, height+MARGIN, 100, 20);
 			toLabel.setText("     TO CITY NAME:");
+			this.add(toLabel);
 
 			enter = new JButton();
 			enter.addActionListener(new ActionListener(){
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
 					String toS = to.getText();
 					String fromS = from.getText();
-					mapPanel.fromTo(toS, fromS);
-					System.out.println(toS+" @@@@ "+fromS);
+					
+					String a=mapPanel.fromTo(toS, fromS);
+					
+					distance.setText(toS);
+					time.setText(fromS);
 				}
 			
 			});
 			enter.setBounds(MARGIN, height+MARGIN-5, 100, 30);
 			enter.setText("ENTER");
-
 			this.add(enter);
-			this.add(from);
-			this.add(to);
-			this.add(fromLabel);
-			this.add(toLabel, BorderLayout.SOUTH);
 		}
 		
 	}
