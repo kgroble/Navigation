@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -24,8 +25,11 @@ public class ApplicationWindow extends JFrame {
 	private MapPanel mapPanel;
 	private ControlPanel myPanel;
 	private Graph<City,Connection,String> map;
+	private AStar a;
 	
-	public ApplicationWindow(Graph<City,Connection,String> map){
+	public ApplicationWindow(Graph<City,Connection,String> map, AStar a){
+		this.a = a;
+		
 		//Create container and establish border layout
 		Container contentContainer = getContentPane();
 		BorderLayout jBorderLayout = new BorderLayout();
@@ -132,15 +136,36 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					//Take input from the user
-					String toS = to.getText();
-					String fromS = from.getText();
+					String toS = to.getText().toLowerCase().trim();
+					String fromS = from.getText().toLowerCase().trim();
+					City toCity = null;
+					City fromCity = null;
+					
+					ArrayList<City> cities = map.getElements();
+					for(City city : cities){
+						String cityName = city.getName().toLowerCase();
+						if(cityName.equals(toS)){
+							toCity = city;
+							toS = toCity.getName();
+						}
+						if(cityName.equals(fromS)){
+							fromCity = city;
+							fromS = fromCity.getName();
+						}
+						
+					}
+					if(toCity != null && fromCity != null){
+						System.out.println(a.findShortestPathBetween(fromS, toS));
+					} else {
+						System.out.println("Please make sure you entered valid city names.");
+					}
 					
 					//send input to the map panel and receive informative string
-					String a=mapPanel.fromTo(toS, fromS);
+					//String a=mapPanel.fromTo(toSt, fromS);
 					
 					//display output
-					distance.setText(toS);
-					time.setText(fromS);
+					//distance.setText(toS);
+					//time.setText(fromS);
 				}
 			
 			});
