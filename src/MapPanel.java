@@ -68,13 +68,14 @@ public class MapPanel extends JPanel {
 		return null;
 	}
 
-	public class MouseHandler implements MouseListener, MouseWheelListener, MouseMotionListener {
+	public class MouseHandler implements MouseListener, MouseWheelListener,
+			MouseMotionListener {
 
-		Point lastMousePoint = new Point(0,0);
-		
+		Point lastMousePoint = new Point(0, 0);
+
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
+
 		}
 
 		@Override
@@ -127,49 +128,58 @@ public class MapPanel extends JPanel {
 		@Override
 		public void mouseMoved(MouseEvent e) {
 			// TODO Auto-generated method stub
-			
+
 		}
 
 	}
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
+
 		Graphics2D g2d = (Graphics2D) g;
-		g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL, RenderingHints.VALUE_STROKE_PURE);
-		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-		
+		g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
+				RenderingHints.VALUE_STROKE_PURE);
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_ON);
+
 		// Translate for pan
 		g2d.translate(centerX, centerY);
 
+		// Draw links
+		g2d.setColor(CONNECTION_COLOR);
+		g2d.setStroke(new BasicStroke((float) (CONNECTION_WIDTH * zoom)));
 		ArrayList<City> cities = map.getElements();
 		for (City city : cities) {
 			double translateX = city.getXCoord() * zoom;
 			double translateY = city.getYCoord() * zoom;
 			g2d.translate(translateX, translateY);
-			
-			// Draw city names:
-			java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
-			int stringWidth = fontMetric.stringWidth(city.getName());
-			g2d.drawString(city.getName(), (int)(-stringWidth/2), (int) (CITY_SIZE * zoom + 10));
 			HashMap<City, Connection> connectedCitesHashMap = map
 					.getConnectedElements(city.getName());
-
-			g2d.setColor(CONNECTION_COLOR);
-			HashMap<String, Boolean> visited = new HashMap<String, Boolean>();
-			g2d.setStroke(new BasicStroke((float)(CONNECTION_WIDTH * zoom)));
 			for (Map.Entry<City, Connection> entry : connectedCitesHashMap
 					.entrySet()) {
 				City toCity = entry.getKey();
-				if (!visited.containsKey(toCity.getName())) {
-					int xDiff = (int) ((toCity.getXCoord() - city.getXCoord()) * zoom);
-					int yDiff = (int) ((toCity.getYCoord() - city.getYCoord()) * zoom);
-					g2d.drawLine(0, 0, xDiff, yDiff);
-					visited.put(toCity.getName(), true);
-				}
+				int xDiff = (int) ((toCity.getXCoord() - city.getXCoord()) * zoom);
+				int yDiff = (int) ((toCity.getYCoord() - city.getYCoord()) * zoom);
+				g2d.drawLine(0, 0, xDiff, yDiff);
+
 			}
-			g2d.setStroke(new BasicStroke(1));
-			
+			g2d.translate(-translateX, -translateY);
+		}
+		g2d.setColor(CITY_COLOR);
+		g2d.setStroke(new BasicStroke(1));
+
+		// Draw cities and names
+		for (City city : cities) {
+			double translateX = city.getXCoord() * zoom;
+			double translateY = city.getYCoord() * zoom;
+			g2d.translate(translateX, translateY);
+
+			// Draw city names:
+			java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
+			int stringWidth = fontMetric.stringWidth(city.getName());
+			g2d.drawString(city.getName(), (int) (-stringWidth / 2),
+					(int) (CITY_SIZE * zoom + 10));
+
 			// Draw city
 			Ellipse2D.Double circle = new Ellipse2D.Double();
 			circle.height = CITY_SIZE * zoom;
@@ -179,7 +189,7 @@ public class MapPanel extends JPanel {
 			g2d.translate(-centerLinks, -centerLinks);
 			g2d.fill(circle);
 			g2d.translate(centerLinks, centerLinks);
-		
+
 			g2d.translate(-translateX, -translateY);
 		}
 
