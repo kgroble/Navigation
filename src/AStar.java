@@ -82,11 +82,70 @@ public class AStar
 	public ArrayList<Path> findPathsWithTravelDistance(String startCity, double bottomLimit, double topLimit)
 	{
 		City startingPoint = (City) this.graph.get(startCity);
-		return null;
+		ArrayList<Path> possiblePaths = new ArrayList<Path>();
+		Path start = new Path(startingPoint);
+		breadthFirstSearchDistance(startCity, "DOES NOT EXIST", bottomLimit, topLimit, possiblePaths, start);
+		
+		return possiblePaths;
 	}
 	
 	public ArrayList<Path> findPathsWithTravelTime(String startCity, double bottomLimit, double topLimit)
 	{
-		return null;
+		City startingPoint = (City) this.graph.get(startCity);
+		ArrayList<Path> possiblePaths = new ArrayList<Path>();
+		Path start = new Path(startingPoint);
+		breadthFirstSearchTime(startCity, "DOES NOT EXIST", bottomLimit, topLimit, possiblePaths, start);
+		
+		return possiblePaths;
+	}
+	
+	private void breadthFirstSearchDistance(String cityName, String previousCityName, 
+			double bottomLimit, double topLimit, ArrayList<Path> possiblePaths, Path path)
+	{
+		City currentCity = (City) this.graph.get(cityName);
+		HashMap<City, Connection> connections = this.graph.getConnectedElements(cityName);
+		
+		for (City nextCity : connections.keySet())
+		{
+			//don't want to go to go back to where we just were
+			//TODO maybe add so it wont repeat cities at all?
+			if (nextCity.getName().equals(previousCityName))
+				continue;
+			
+			if (path.getPathLength() < topLimit)
+			{
+				if (path.getPathLength() > bottomLimit)
+					possiblePaths.add(path);
+				
+				path.addToPath(nextCity, connections.get(nextCity));
+				breadthFirstSearchDistance(nextCity.getName(), cityName, bottomLimit, topLimit, possiblePaths, path);
+			}
+			
+		}
+	}
+	
+	private void breadthFirstSearchTime(String cityName, String previousCityName, 
+			double bottomLimit, double topLimit, ArrayList<Path> possiblePaths, Path path)
+	{
+		City currentCity = (City) this.graph.get(cityName);
+		HashMap<City, Connection> connections = this.graph.getConnectedElements(cityName);
+		
+		for (City nextCity : connections.keySet())
+		{
+			//don't want to go to go back to where we just were
+			//TODO maybe add so it wont repeat cities at all?
+			if (nextCity.getName().equals(previousCityName))
+				continue;
+			
+			if (path.getPathTravelTime() < topLimit)
+			{
+				if (path.getPathTravelTime() > bottomLimit)
+					possiblePaths.add(path);
+				
+				path.addToPath(nextCity, connections.get(nextCity));
+				breadthFirstSearchDistance(nextCity.getName(), cityName, bottomLimit, topLimit, possiblePaths, path);
+			}
+			
+		}
 	}
 }
