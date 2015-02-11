@@ -8,6 +8,7 @@ import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
+import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
@@ -17,6 +18,8 @@ import javax.swing.JTextField;
 import javax.swing.JTextPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
+
+import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class ApplicationWindow extends JFrame {
 
@@ -32,19 +35,22 @@ public class ApplicationWindow extends JFrame {
 		
 		//Create container and establish border layout
 		Container contentContainer = getContentPane();
+		BoxLayout box=new BoxLayout(contentContainer, BoxLayout.PAGE_AXIS);
 		BorderLayout jBorderLayout = new BorderLayout();
-		this.setLayout(jBorderLayout);
+		this.setLayout(box);
 		
 		//create and add myPanel
 		myPanel = new ControlPanel(0);
-		contentContainer.add(myPanel,jBorderLayout.CENTER);
 		myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
+		myPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 75));
+		contentContainer.add(myPanel,box);
 		
 		//create and add mapPanel
 		mapPanel = new MapPanel(map);
 		mapPanel.setBounds(0, 75, FRAME_WIDTH,FRAME_HEIGHT-75);
+		mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,FRAME_HEIGHT-75));
 		this.map=map;
-		contentContainer.add(mapPanel,jBorderLayout.SOUTH);
+		contentContainer.add(mapPanel,box);
 		
 		setSize(FRAME_WIDTH,FRAME_HEIGHT);
 		setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -57,12 +63,15 @@ public class ApplicationWindow extends JFrame {
             	int newWidth=getWidth();
             	int newHeight=getHeight();
             	
+            	mapPanel.setPreferredSize(new Dimension(newWidth,newHeight-75));
+            	myPanel.setPreferredSize(new Dimension(newWidth, 75));
+            	
             	//manipulate the panels
-            	if(newWidth>=FRAME_WIDTH){
+            	if(newWidth!=FRAME_WIDTH){
             		myPanel.setBounds(0, 0, newWidth, 75);
             		mapPanel.setBounds(0,75,newWidth,mapPanel.getHeight());
             	}
-            	if(newHeight>=FRAME_HEIGHT)
+            	if(newHeight!=FRAME_HEIGHT)
         			mapPanel.setBounds(0, 75, mapPanel.getWidth(),newHeight-75);
             	
             	//update the frame
