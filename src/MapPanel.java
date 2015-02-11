@@ -106,9 +106,9 @@ public class MapPanel extends JPanel {
 			// TODO Auto-generated method stub
 			if (arg0.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
 				if (arg0.getPreciseWheelRotation() > 0)
-					zoom *= arg0.getPreciseWheelRotation() * ZOOM_SPEED;
+					zoom /= arg0.getPreciseWheelRotation() * ZOOM_SPEED;
 				else
-					zoom /= Math.abs(arg0.getPreciseWheelRotation()
+					zoom *= Math.abs(arg0.getPreciseWheelRotation()
 							* ZOOM_SPEED);
 			}
 			System.out.println(zoom);
