@@ -22,7 +22,8 @@ public class ApplicationWindow extends JFrame {
 	private static final int FRAME_WIDTH=1000;
 	private static final int FRAME_HEIGHT=600;
 	private MapPanel mapPanel;
-	private MyPanel myPanel;
+	private ControlPanel myPanel;
+	private Graph<City,Connection,String> map;
 	
 	public ApplicationWindow(Graph<City,Connection,String> map){
 		//Create container and establish border layout
@@ -31,13 +32,14 @@ public class ApplicationWindow extends JFrame {
 		this.setLayout(jBorderLayout);
 		
 		//create and add myPanel
-		myPanel = new MyPanel(0);
+		myPanel = new ControlPanel(0);
 		contentContainer.add(myPanel,jBorderLayout.CENTER);
 		myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
 		
 		//create and add mapPanel
 		mapPanel = new MapPanel(map);
 		mapPanel.setBounds(0, 75, FRAME_WIDTH,FRAME_HEIGHT-75);
+		this.map=map;
 		contentContainer.add(mapPanel,jBorderLayout.SOUTH);
 		
 		setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -68,7 +70,7 @@ public class ApplicationWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	public class MyPanel extends JComponent {
+	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton enter;
 		private JTextArea from, to;
@@ -76,7 +78,7 @@ public class ApplicationWindow extends JFrame {
 		private JTextPane distance, time;
 		private final static int MARGIN = 25;
 
-		public MyPanel(int height) {
+		public ControlPanel(int height) {
 			super();
 			
 			TitledBorder border = BorderFactory.createTitledBorder(
