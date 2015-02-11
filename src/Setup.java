@@ -27,15 +27,16 @@ public class Setup {
 			while(sc.hasNextLine()){
 				String city = sc.nextLine();
 				String[] cityInfo = city.split("--");
-				if(cityInfo.length != 4){
+				if(cityInfo.length != 5){
 					System.out.println("The line \"" + city + "\" is of invalid format.");
-					System.out.println("Please use format: name--population--xCoordinate--yCoordinate");
+					System.out.println("Please use format: name--population--interest--xCoordinate--yCoordinate");
 				} else {
 					String name = cityInfo[0];
 					int population = Integer.parseInt(cityInfo[1]);
-					double xCoord = Double.parseDouble(cityInfo[2]);
-					double yCoord = Double.parseDouble(cityInfo[3]);
-					addCity(name, population, xCoord, yCoord);
+					double interest = Double.parseDouble(cityInfo[2]);
+					double xCoord = Double.parseDouble(cityInfo[3]);
+					double yCoord = Double.parseDouble(cityInfo[4]);
+					addCity(name, population, interest, xCoord, yCoord);
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -77,9 +78,9 @@ public class Setup {
 	 * @param xCoord
 	 * @param yCoord
 	 */
-	public void addCity(String name, int pop, double xCoord, double yCoord){
+	public void addCity(String name, int pop, double interest, double xCoord, double yCoord){
 		//System.out.println("Adding city: " + name + ", population " + pop + " at (" + xCoord + ", " + yCoord + ").");
-		g.add(new City(name, pop, xCoord, yCoord), name);
+		g.add(new City(name, pop, interest, xCoord, yCoord), name);
 	}
 	
 	/**
