@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.util.ArrayList;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
@@ -22,22 +23,27 @@ public class ApplicationWindow extends JFrame {
 	private static final int FRAME_WIDTH=1000;
 	private static final int FRAME_HEIGHT=600;
 	private MapPanel mapPanel;
-	private MyPanel myPanel;
+	private ControlPanel myPanel;
+	private Graph<City,Connection,String> map;
+	private AStar a;
 	
-	public ApplicationWindow(Graph<City,Connection,String> map){
+	public ApplicationWindow(Graph<City,Connection,String> map, AStar a){
+		this.a = a;
+		
 		//Create container and establish border layout
 		Container contentContainer = getContentPane();
 		BorderLayout jBorderLayout = new BorderLayout();
 		this.setLayout(jBorderLayout);
 		
 		//create and add myPanel
-		myPanel = new MyPanel(0);
+		myPanel = new ControlPanel(0);
 		contentContainer.add(myPanel,jBorderLayout.CENTER);
 		myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
 		
 		//create and add mapPanel
 		mapPanel = new MapPanel(map);
 		mapPanel.setBounds(0, 75, FRAME_WIDTH,FRAME_HEIGHT-75);
+		this.map=map;
 		contentContainer.add(mapPanel,jBorderLayout.SOUTH);
 		
 		setSize(FRAME_WIDTH,FRAME_HEIGHT);
@@ -68,7 +74,7 @@ public class ApplicationWindow extends JFrame {
 		setVisible(true);
 	}
 	
-	public class MyPanel extends JComponent {
+	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton enter;
 		private JTextArea from, to;
@@ -76,7 +82,7 @@ public class ApplicationWindow extends JFrame {
 		private JTextPane distance, time;
 		private final static int MARGIN = 25;
 
-		public MyPanel(int height) {
+		public ControlPanel(int height) {
 			super();
 			
 			TitledBorder border = BorderFactory.createTitledBorder(
@@ -130,15 +136,36 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					//Take input from the user
-					String toS = to.getText();
-					String fromS = from.getText();
+					String toS = to.getText().toLowerCase().trim();
+					String fromS = from.getText().toLowerCase().trim();
+					City toCity = null;
+					City fromCity = null;
+					
+					ArrayList<City> cities = map.getElements();
+					for(City city : cities){
+						String cityName = city.getName().toLowerCase();
+						if(cityName.equals(toS)){
+							toCity = city;
+							toS = toCity.getName();
+						}
+						if(cityName.equals(fromS)){
+							fromCity = city;
+							fromS = fromCity.getName();
+						}
+						
+					}
+					if(toCity != null && fromCity != null){
+						System.out.println(a.findShortestPathBetween(fromS, toS));
+					} else {
+						System.out.println("Please make sure you entered valid city names.");
+					}
 					
 					//send input to the map panel and receive informative string
-					String a=mapPanel.fromTo(toS, fromS);
+					//String a=mapPanel.fromTo(toSt, fromS);
 					
 					//display output
-					distance.setText(toS);
-					time.setText(fromS);
+					//distance.setText(toS);
+					//time.setText(fromS);
 				}
 			
 			});

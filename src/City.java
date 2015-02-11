@@ -8,6 +8,7 @@ public class City{
 	private int population;
 	private double xCoord;
 	private double yCoord;
+	private double interest;
 	
 	/**
 	 * Constructs a new city from the given parameters.
@@ -17,7 +18,7 @@ public class City{
 	 * @param xCoord
 	 * @param yCoord
 	 */
-	public City(String name, int population, double xCoord, double yCoord){
+	public City(String name, int population, double interest, double xCoord, double yCoord){
 		this.name = name;
 		this.population = population;
 		this.xCoord = xCoord;

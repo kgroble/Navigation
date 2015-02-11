@@ -21,11 +21,18 @@ public class AStar
 	 */
 	public Path findShortestPathBetween(String start, String end)
 	{
+		return findNShortestPaths(start, end, 1).get(0);
+		
+	}
+	
+	public ArrayList<Path> findNShortestPaths(String start, String end, int number)
+	{
 		System.out.printf("Searching for path between %s and %s.%n", start, end);
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
 		ArrayList<Path> closed = new ArrayList<Path>();
+		ArrayList<Path> possiblePaths = new ArrayList<Path>();
 		Path current = new Path(startCity);
 		Path newPath;
 		int iterations = 0;
@@ -34,7 +41,7 @@ public class AStar
 		//Not sure about this
 		HashMap<City, Connection> connections;
 		
-		while (!open.isEmpty())
+		while (!open.isEmpty() && possiblePaths.size() < number)
 		{		
 			iterations ++;
 			current = open.remove();
@@ -43,8 +50,11 @@ public class AStar
 			if (current.getEndpoint().equals(endCity))
 			{
 				System.out.println("Path found.");
-				System.out.printf("%d iterations.%n", iterations);
-				return current;
+//				System.out.printf("%d iterations.%n", iterations);
+				System.out.printf("Path is %.1f units long%n", current.getPathLength());
+				System.out.printf("Path will take %.1f units of time.%n", current.getPathTravelTime());
+				possiblePaths.add(current);
+				continue;
 			}
 			
 			//Gets a hashmap of the connected cities and the associated Connection objects.
@@ -63,7 +73,20 @@ public class AStar
 			
 		}
 		 
-		throw new RuntimeException("Connection not found");
+		if (possiblePaths.size() == 0)
+			throw new RuntimeException("Connection not found");
+		
+		return possiblePaths;
 	}
 	
+	public ArrayList<Path> findPathsWithTravelDistance(String startCity, double bottomLimit, double topLimit)
+	{
+		City startingPoint = (City) this.graph.get(startCity);
+		return null;
+	}
+	
+	public ArrayList<Path> findPathsWithTravelTime(String startCity, double bottomLimit, double topLimit)
+	{
+		return null;
+	}
 }
