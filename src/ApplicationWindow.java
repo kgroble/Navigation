@@ -35,7 +35,7 @@ public class ApplicationWindow extends JFrame {
 		
 		//Create container and establish border layout
 		Container contentContainer = getContentPane();
-		BoxLayout box=new BoxLayout(contentContainer, BoxLayout.PAGE_AXIS);
+		BoxLayout box=new BoxLayout(contentContainer, BoxLayout.Y_AXIS);
 		BorderLayout jBorderLayout = new BorderLayout();
 		this.setLayout(box);
 		
