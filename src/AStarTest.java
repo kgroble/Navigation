@@ -6,7 +6,7 @@ import org.junit.Test;
 
 public class AStarTest
 {
-//	@Test
+	@Test
 	public void test()
 	{
 		Graph<City, Connection, String> graph = new Graph<City, Connection, String>();
@@ -45,4 +45,32 @@ public class AStarTest
 		Path path = pathfinder.findShortestPathBetween("Arad", "Bucharest");
 		assertTrue(path.toString().equals("[Arad, Sibiu, Fagaras, Bucharest]"));
 	}	
+	
+	@Test
+	public void testTravelDistanceSearch()
+	{
+		Graph<City,Connection,String> map = new Graph<City,Connection,String>();
+		Setup setup = new Setup(map);
+		AStar pathfinder = new AStar(map);
+		
+		double len = pathfinder.findShortestPathBetween("Arad", "Zerind").getPathLength();
+		ArrayList<Path> paths = pathfinder.findPathsWithTravelDistance("Arad", len-10, len+10);
+		
+		assertTrue(paths.size()==1);
+		
+	}
+	
+	@Test
+	public void testTravelTimeSearch()
+	{
+		Graph<City,Connection,String> map = new Graph<City,Connection,String>();
+		Setup setup = new Setup(map);
+		AStar pathfinder = new AStar(map);
+		
+		double len = pathfinder.findShortestPathBetween("Arad", "Zerind").getPathTravelTime();
+		ArrayList<Path> paths = pathfinder.findPathsWithTravelTime("Arad", len-10, len+10);
+		
+		assertTrue(paths.size()==1);
+		
+	}
 }
