@@ -3,9 +3,12 @@ import java.util.ArrayList;
 
 public class Path implements Comparable<Path>
 {
+	private enum Heuristic {TIME, DISTANCE}
+	
 	private ArrayList<City> path;
 	private double pathLength;
 	private double approximatedPathLength;
+	private double timeTaken;
 	
 	/**
 	 * Creates the beginning of a path.
@@ -17,6 +20,7 @@ public class Path implements Comparable<Path>
 		this.path = new ArrayList<City>();
 		this.path.add(startPoint);
 		this.pathLength = 0;
+		this.timeTaken = 0;
 	}
 	
 	/**
@@ -27,11 +31,17 @@ public class Path implements Comparable<Path>
 	{
 		this.path = new ArrayList<City>();
 		this.pathLength = 0;
+		this.timeTaken = 0;
 	}
 	
 	public double getPathLength()
 	{
 		return this.pathLength;
+	}
+	
+	public double getPathTravelTime()
+	{
+		return this.timeTaken;
 	}
 	
 	public double getApproximatedPathLength()
@@ -54,6 +64,7 @@ public class Path implements Comparable<Path>
 	{
 		this.path.add(nextCity);
 		this.pathLength += link.getConnectionDistance();
+		this.timeTaken += link.getConnectionTravelTime();
 	}
 
 	/**
@@ -90,6 +101,7 @@ public class Path implements Comparable<Path>
 		for (City city : this.path)
 			copy.addToPathForCopyingPurposes(city);
 		copy.pathLength = this.pathLength;
+		copy.timeTaken = this.timeTaken;
 		return copy;
 	}
 }
