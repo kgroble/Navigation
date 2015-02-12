@@ -23,12 +23,13 @@ import com.sun.org.apache.bcel.internal.generic.NEW;
 
 public class ApplicationWindow extends JFrame {
 
-	private static final int FRAME_WIDTH=1000;
+	private static final int FRAME_WIDTH=1100;
 	private static final int FRAME_HEIGHT=600;
 	private MapPanel mapPanel;
 	private ControlPanel myPanel;
 	private Graph<City,Connection,String> map;
 	private AStar a;
+	private ActionListener restartListen;
 	
 	public ApplicationWindow(Graph<City,Connection,String> map, AStar a){
 		this.a = a;
@@ -36,11 +37,64 @@ public class ApplicationWindow extends JFrame {
 		//Create container and establish border layout
 		Container contentContainer = getContentPane();
 		BoxLayout box=new BoxLayout(contentContainer, BoxLayout.Y_AXIS);
-		BorderLayout jBorderLayout = new BorderLayout();
 		this.setLayout(box);
 		
 		//create and add myPanel
-		myPanel = new ControlPanel(0);
+		restartListen= new ActionListener(){
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				setVisible(false);
+				remove(myPanel);
+				remove(mapPanel);
+				Container contentContainer = getContentPane();
+				BoxLayout box=new BoxLayout(contentContainer, BoxLayout.Y_AXIS);
+				setLayout(box);
+				
+				//create and add myPanel
+				myPanel = new ControlPanel(0,restartListen);
+				myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
+				myPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 75));
+				contentContainer.add(myPanel,box);
+				
+				//create and add mapPanel
+				mapPanel = new MapPanel(map);
+				mapPanel.setBounds(0, 75, FRAME_WIDTH,FRAME_HEIGHT-75);
+				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,FRAME_HEIGHT-75));
+				contentContainer.add(mapPanel,box);
+				
+				setSize(FRAME_WIDTH,FRAME_HEIGHT);
+				setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+				
+				addComponentListener(new ComponentAdapter() {
+
+		            @Override
+		            public void componentResized(ComponentEvent e) {
+		            	//retrieve new height and width info
+		            	int newWidth=getWidth();
+		            	int newHeight=getHeight();
+		            	
+		            	mapPanel.setPreferredSize(new Dimension(newWidth,newHeight-75));
+		            	myPanel.setPreferredSize(new Dimension(newWidth, 75));
+		            	
+		            	//manipulate the panels
+		            	if(newWidth!=FRAME_WIDTH){
+		            		myPanel.setBounds(0, 0, newWidth, 75);
+		            		mapPanel.setBounds(0,75,newWidth,mapPanel.getHeight());
+		            	}
+		            	if(newHeight!=FRAME_HEIGHT)
+		        			mapPanel.setBounds(0, 75, mapPanel.getWidth(),newHeight-75);
+		            	
+		            	//update the frame
+		            	repaint();
+		            }
+		        });
+				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				setVisible(true);
+			}
+			
+		};
+		myPanel = new ControlPanel(0,restartListen);
 		myPanel.setBounds(0, 0, FRAME_WIDTH, 75);
 		myPanel.setPreferredSize(new Dimension(FRAME_WIDTH, 75));
 		contentContainer.add(myPanel,box);
@@ -85,13 +139,13 @@ public class ApplicationWindow extends JFrame {
 	
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
-		private JButton enter;
+		private JButton enter, restart;
 		private JTextArea from, to;
 		private JLabel toLabel, fromLabel, distanceLabel, timeLabel;
 		private JTextPane distance, time;
 		private final static int MARGIN = 25;
 
-		public ControlPanel(int height) {
+		public ControlPanel(int height, ActionListener ab) {
 			super();
 			
 			TitledBorder border = BorderFactory.createTitledBorder(
@@ -181,6 +235,12 @@ public class ApplicationWindow extends JFrame {
 			enter.setBounds(MARGIN, height+MARGIN-5, 100, 30);
 			enter.setText("ENTER");
 			this.add(enter);
+			
+			restart= new JButton();
+			restart.setBounds(970,height+MARGIN-5,100,30);
+			restart.setText("RESTART");
+			restart.addActionListener(ab);
+			this.add(restart);
 		}
 		
 	}
