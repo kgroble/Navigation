@@ -67,12 +67,6 @@ public class MapPanel extends JPanel {
 		this.pathsToDraw = new ArrayList<Path>();
 	}
 
-	public String fromTo(String fromCity, String toCity) {
-		// add code to make stuff change in the map to highlight route, then
-		// transfer data to myPanel in a string
-		return null;
-	}
-
 	public void addPath(Path pathToAdd)
 	{
 		this.pathsToDraw.add(pathToAdd);
