@@ -63,16 +63,21 @@ public class MapPanel extends JPanel {
 				BorderFactory.createLoweredBevelBorder(), "MAP");
 		border.setTitleJustification(TitledBorder.LEFT);
 		this.setBorder(border);
-		
+
 		this.pathsToDraw = new ArrayList<Path>();
 	}
 
-	public void addPath(Path pathToAdd)
-	{
+	public String fromTo(String fromCity, String toCity) {
+		// add code to make stuff change in the map to highlight route, then
+		// transfer data to myPanel in a string
+		return null;
+	}
+
+	public void addPath(Path pathToAdd) {
 		this.pathsToDraw.add(pathToAdd);
 		this.repaint();
 	}
-	
+
 	public class MouseHandler implements MouseListener, MouseWheelListener,
 			MouseMotionListener {
 
@@ -111,13 +116,23 @@ public class MapPanel extends JPanel {
 		public void mouseWheelMoved(MouseWheelEvent arg0) {
 			// TODO Auto-generated method stub
 			if (arg0.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-				if (arg0.getPreciseWheelRotation() > 0)
+				if (arg0.getPreciseWheelRotation() > 0) {
 					zoom /= arg0.getPreciseWheelRotation() * ZOOM_SPEED;
-				else
+					centerX = (arg0.getPreciseWheelRotation()
+							* (1 - (ZOOM_SPEED - 1))
+							* (centerX - arg0.getX()) + arg0.getX());
+					centerY = (arg0.getPreciseWheelRotation()
+							* (1 - (ZOOM_SPEED - 1))
+							* (centerY - arg0.getY()) + arg0.getY());
+				} else {
 					zoom *= Math.abs(arg0.getPreciseWheelRotation()
 							* ZOOM_SPEED);
+					centerX = (Math.abs(arg0.getPreciseWheelRotation())
+							* ZOOM_SPEED * (centerX - arg0.getX()) + arg0.getX());
+					centerY = (Math.abs(arg0.getPreciseWheelRotation())
+							* ZOOM_SPEED * (centerY - arg0.getY()) + arg0.getY());
+				}
 			}
-			System.out.println(zoom);
 			repaint();
 		}
 
@@ -126,7 +141,6 @@ public class MapPanel extends JPanel {
 			centerX += (e.getX() - lastMousePoint.getX());
 			centerY += (e.getY() - lastMousePoint.getY());
 			lastMousePoint = e.getPoint();
-			System.out.println(e.getX());
 			repaint();
 		}
 
@@ -146,6 +160,7 @@ public class MapPanel extends JPanel {
 				RenderingHints.VALUE_STROKE_PURE);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
+
 
 		// Translate for pan
 		g2d.translate(centerX, centerY);
@@ -191,7 +206,7 @@ public class MapPanel extends JPanel {
 			circle.width = CITY_SIZE * zoom;
 			g2d.setColor(CITY_COLOR);
 			double centerLinks = CITY_SIZE * zoom / 2;
-			g2d.translate(-centerLinks, -centerLinks); 
+			g2d.translate(-centerLinks, -centerLinks);
 			g2d.fill(circle);
 			g2d.translate(centerLinks, centerLinks);
 
@@ -199,24 +214,22 @@ public class MapPanel extends JPanel {
 		}
 
 		drawPaths(g2d);
-		
+
 		// Translate for pan
 		g2d.translate(-centerX, -centerY);
 	}
 
-	private void drawPaths(Graphics2D g2d)
-	{
+	private void drawPaths(Graphics2D g2d) {
 		g2d.setColor(PATH_COLOR);
-		for (Path path : pathsToDraw)
-		{
+		for (Path path : pathsToDraw) {
 			ArrayList<Point> linkPoints = new ArrayList<Point>();
-			for (City city : path.getCities())
-			{
-				linkPoints.add(new Point((int)(city.getXCoord() * zoom), (int)(city.getYCoord() * zoom)));
+			for (City city : path.getCities()) {
+				linkPoints.add(new Point((int) (city.getXCoord() * zoom),
+						(int) (city.getYCoord() * zoom)));
 				double translateX = city.getXCoord() * zoom;
 				double translateY = city.getYCoord() * zoom;
 				g2d.translate(translateX, translateY);
-				
+
 				Ellipse2D.Double circle = new Ellipse2D.Double();
 				circle.height = CITY_SIZE * zoom;
 				circle.width = CITY_SIZE * zoom;
@@ -224,18 +237,20 @@ public class MapPanel extends JPanel {
 				g2d.translate(-centerLinks, -centerLinks);
 				g2d.fill(circle);
 				g2d.translate(centerLinks, centerLinks);
-				
+
 				g2d.translate(-translateX, -translateY);
 			}
-			
-			g2d.setStroke(new BasicStroke((float) (PATH_CONNECTION_WIDTH * zoom)));
-			for (int i = 0; i < linkPoints.size() - 1; i++)
-			{
-				g2d.drawLine(linkPoints.get(i).x, linkPoints.get(i).y, linkPoints.get(i + 1).x, linkPoints.get(i + 1).y);
+
+			g2d.setStroke(new BasicStroke(
+					(float) (PATH_CONNECTION_WIDTH * zoom)));
+			for (int i = 0; i < linkPoints.size() - 1; i++) {
+				g2d.drawLine(linkPoints.get(i).x, linkPoints.get(i).y,
+						linkPoints.get(i + 1).x, linkPoints.get(i + 1).y);
 			}
 			g2d.setStroke(new BasicStroke(1));
 		}
 		g2d.setColor(CITY_COLOR);
 	}
-	
+
 }
+
