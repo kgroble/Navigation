@@ -34,6 +34,11 @@ public class Path implements Comparable<Path>
 		this.timeTaken = 0;
 	}
 	
+	public ArrayList<City> getCities()
+	{
+		return path;
+	}
+	
 	public double getPathLength()
 	{
 		return this.pathLength;
