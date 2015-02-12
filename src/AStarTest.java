@@ -54,8 +54,10 @@ public class AStarTest
 		AStar pathfinder = new AStar(map);
 		
 		double len = pathfinder.findShortestPathBetween("Arad", "Zerind").getPathLength();
-		ArrayList<Path> paths = pathfinder.findPathsWithTravelDistance("Arad", len-10, len+10);
-		
+		ArrayList<Path> paths = pathfinder.findPathsWithTravelDistance("Arad", len-1, len+1);
+//		System.out.println(paths.size());
+//		for (Path path : paths)
+//			System.out.println(path);
 		assertTrue(paths.size()==1);
 		
 	}

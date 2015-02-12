@@ -164,7 +164,7 @@ public class ApplicationWindow extends JFrame {
 						
 					}
 					if(toCity != null && fromCity != null){
-						System.out.println(a.findShortestPathBetween(fromS, toS));
+						ApplicationWindow.this.mapPanel.addPath(a.findShortestPathBetween(fromS, toS));
 					} else {
 						System.out.println("Please make sure you entered valid city names.");
 					}

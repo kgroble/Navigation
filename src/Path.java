@@ -88,6 +88,15 @@ public class Path implements Comparable<Path>
 	}
 	
 	
+	public boolean containsCity(String cityName)
+	{
+		for (City city : this.path)
+		{
+			if (city.getName().equals(cityName))
+				return true;
+		}
+		return false;
+	}
 	
 	//TODO I guaruntee there is a better way to do this nonsense.
 	private void addToPathForCopyingPurposes(City nextCity)

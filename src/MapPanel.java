@@ -44,6 +44,7 @@ public class MapPanel extends JPanel {
 	double zoom = 1.0;
 	double centerX = 0.0;
 	double centerY = 0.0;
+	private ArrayList<Path> pathsToDraw;
 
 	public MapPanel(Graph<City, Connection, String> map) {
 		super();
@@ -60,6 +61,8 @@ public class MapPanel extends JPanel {
 				BorderFactory.createLoweredBevelBorder(), "MAP");
 		border.setTitleJustification(TitledBorder.LEFT);
 		this.setBorder(border);
+		
+		this.pathsToDraw = new ArrayList<Path>();
 	}
 
 	public String fromTo(String fromCity, String toCity) {
@@ -68,6 +71,11 @@ public class MapPanel extends JPanel {
 		return null;
 	}
 
+	public void addPath(Path pathToAdd)
+	{
+		this.pathsToDraw.add(pathToAdd);
+	}
+	
 	public class MouseHandler implements MouseListener, MouseWheelListener,
 			MouseMotionListener {
 

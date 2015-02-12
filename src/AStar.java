@@ -113,10 +113,10 @@ public class AStar
 			
 			for (City nextCity : connections.keySet())
 			{
-				newPath = path.copy();
-				
-				if (nextCity.getName().equals(previousCityName))
+				if (path.containsCity(nextCity.getName()))
 					continue;
+				
+				newPath = path.copy();
 				
 				newPath.addToPath(nextCity, connections.get(nextCity));
 				breadthFirstSearchDistance(nextCity.getName(), cityName, bottomLimit, topLimit, possiblePaths, newPath);
@@ -139,10 +139,10 @@ public class AStar
 			
 			for (City nextCity : connections.keySet())
 			{
-				newPath = path.copy();
-				
-				if (nextCity.getName().equals(previousCityName))
+				if (path.containsCity(nextCity.getName()))
 					continue;
+				
+				newPath = path.copy();
 				
 				newPath.addToPath(nextCity, connections.get(nextCity));
 				breadthFirstSearchTime(nextCity.getName(), cityName, bottomLimit, topLimit, possiblePaths, newPath);
