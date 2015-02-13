@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -12,21 +11,15 @@ import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
 import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.JTextPane;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.TitledBorder;
 
-import sun.security.pkcs11.wrapper.CK_AES_CTR_PARAMS;
-
-import com.sun.org.apache.bcel.internal.generic.NEW;
-
 public class ApplicationWindow extends JFrame {
 
+	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1100;
 	private static final int FRAME_HEIGHT = 600;
 	private MapPanel mapPanel;
@@ -157,7 +150,7 @@ public class ApplicationWindow extends JFrame {
 
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
-		private JButton enter, restart;
+		private JButton enter, restart, pathDistance, pathTime, clear;
 		private JTextArea cityName;
 		private JList<String> list;
 		private final static int MARGIN = 25;
@@ -184,6 +177,19 @@ public class ApplicationWindow extends JFrame {
 			JScrollPane listScroller = new JScrollPane(list);
 			listScroller.setBounds(250, MARGIN - 10, 200, 60);
 			this.add(listScroller);
+			
+			clear = new JButton();
+			clear.addActionListener(new ActionListener() {
+				
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					myList.clear();
+					list.updateUI();
+				}
+			});
+			clear.setBounds(455, height + MARGIN - 10, 100, 30);
+			clear.setText("Clear List");
+			this.add(clear);
 
 			enter = new JButton();
 			enter.addActionListener(new ActionListener() {

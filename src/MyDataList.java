@@ -12,6 +12,7 @@ public class MyDataList<E extends Comparable<? super E>> extends ArrayList<E> im
 	public void addListDataListener(ListDataListener arg0) {
 		// TODO Auto-generated method stub
 		
+		
 	}
 
 	@Override
