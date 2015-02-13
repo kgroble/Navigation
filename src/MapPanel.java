@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -38,10 +39,15 @@ public class MapPanel extends JPanel {
 
 	static final float ZOOM_SPEED = 1.05f;
 	static final float ZOOM_MAX = 10.0f;
-	static final float ZOOM_MIN = 0.01f;
+	static final float ZOOM_MIN = 0.3f;
+
+	static final float SELECTED_CITY_SIZE = 13.0f;
 	static final float CITY_SIZE = 10.0f;
+
 	static final float CONNECTION_WIDTH = 1.2f;
 	static final float PATH_CONNECTION_WIDTH = 1.6f;
+
+	static final Color SELECTED_CITY_COLOR = Color.RED;
 	static final Color CITY_COLOR = Color.BLACK;
 	static final Color CONNECTION_COLOR = Color.GRAY;
 	static final Color PATH_COLOR = Color.BLUE;
@@ -51,6 +57,7 @@ public class MapPanel extends JPanel {
 	private Graph<City, Connection, String> map;
 	private City selectedCity = null;
 	private HashMap<Integer, ArrayList<City>> clickMap = new HashMap<Integer, ArrayList<City>>();
+	private JButton addCityButton;
 	int partitionWidth;
 	final int partitionCount = 30;
 	final int selectionMaxRadius = 20;
@@ -64,7 +71,24 @@ public class MapPanel extends JPanel {
 		super();
 		this.map = map;
 		updateClickMap();
+		this.setLayout(null);
 		
+		addCityButton = new JButton();
+		addCityButton.setBounds(0, 0, 0, 0);
+		addCityButton.setText("Add City");
+		addCityButton.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				if (selectedCity != null)
+				{
+					System.out.println("You want to add: " + selectedCity.getName());
+				}
+				
+			}
+		});
+		this.add(addCityButton);
+
 		// Add mouse function
 		MouseHandler aHandler = new MouseHandler();
 		this.addMouseListener(aHandler);
@@ -92,44 +116,44 @@ public class MapPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-			
+
 			Point clickPoint = e.getPoint();
-			
+
 			clickPoint.x -= centerX;
 			clickPoint.y -= centerY;
-			
+
 			clickPoint.x /= zoom;
 			clickPoint.y /= zoom;
-			
+
 			int partitionNumber = Math.floorDiv((int) clickPoint.x,
 					partitionWidth);
 			if (partitionNumber < 0)
 				partitionNumber = 0;
 			else if (partitionNumber >= partitionCount)
 				partitionNumber = partitionCount - 1;
-			
+
 			ArrayList<City> citiesToSearch = new ArrayList<City>();
-			
+
 			citiesToSearch.addAll(clickMap.get(partitionNumber));
 			if (partitionNumber != 0)
 				citiesToSearch.addAll(clickMap.get(partitionNumber - 1));
 			if (partitionNumber != partitionCount - 1)
 				citiesToSearch.addAll(clickMap.get(partitionNumber + 1));
-			
+
 			int closestCityDist = selectionMaxRadius;
 			City closestCity = null;
-			for (City city : citiesToSearch)
-			{ 
-				int xDistSquared = (int) Math.pow(city.getXCoord() - clickPoint.x, 2);
-				int yDistSquared = (int) Math.pow(city.getYCoord() - clickPoint.y, 2);
+			for (City city : citiesToSearch) {
+				int xDistSquared = (int) Math.pow(city.getXCoord()
+						- clickPoint.x, 2);
+				int yDistSquared = (int) Math.pow(city.getYCoord()
+						- clickPoint.y, 2);
 				int distance = (int) Math.sqrt(xDistSquared + yDistSquared);
-				if (distance < closestCityDist)
-				{
+				if (distance < closestCityDist) {
 					closestCityDist = distance;
 					closestCity = city;
 				}
 			}
-			
+
 			selectedCity = closestCity;
 			repaint();
 		}
@@ -161,7 +185,7 @@ public class MapPanel extends JPanel {
 		public void mouseWheelMoved(MouseWheelEvent arg0) {
 			// TODO Auto-generated method stub
 			if (arg0.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-				if (arg0.getPreciseWheelRotation() > 0) {
+				if (arg0.getPreciseWheelRotation() > 0 && zoom >= ZOOM_MIN) {
 					zoom /= arg0.getPreciseWheelRotation() * ZOOM_SPEED;
 					centerX = (arg0.getPreciseWheelRotation()
 							* (1 - (ZOOM_SPEED - 1)) * (centerX - arg0.getX()) + arg0
@@ -169,7 +193,7 @@ public class MapPanel extends JPanel {
 					centerY = (arg0.getPreciseWheelRotation()
 							* (1 - (ZOOM_SPEED - 1)) * (centerY - arg0.getY()) + arg0
 							.getY());
-				} else {
+				} else if (zoom <= ZOOM_MAX) {
 					zoom *= Math.abs(arg0.getPreciseWheelRotation()
 							* ZOOM_SPEED);
 					centerX = (Math.abs(arg0.getPreciseWheelRotation())
@@ -253,22 +277,15 @@ public class MapPanel extends JPanel {
 			g2d.setColor(CITY_COLOR);
 			double centerLinks = CITY_SIZE * zoom / 2;
 			g2d.translate(-centerLinks, -centerLinks);
-			// TODO: Probably faster to draw this seperate
-			if (selectedCity != null && city.equals(selectedCity))
-			{
-				g2d.setColor(Color.RED);
-				g2d.fill(circle);
-				g2d.setColor(CITY_COLOR);
-			}
-			else
-				g2d.fill(circle);
+			g2d.fill(circle);
 			g2d.translate(centerLinks, centerLinks);
 
 			g2d.translate(-translateX, -translateY);
 		}
 
 		drawPaths(g2d);
-		
+		drawSelectedCity(g2d);
+
 		// Translate for pan
 		g2d.translate(-centerX, -centerY);
 	}
@@ -304,6 +321,38 @@ public class MapPanel extends JPanel {
 			g2d.setStroke(new BasicStroke(1));
 		}
 		g2d.setColor(CITY_COLOR);
+	}
+
+	/**
+	 * @param g2d the graphics object on which to draw
+	 */
+	private void drawSelectedCity(Graphics2D g2d) {
+		if (selectedCity != null) {
+			g2d.setColor(SELECTED_CITY_COLOR);
+			double translateX = selectedCity.getXCoord() * zoom;
+			double translateY = selectedCity.getYCoord() * zoom;
+			g2d.translate(translateX, translateY);
+
+			Ellipse2D.Double circle = new Ellipse2D.Double();
+			circle.height = SELECTED_CITY_SIZE * zoom;
+			circle.width = SELECTED_CITY_SIZE * zoom;
+			double centerLinks = SELECTED_CITY_SIZE * zoom / 2;
+			g2d.translate(-centerLinks, -centerLinks);
+			g2d.fill(circle);
+			g2d.translate(centerLinks, centerLinks);
+
+			g2d.translate(-translateX, -translateY);
+			g2d.setColor(CITY_COLOR);
+			
+			Point buttonPoint = new Point((int)translateX, (int)translateY);
+			buttonPoint.x += centerX - 40;
+			buttonPoint.y += centerY + centerLinks + 20;
+			addCityButton.setBounds(buttonPoint.x, buttonPoint.y, 80, 20);
+		}
+		else
+		{
+			addCityButton.setBounds(0, 0, 0, 0);
+		}
 	}
 
 	private void updateClickMap() {
