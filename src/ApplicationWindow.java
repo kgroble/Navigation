@@ -13,68 +13,76 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
+
+import org.omg.CORBA.PRIVATE_MEMBER;
 
 public class ApplicationWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1100;
 	private static final int FRAME_HEIGHT = 600;
+
+	// Serves as the 'background' that the other two panels will be added to:
+	private JPanel containerPanel;
 	private MapPanel mapPanel;
-	private ControlPanel myPanel;
+	private ControlPanel controlPanel;
+
 	private Graph<City, Connection, String> map;
-	private AStar a;
+	private AStar aStar;
 	private ActionListener restartListen;
-	private MyDataList<String> myList;
-	private JList<String> list;
+	private MyDataList<String> citiesList;
+	private JList<String> listBox;
 
 	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
-		this.a = a;
+		this.aStar = a;
+		this.citiesList = new MyDataList<String>();
 
-		// Create container and establish border layout
-		Container contentContainer = getContentPane();
-		BoxLayout box = new BoxLayout(contentContainer, BoxLayout.Y_AXIS);
-		this.setLayout(box);
+		// Set up jframe
+		this.setTitle("Navigation");
 
-		myList = new MyDataList<String>();
+		// Set up container panel
+		this.containerPanel = new JPanel();
+		this.containerPanel.setLayout(null);
+		this.containerPanel.setBackground(new Color(160, 160, 160));
+		this.add(containerPanel);
 
-		list = new JList<String>(myList);
-		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		list.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
-		list.setBorder(new BevelBorder(1));
+		this.listBox = new JList<String>(citiesList);
+		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		this.listBox.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
+		this.listBox.setBorder(new BevelBorder(1));
 
 		int controlPanelHeight = 95;
 
-		// create and add myPanel
 		restartListen = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				remove(myPanel);
+				remove(controlPanel);
 				remove(mapPanel);
 				Container contentContainer = getContentPane();
 				BoxLayout box = new BoxLayout(contentContainer,
 						BoxLayout.Y_AXIS);
 				setLayout(box);
 
-				myList = new MyDataList<String>();
-				
-				list = new JList<String>(myList);
-				list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-				list.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
-				list.setBorder(new BevelBorder(1));
+				citiesList = new MyDataList<String>();
+
+				listBox = new JList<String>(citiesList);
+				listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+				listBox.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
+				listBox.setBorder(new BevelBorder(1));
 
 				// create and add myPanel
-				myPanel = new ControlPanel(0, restartListen);
-				myPanel.setBounds(0, 0, FRAME_WIDTH, controlPanelHeight);
-				myPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
+				controlPanel = new ControlPanel(0, restartListen);
+				controlPanel.setBounds(0, 0, FRAME_WIDTH, controlPanelHeight);
+				controlPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
 						controlPanelHeight));
-				contentContainer.add(myPanel, box);
+				contentContainer.add(controlPanel, box);
 
 				// create and add mapPanel
 				mapPanel = new MapPanel(map, ApplicationWindow.this);
@@ -97,12 +105,12 @@ public class ApplicationWindow extends JFrame {
 
 						mapPanel.setPreferredSize(new Dimension(newWidth,
 								newHeight - controlPanelHeight));
-						myPanel.setPreferredSize(new Dimension(newWidth,
+						controlPanel.setPreferredSize(new Dimension(newWidth,
 								controlPanelHeight));
 
 						// manipulate the panels
 						if (newWidth != FRAME_WIDTH) {
-							myPanel.setBounds(0, 0, newWidth,
+							controlPanel.setBounds(0, 0, newWidth,
 									controlPanelHeight);
 							mapPanel.setBounds(0, controlPanelHeight, newWidth,
 									mapPanel.getHeight());
@@ -121,19 +129,23 @@ public class ApplicationWindow extends JFrame {
 			}
 
 		};
-		myPanel = new ControlPanel(0, restartListen);
-		myPanel.setBounds(0, 0, FRAME_WIDTH, controlPanelHeight);
-		myPanel.setPreferredSize(new Dimension(FRAME_WIDTH, controlPanelHeight));
-		contentContainer.add(myPanel, box);
 
-		// create and add mapPanel
-		mapPanel = new MapPanel(map, this);
-		mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH, FRAME_HEIGHT
-				- controlPanelHeight);
-		mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
+		// Set up controlsPanel
+		this.controlPanel = new ControlPanel(0, restartListen);
+		this.controlPanel.setBounds(0, 0, FRAME_WIDTH, controlPanelHeight);
+		this.controlPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
+				controlPanelHeight));
+		// this.controlPanel.setBackground(Color.GRAY);
+		this.containerPanel.add(controlPanel);
+
+		// Set up mapPanel
+		this.mapPanel = new MapPanel(map, this);
+		this.mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH,
+				FRAME_HEIGHT - controlPanelHeight);
+		this.mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
 				- controlPanelHeight));
 		this.map = map;
-		contentContainer.add(mapPanel, box);
+		this.containerPanel.add(this.mapPanel);
 
 		setSize(FRAME_WIDTH, FRAME_HEIGHT);
 		setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
@@ -148,12 +160,12 @@ public class ApplicationWindow extends JFrame {
 
 				mapPanel.setPreferredSize(new Dimension(newWidth, newHeight
 						- controlPanelHeight));
-				myPanel.setPreferredSize(new Dimension(newWidth,
+				controlPanel.setPreferredSize(new Dimension(newWidth,
 						controlPanelHeight));
 
 				// manipulate the panels
 				if (newWidth != FRAME_WIDTH) {
-					myPanel.setBounds(0, 0, newWidth, controlPanelHeight);
+					controlPanel.setBounds(0, 0, newWidth, controlPanelHeight);
 					mapPanel.setBounds(0, controlPanelHeight, newWidth,
 							mapPanel.getHeight());
 				}
@@ -169,10 +181,11 @@ public class ApplicationWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	
-	
+
 	/**
-	 * Adds cityName to the list if it is a proper city name, otherwise it does nothing
+	 * Adds cityName to the list if it is a proper city name, otherwise it does
+	 * nothing
+	 * 
 	 * @param cityName
 	 */
 	public void addToList(String cityName) {
@@ -181,31 +194,33 @@ public class ApplicationWindow extends JFrame {
 		for (City city : cities) {
 			String cityName1 = city.getName().toLowerCase();
 			if (cityName1.equals(cityText)) {
-				myList.add(city.getName());
-				list.updateUI();
+				citiesList.add(city.getName());
+				listBox.updateUI();
 				break;
 			}
 		}
 	}
-	
+
 	/**
-	 * removes an element from the specified index if that index is in myList's range
+	 * removes an element from the specified index if that index is in myList's
+	 * range
+	 * 
 	 * @param index
 	 */
-	public void removeFromList(int index){
-		if(index>=0&&index<myList.size()){
-			myList.remove(index);
-			list.updateUI();
+	public void removeFromList(int index) {
+		if (index >= 0 && index < citiesList.size()) {
+			citiesList.remove(index);
+			listBox.updateUI();
 		}
 	}
 
 	/**
 	 * @return the list of cities in the path the user has created
 	 */
-	public String[] getCityNames(){
-		return (String[]) this.myList.toArray();
+	public String[] getCityNames() {
+		return (String[]) this.citiesList.toArray();
 	}
-	
+
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
@@ -215,18 +230,18 @@ public class ApplicationWindow extends JFrame {
 		public ControlPanel(int height, ActionListener ab) {
 			super();
 
-			Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
-//			TitledBorder border = BorderFactory.createTitledBorder(
-//					BorderFactory.createLoweredBevelBorder(), "Control Panel");
-//			border.setTitleJustification(TitledBorder.LEFT);
-			this.setBorder(border);
+			// Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+			// TitledBorder border = BorderFactory.createTitledBorder(
+			// BorderFactory.createLoweredBevelBorder(), "Control Panel");
+			// border.setTitleJustification(TitledBorder.LEFT);
+			// this.setBorder(border);
 
 			cityName = new JTextArea();
 			cityName.setBounds(MARGIN, height + MARGIN, 100, 20);
 			cityName.setBorder(new BevelBorder(1));
 			this.add(cityName);
 
-			JScrollPane listScroller = new JScrollPane(list);
+			JScrollPane listScroller = new JScrollPane(listBox);
 			listScroller.setBounds(250, MARGIN - 10, 200, 65);
 			this.add(listScroller);
 
@@ -235,8 +250,8 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					myList.clear();
-					list.updateUI();
+					citiesList.clear();
+					listBox.updateUI();
 				}
 			});
 			clear.setBounds(455, height + MARGIN - 10, 100, 30);
@@ -292,7 +307,7 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					int cityIndex = list.getSelectedIndex();
+					int cityIndex = listBox.getSelectedIndex();
 					removeFromList(cityIndex);
 				}
 			});
@@ -304,10 +319,11 @@ public class ApplicationWindow extends JFrame {
 			pathTime.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) 
-				{
-					ArrayList<String> waypoints = new ArrayList<String>(ApplicationWindow.this.myList);
-					Path path = ApplicationWindow.this.a.findFastestPathWithWayPoints(waypoints);
+				public void actionPerformed(ActionEvent e) {
+					ArrayList<String> waypoints = new ArrayList<String>(
+							ApplicationWindow.this.citiesList);
+					Path path = ApplicationWindow.this.aStar
+							.findFastestPathWithWayPoints(waypoints);
 					ApplicationWindow.this.mapPanel.addPath(path);
 				}
 			});
@@ -319,14 +335,15 @@ public class ApplicationWindow extends JFrame {
 			pathDistance.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e)
-				{
-					ArrayList<String> waypoints = new ArrayList<String>(ApplicationWindow.this.myList);
-					Path path = ApplicationWindow.this.a.findShortestPathWithWayPoints(waypoints);
+				public void actionPerformed(ActionEvent e) {
+					ArrayList<String> waypoints = new ArrayList<String>(
+							ApplicationWindow.this.citiesList);
+					Path path = ApplicationWindow.this.aStar
+							.findShortestPathWithWayPoints(waypoints);
 					ApplicationWindow.this.mapPanel.addPath(path);
 				}
 			});
-			
+
 			pathDistance.setBounds(560, height + MARGIN + 25, 120, 30);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);
@@ -336,6 +353,9 @@ public class ApplicationWindow extends JFrame {
 			restart.setText("RESTART");
 			restart.addActionListener(ab);
 			this.add(restart);
+
+			this.setBackground(Color.GRAY);
+			this.setOpaque(true);
 		}
 
 	}

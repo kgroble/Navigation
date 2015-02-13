@@ -75,6 +75,7 @@ public class MapPanel extends JPanel {
 		this.map = map;
 		updateClickMap();
 		this.setLayout(null);
+		this.setBackground(Color.WHITE);
 
 		addCityButton = new JButton();
 		addCityButton.setBounds(0, 0, 0, 0);
@@ -105,11 +106,11 @@ public class MapPanel extends JPanel {
 		this.addMouseMotionListener(aHandler);
 
 		// add border
-		Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+//		Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
 //		TitledBorder border = BorderFactory.createTitledBorder(
 //				BorderFactory.createLoweredBevelBorder(), "MAP");
 //		border.setTitleJustification(TitledBorder.LEFT);
-		this.setBorder(border);
+//		this.setBorder(border);
 
 		this.pathsToDraw = new ArrayList<Path>();
 	}
@@ -255,7 +256,7 @@ public class MapPanel extends JPanel {
 				RenderingHints.VALUE_STROKE_PURE);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-
+		
 		// Translate for pan
 		g2d.translate(centerX, centerY);
 
@@ -312,6 +313,16 @@ public class MapPanel extends JPanel {
 
 		// Translate for pan
 		g2d.translate(-centerX, -centerY);
+		
+		
+		// Draw border
+		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
+				RenderingHints.VALUE_ANTIALIAS_OFF);
+		g2d.setColor(new Color(160,160,160));
+		g2d.setStroke(new BasicStroke(2));
+	    g2d.drawRect(1, 1, this.getWidth()-18, this.getHeight()-41);
+	    g2d.setColor(Color.LIGHT_GRAY);
+	    g2d.drawRect(3, 3, this.getWidth()-22, this.getHeight()-45);
 	}
 
 	private void drawPaths(Graphics2D g2d) {
