@@ -50,7 +50,7 @@ public class MapPanel extends JPanel {
 	private City selectedCity = null;
 	private HashMap<Integer, ArrayList<City>> clickMap = new HashMap<Integer, ArrayList<City>>();
 	int partitionWidth;
-	final int partitionCount = 10;
+	final int partitionCount = 30;
 	final int selectionMaxRadius = 20;
 
 	double zoom = 1.0;
@@ -103,7 +103,7 @@ public class MapPanel extends JPanel {
 					partitionWidth);
 			if (partitionNumber < 0)
 				partitionNumber = 0;
-			else if (partitionNumber > partitionCount)
+			else if (partitionNumber >= partitionCount)
 				partitionNumber = partitionCount - 1;
 			
 			ArrayList<City> citiesToSearch = new ArrayList<City>();
