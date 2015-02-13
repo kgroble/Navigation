@@ -64,7 +64,7 @@ public class ApplicationWindow extends JFrame {
 				contentContainer.add(myPanel, box);
 
 				// create and add mapPanel
-				mapPanel = new MapPanel(map, myList);
+				mapPanel = new MapPanel(map);
 				mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH,
 						FRAME_HEIGHT - controlPanelHeight);
 				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
@@ -114,7 +114,7 @@ public class ApplicationWindow extends JFrame {
 		contentContainer.add(myPanel, box);
 
 		// create and add mapPanel
-		mapPanel = new MapPanel(map, myList);
+		mapPanel = new MapPanel(map);
 		mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH, FRAME_HEIGHT
 				- controlPanelHeight);
 		mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
