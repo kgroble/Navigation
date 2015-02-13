@@ -34,6 +34,7 @@ public class ApplicationWindow extends JFrame {
 	private Graph<City, Connection, String> map;
 	private AStar a;
 	private ActionListener restartListen;
+	private MyDataList<String> myList;
 
 	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
 		this.a = a;
@@ -43,8 +44,10 @@ public class ApplicationWindow extends JFrame {
 		BoxLayout box = new BoxLayout(contentContainer, BoxLayout.Y_AXIS);
 		this.setLayout(box);
 		
+		myList = new MyDataList<String>();
+		
 		int controlPanelHeight=95;
-
+		
 		// create and add myPanel
 		restartListen = new ActionListener() {
 
@@ -58,6 +61,8 @@ public class ApplicationWindow extends JFrame {
 						BoxLayout.Y_AXIS);
 				setLayout(box);
 				
+				myList = new MyDataList<String>();
+				
 				// create and add myPanel
 				myPanel = new ControlPanel(0, restartListen);
 				myPanel.setBounds(0, 0, FRAME_WIDTH, controlPanelHeight);
@@ -65,7 +70,7 @@ public class ApplicationWindow extends JFrame {
 				contentContainer.add(myPanel, box);
 
 				// create and add mapPanel
-				mapPanel = new MapPanel(map);
+				mapPanel = new MapPanel(map, myList);
 				mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH, FRAME_HEIGHT - controlPanelHeight);
 				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
 						FRAME_HEIGHT - controlPanelHeight));
@@ -111,7 +116,7 @@ public class ApplicationWindow extends JFrame {
 		contentContainer.add(myPanel, box);
 
 		// create and add mapPanel
-		mapPanel = new MapPanel(map);
+		mapPanel = new MapPanel(map,myList);
 		mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH, FRAME_HEIGHT - controlPanelHeight);
 		mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT - controlPanelHeight));
 		this.map = map;
@@ -154,8 +159,7 @@ public class ApplicationWindow extends JFrame {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton enter, restart;
 		private JTextArea cityName;
-		private JList list;
-		private MyDataList<String> myList;
+		private JList<String> list;
 		private final static int MARGIN = 25;
 
 		public ControlPanel(int height, ActionListener ab) {
@@ -165,8 +169,6 @@ public class ApplicationWindow extends JFrame {
 					BorderFactory.createLoweredBevelBorder(), "Control Panel");
 			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
-
-			myList = new MyDataList<String>();
 
 			cityName = new JTextArea();
 			cityName.setBounds(MARGIN, height + MARGIN, 100, 20);
@@ -237,6 +239,8 @@ public class ApplicationWindow extends JFrame {
 			enter.setBounds(135, height + MARGIN - 5, 100, 30);
 			enter.setText("Add City");
 			this.add(enter);
+			
+			
 
 			restart = new JButton();
 			restart.setBounds(970, height + MARGIN - 5, 100, 30);

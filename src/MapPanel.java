@@ -18,6 +18,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.BorderFactory;
+import javax.swing.JButton;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
@@ -51,6 +52,8 @@ public class MapPanel extends JPanel {
 	private Graph<City, Connection, String> map;
 	private City selectedCity = null;
 	private HashMap<Integer, ArrayList<City>> clickMap = new HashMap<Integer, ArrayList<City>>();
+	private JButton add;
+	private MyDataList<String> myList;
 	int partitionWidth;
 	final int partitionCount = 30;
 	final int selectionMaxRadius = 20;
@@ -60,16 +63,31 @@ public class MapPanel extends JPanel {
 	double centerY = 0.0;
 	private ArrayList<Path> pathsToDraw;
 
-	public MapPanel(Graph<City, Connection, String> map) {
+	public MapPanel(Graph<City, Connection, String> map, MyDataList<String> list) {
 		super();
 		this.map = map;
 		updateClickMap();
+		
+		myList=list;
 		
 		// Add mouse function
 		MouseHandler aHandler = new MouseHandler();
 		this.addMouseListener(aHandler);
 		this.addMouseWheelListener(aHandler);
 		this.addMouseMotionListener(aHandler);
+		
+		add= new JButton();
+		this.add(add);
+		add.setText("add");
+		add.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				myList.add(selectedCity.getName());
+			}
+		});
+//		add.setBounds(10,10,20,20);
+		add.setVisible(false);
 
 		// add border
 		TitledBorder border = BorderFactory.createTitledBorder(
@@ -131,6 +149,14 @@ public class MapPanel extends JPanel {
 			}
 			
 			selectedCity = closestCity;
+			if(selectedCity!=null){
+				add.setVisible(true);
+				add.setText("add "+closestCity.getName());
+				add.setVisible(true);
+			}
+			else {
+				add.setVisible(false);
+			}
 			repaint();
 		}
 
