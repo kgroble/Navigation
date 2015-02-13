@@ -37,6 +37,8 @@ import com.sun.javafx.tk.FontMetrics;
 public class MapPanel extends JPanel {
 
 	static final float ZOOM_SPEED = 1.05f;
+	static final float ZOOM_MAX = 10.0f;
+	static final float ZOOM_MIN = 0.01f;
 	static final float CITY_SIZE = 10.0f;
 	static final float CONNECTION_WIDTH = 1.2f;
 	static final float PATH_CONNECTION_WIDTH = 1.6f;
@@ -50,7 +52,7 @@ public class MapPanel extends JPanel {
 	private City selectedCity = null;
 	private HashMap<Integer, ArrayList<City>> clickMap = new HashMap<Integer, ArrayList<City>>();
 	int partitionWidth;
-	final int partitionCount = 10;
+	final int partitionCount = 30;
 	final int selectionMaxRadius = 20;
 
 	double zoom = 1.0;
@@ -103,7 +105,7 @@ public class MapPanel extends JPanel {
 					partitionWidth);
 			if (partitionNumber < 0)
 				partitionNumber = 0;
-			else if (partitionNumber > partitionCount)
+			else if (partitionNumber >= partitionCount)
 				partitionNumber = partitionCount - 1;
 			
 			ArrayList<City> citiesToSearch = new ArrayList<City>();
@@ -114,12 +116,10 @@ public class MapPanel extends JPanel {
 			if (partitionNumber != partitionCount - 1)
 				citiesToSearch.addAll(clickMap.get(partitionNumber + 1));
 			
-			System.out.println("Searching cities: ");
 			int closestCityDist = selectionMaxRadius;
 			City closestCity = null;
 			for (City city : citiesToSearch)
-			{
-				System.out.println(city); 
+			{ 
 				int xDistSquared = (int) Math.pow(city.getXCoord() - clickPoint.x, 2);
 				int yDistSquared = (int) Math.pow(city.getYCoord() - clickPoint.y, 2);
 				int distance = (int) Math.sqrt(xDistSquared + yDistSquared);
@@ -315,13 +315,8 @@ public class MapPanel extends JPanel {
 			if (city.getXCoord() > maxX)
 				maxX = (int) city.getXCoord();
 
-		// TODO: TEST:
-		System.out.println("Map Width = " + maxX);
-
 		// Prime the clickMap hashMap with emtpy arrayLists;
 		partitionWidth = maxX / partitionCount;
-		System.out.println(partitionCount + " partitions each "
-				+ partitionWidth + " units wide'");
 		for (int i = 0; i < partitionCount; i++)
 			clickMap.put(i, new ArrayList<City>());
 
@@ -331,15 +326,6 @@ public class MapPanel extends JPanel {
 			if (partitionNumber >= partitionCount)
 				partitionNumber = partitionCount - 1;
 			clickMap.get(partitionNumber).add(city);
-		}
-		
-		for (int i = 0; i < partitionCount; i++)
-		{
-			System.out.println("\nPartititon " + i);
-			for (City city : clickMap.get(i))
-			{
-				System.out.println(city);
-			}
 		}
 	}
 }
