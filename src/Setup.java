@@ -54,14 +54,15 @@ public class Setup {
 			while(sc.hasNextLine()){
 				String cityLink = sc.nextLine();
 				String[] linkInfo = cityLink.split("--");
-				if(linkInfo.length != 3){
+				if(linkInfo.length != 4){
 					System.out.println("The line \"" + cityLink + "\" is of invalid format.");
-					System.out.println("Please use format: startCity--stopCity--distance");
+					System.out.println("Please use format: startCity--stopCity--distance--speed");
 				} else {
 					String startCity = linkInfo[0];
 					String endCity = linkInfo[1];
 					double distance = Double.parseDouble(linkInfo[2]);
-					addLink(startCity, endCity, distance);
+					double speed = Double.parseDouble(linkInfo[3]);
+					addLink(startCity, endCity, distance, speed);
 				}
 			}
 
@@ -89,8 +90,8 @@ public class Setup {
 	 * @param c1
 	 * @param c2
 	 */
-	public void addLink(String start, String end, double distance){
-		Connection c = new Connection(distance);
+	public void addLink(String start, String end, double distance, double speed){
+		Connection c = new Connection(distance, speed);
 		g.addLink(start, end, c);
 	}
 }

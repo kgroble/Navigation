@@ -2,6 +2,7 @@ public class Connection
 {
 	private double length;
 	private double averageSpeed;
+	private double timeTaken;
 	
 	public Connection(double length)
 	{
@@ -12,6 +13,14 @@ public class Connection
 	{
 		this.length = length;
 		this.averageSpeed = averageSpeed;
+		
+		if (this.averageSpeed == 0)
+			throw new RuntimeException("Speed is equal to zero.");
+		if (this.length <= 0)
+			throw new RuntimeException("Length is either negative or zero.");
+		
+		this.timeTaken = this.length / this.averageSpeed;
+	
 	}
 	
 	public double getConnectionDistance()
@@ -21,7 +30,7 @@ public class Connection
 	
 	public double getConnectionTravelTime()
 	{
-		return this.length / this.averageSpeed;
+		return this.timeTaken;
 	}
 	
 	public double getConnectionAverageSpeed()
