@@ -43,6 +43,7 @@ public class MapPanel extends JPanel {
 
 	static final float SELECTED_CITY_SIZE = 13.0f;
 	static final float CITY_SIZE = 10.0f;
+	static final float CONNECTION_CITY_SIZE = 12.0f;
 
 	static final float CONNECTION_WIDTH = 1.2f;
 	static final float PATH_CONNECTION_WIDTH = 1.6f;
@@ -84,7 +85,8 @@ public class MapPanel extends JPanel {
 				{
 					System.out.println("You want to add: " + selectedCity.getName());
 				}
-				
+				selectedCity = null;
+				repaint();
 			}
 		});
 		this.add(addCityButton);
