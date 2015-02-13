@@ -115,7 +115,7 @@ public class Path implements Comparable<Path>
 		return false;
 	}
 	
-	//TODO I guaruntee there is a better way to do this nonsense.
+	//TODO I guarantee there is a better way to do this nonsense.
 	private void addToPathForCopyingPurposes(City nextCity)
 	{
 		this.path.add(nextCity);
