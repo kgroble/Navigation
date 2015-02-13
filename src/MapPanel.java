@@ -21,6 +21,10 @@ import javax.swing.BorderFactory;
 import javax.swing.JPanel;
 import javax.swing.border.TitledBorder;
 
+import org.junit.experimental.max.MaxCore;
+
+import sun.reflect.generics.tree.Tree;
+
 import com.sun.javafx.tk.FontMetrics;
 
 /**
@@ -41,7 +45,13 @@ public class MapPanel extends JPanel {
 	static final Color PATH_COLOR = Color.BLUE;
 
 	private static final long serialVersionUID = 1L;
+
 	private Graph<City, Connection, String> map;
+	private City selectedCity = null;
+	private HashMap<Integer, ArrayList<City>> clickMap = new HashMap<Integer, ArrayList<City>>();
+	int partitionWidth;
+	final int partitionCount = 10;
+	final int selectionMaxRadius = 20;
 
 	double zoom = 1.0;
 	double centerX = 0.0;
@@ -51,7 +61,8 @@ public class MapPanel extends JPanel {
 	public MapPanel(Graph<City, Connection, String> map) {
 		super();
 		this.map = map;
-
+		updateClickMap();
+		
 		// Add mouse function
 		MouseHandler aHandler = new MouseHandler();
 		this.addMouseListener(aHandler);
@@ -67,12 +78,6 @@ public class MapPanel extends JPanel {
 		this.pathsToDraw = new ArrayList<Path>();
 	}
 
-	public String fromTo(String fromCity, String toCity) {
-		// add code to make stuff change in the map to highlight route, then
-		// transfer data to myPanel in a string
-		return null;
-	}
-
 	public void addPath(Path pathToAdd) {
 		this.pathsToDraw.add(pathToAdd);
 		this.repaint();
@@ -85,7 +90,48 @@ public class MapPanel extends JPanel {
 
 		@Override
 		public void mouseClicked(MouseEvent e) {
-
+			
+			Point clickPoint = e.getPoint();
+			
+			clickPoint.x -= centerX;
+			clickPoint.y -= centerY;
+			
+			clickPoint.x /= zoom;
+			clickPoint.y /= zoom;
+			
+			int partitionNumber = Math.floorDiv((int) clickPoint.x,
+					partitionWidth);
+			if (partitionNumber < 0)
+				partitionNumber = 0;
+			else if (partitionNumber > partitionCount)
+				partitionNumber = partitionCount - 1;
+			
+			ArrayList<City> citiesToSearch = new ArrayList<City>();
+			
+			citiesToSearch.addAll(clickMap.get(partitionNumber));
+			if (partitionNumber != 0)
+				citiesToSearch.addAll(clickMap.get(partitionNumber - 1));
+			if (partitionNumber != partitionCount - 1)
+				citiesToSearch.addAll(clickMap.get(partitionNumber + 1));
+			
+			System.out.println("Searching cities: ");
+			int closestCityDist = selectionMaxRadius;
+			City closestCity = null;
+			for (City city : citiesToSearch)
+			{
+				System.out.println(city); 
+				int xDistSquared = (int) Math.pow(city.getXCoord() - clickPoint.x, 2);
+				int yDistSquared = (int) Math.pow(city.getYCoord() - clickPoint.y, 2);
+				int distance = (int) Math.sqrt(xDistSquared + yDistSquared);
+				if (distance < closestCityDist)
+				{
+					closestCityDist = distance;
+					closestCity = city;
+				}
+			}
+			
+			selectedCity = closestCity;
+			repaint();
 		}
 
 		@Override
@@ -103,7 +149,6 @@ public class MapPanel extends JPanel {
 		@Override
 		public void mousePressed(MouseEvent e) {
 			lastMousePoint = e.getPoint();
-			System.out.println(e.getPoint());
 		}
 
 		@Override
@@ -119,18 +164,20 @@ public class MapPanel extends JPanel {
 				if (arg0.getPreciseWheelRotation() > 0) {
 					zoom /= arg0.getPreciseWheelRotation() * ZOOM_SPEED;
 					centerX = (arg0.getPreciseWheelRotation()
-							* (1 - (ZOOM_SPEED - 1))
-							* (centerX - arg0.getX()) + arg0.getX());
+							* (1 - (ZOOM_SPEED - 1)) * (centerX - arg0.getX()) + arg0
+							.getX());
 					centerY = (arg0.getPreciseWheelRotation()
-							* (1 - (ZOOM_SPEED - 1))
-							* (centerY - arg0.getY()) + arg0.getY());
+							* (1 - (ZOOM_SPEED - 1)) * (centerY - arg0.getY()) + arg0
+							.getY());
 				} else {
 					zoom *= Math.abs(arg0.getPreciseWheelRotation()
 							* ZOOM_SPEED);
 					centerX = (Math.abs(arg0.getPreciseWheelRotation())
-							* ZOOM_SPEED * (centerX - arg0.getX()) + arg0.getX());
+							* ZOOM_SPEED * (centerX - arg0.getX()) + arg0
+							.getX());
 					centerY = (Math.abs(arg0.getPreciseWheelRotation())
-							* ZOOM_SPEED * (centerY - arg0.getY()) + arg0.getY());
+							* ZOOM_SPEED * (centerY - arg0.getY()) + arg0
+							.getY());
 				}
 			}
 			repaint();
@@ -160,7 +207,6 @@ public class MapPanel extends JPanel {
 				RenderingHints.VALUE_STROKE_PURE);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-
 
 		// Translate for pan
 		g2d.translate(centerX, centerY);
@@ -207,14 +253,22 @@ public class MapPanel extends JPanel {
 			g2d.setColor(CITY_COLOR);
 			double centerLinks = CITY_SIZE * zoom / 2;
 			g2d.translate(-centerLinks, -centerLinks);
-			g2d.fill(circle);
+			// TODO: Probably faster to draw this seperate
+			if (selectedCity != null && city.equals(selectedCity))
+			{
+				g2d.setColor(Color.RED);
+				g2d.fill(circle);
+				g2d.setColor(CITY_COLOR);
+			}
+			else
+				g2d.fill(circle);
 			g2d.translate(centerLinks, centerLinks);
 
 			g2d.translate(-translateX, -translateY);
 		}
 
 		drawPaths(g2d);
-
+		
 		// Translate for pan
 		g2d.translate(-centerX, -centerY);
 	}
@@ -252,5 +306,40 @@ public class MapPanel extends JPanel {
 		g2d.setColor(CITY_COLOR);
 	}
 
-}
+	private void updateClickMap() {
+		clickMap.clear();
 
+		// Find out how wide the map is
+		int maxX = 0;
+		for (City city : map.getElements())
+			if (city.getXCoord() > maxX)
+				maxX = (int) city.getXCoord();
+
+		// TODO: TEST:
+		System.out.println("Map Width = " + maxX);
+
+		// Prime the clickMap hashMap with emtpy arrayLists;
+		partitionWidth = maxX / partitionCount;
+		System.out.println(partitionCount + " partitions each "
+				+ partitionWidth + " units wide'");
+		for (int i = 0; i < partitionCount; i++)
+			clickMap.put(i, new ArrayList<City>());
+
+		for (City city : map.getElements()) {
+			int partitionNumber = Math.floorDiv((int) city.getXCoord(),
+					partitionWidth);
+			if (partitionNumber >= partitionCount)
+				partitionNumber = partitionCount - 1;
+			clickMap.get(partitionNumber).add(city);
+		}
+		
+		for (int i = 0; i < partitionCount; i++)
+		{
+			System.out.println("\nPartititon " + i);
+			for (City city : clickMap.get(i))
+			{
+				System.out.println(city);
+			}
+		}
+	}
+}
