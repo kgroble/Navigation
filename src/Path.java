@@ -9,29 +9,33 @@ public class Path implements Comparable<Path>
 	private double pathLength;
 	private double approximatedPathLength;
 	private double timeTaken;
+	private double approximatedTimeTaken;
+	private boolean usingTimeHeuristic;
 	
 	/**
 	 * Creates the beginning of a path.
 	 * 
 	 * @param startPoint the starting point
 	 */
-	public Path(City startPoint)
+	public Path(City startPoint, boolean timeHeuristic)
 	{
 		this.path = new ArrayList<City>();
 		this.path.add(startPoint);
 		this.pathLength = 0;
 		this.timeTaken = 0;
+		this.usingTimeHeuristic = timeHeuristic;
 	}
 	
 	/**
 	 * Creates an empty Path. Will really only be used if a copy
 	 * is being made. See copy method.
 	 */
-	private Path()
+	private Path(boolean timeHeuristic)
 	{
 		this.path = new ArrayList<City>();
 		this.pathLength = 0;
 		this.timeTaken = 0;
+		this.usingTimeHeuristic = timeHeuristic;
 	}
 	
 	public ArrayList<City> getCities()
@@ -48,6 +52,7 @@ public class Path implements Comparable<Path>
 	{
 		return this.timeTaken;
 	}
+	
 	
 	public double getApproximatedPathLength()
 	{
@@ -78,9 +83,16 @@ public class Path implements Comparable<Path>
 	@Override
 	public int compareTo(Path otherPath)
 	{
+		if (this.usingTimeHeuristic)
+			return (int)(this.approximatedTimeTaken - otherPath.getApproximatedTimeTaken());
 		return (int)(this.approximatedPathLength - otherPath.getApproximatedPathLength());
 	}
 	
+	private double getApproximatedTimeTaken()
+	{
+		return this.approximatedTimeTaken;
+	}
+
 	@Override
 	public String toString()
 	{
@@ -109,13 +121,38 @@ public class Path implements Comparable<Path>
 		this.path.add(nextCity);
 	}
 	
+	private boolean isUsingTimeHeuristic()
+	{
+		return this.usingTimeHeuristic;
+	}
+	
 	public Path copy()
 	{
-		Path copy = new Path();
+		Path copy = new Path(this.usingTimeHeuristic);
 		for (City city : this.path)
 			copy.addToPathForCopyingPurposes(city);
 		copy.pathLength = this.pathLength;
 		copy.timeTaken = this.timeTaken;
 		return copy;
+	}
+
+	public double setApproximatedPathTime(City endCity, double maxSpeed)
+	{
+		this.setApproximatedPathLength(endCity);
+		double dist = this.getApproximatedPathLength();
+		return maxSpeed / dist;
+	}
+	
+	public void addToEndOfPath(Path otherPath)
+	{
+		ArrayList<City> cities = otherPath.getCities();
+		
+		for (City city : cities)
+		{
+			this.path.add(city);
+		}
+		
+		this.pathLength += otherPath.getPathLength();
+		this.timeTaken += otherPath.getPathTravelTime();
 	}
 }
