@@ -26,6 +26,7 @@ public class ApplicationWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1100;
 	private static final int FRAME_HEIGHT = 600;
+	private static final int CONTROL_PANEL_WIDTH = 150;
 
 	// Serves as the 'background' that the other two panels will be added to:
 	private JPanel containerPanel;
@@ -53,26 +54,25 @@ public class ApplicationWindow extends JFrame {
 
 		this.listBox = new JList<String>(citiesList);
 		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		this.listBox.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
-		this.listBox.setBorder(new BevelBorder(1));
-
-		int controlPanelHeight = 95;
+		this.listBox.setBounds(ControlPanel.MARGIN,
+				ControlPanel.MARGIN * 2 + 20, CONTROL_PANEL_WIDTH
+						- ControlPanel.MARGIN * 2, 200);
 
 		restartListen = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				containerPanel.remove(mapPanel);				
+				containerPanel.remove(mapPanel);
 				citiesList.clear();
 
 				listBox.updateUI();
 
 				// create and add mapPanel
 				mapPanel = new MapPanel(map, ApplicationWindow.this);
-				mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH,
-						FRAME_HEIGHT - controlPanelHeight);
-				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
-						- controlPanelHeight));
+				mapPanel.setBounds(0, CONTROL_PANEL_WIDTH, FRAME_WIDTH,
+						FRAME_HEIGHT - CONTROL_PANEL_WIDTH);
+				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
+						FRAME_HEIGHT - CONTROL_PANEL_WIDTH));
 				containerPanel.add(mapPanel);
 
 				setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -84,18 +84,18 @@ public class ApplicationWindow extends JFrame {
 
 		// Set up controlsPanel
 		this.controlPanel = new ControlPanel(0, restartListen);
-		this.controlPanel.setBounds(0, 0, FRAME_WIDTH, controlPanelHeight);
-		this.controlPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
-				controlPanelHeight));
+		this.controlPanel.setBounds(0, 0, CONTROL_PANEL_WIDTH, FRAME_HEIGHT);
+		this.controlPanel.setPreferredSize(new Dimension(CONTROL_PANEL_WIDTH,
+				FRAME_HEIGHT));
 		// this.controlPanel.setBackground(Color.GRAY);
 		this.containerPanel.add(controlPanel);
 
 		// Set up mapPanel
 		this.mapPanel = new MapPanel(map, this);
-		this.mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH,
-				FRAME_HEIGHT - controlPanelHeight);
-		this.mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
-				- controlPanelHeight));
+		this.mapPanel.setBounds(CONTROL_PANEL_WIDTH, 0, FRAME_WIDTH
+				- CONTROL_PANEL_WIDTH, FRAME_HEIGHT);
+		this.mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH
+				- CONTROL_PANEL_WIDTH, FRAME_HEIGHT));
 		this.map = map;
 		this.containerPanel.add(this.mapPanel);
 
@@ -110,20 +110,15 @@ public class ApplicationWindow extends JFrame {
 				int newWidth = getWidth();
 				int newHeight = getHeight();
 
-				mapPanel.setPreferredSize(new Dimension(newWidth, newHeight
-						- controlPanelHeight));
-				controlPanel.setPreferredSize(new Dimension(newWidth,
-						controlPanelHeight));
+				mapPanel.setPreferredSize(new Dimension(newWidth
+						- CONTROL_PANEL_WIDTH, newHeight));
+				controlPanel.setPreferredSize(new Dimension(
+						CONTROL_PANEL_WIDTH, newHeight));
 
 				// manipulate the panels
-				if (newWidth != FRAME_WIDTH) {
-					controlPanel.setBounds(0, 0, newWidth, controlPanelHeight);
-					mapPanel.setBounds(0, controlPanelHeight, newWidth,
-							mapPanel.getHeight());
-				}
-				if (newHeight != FRAME_HEIGHT)
-					mapPanel.setBounds(0, controlPanelHeight,
-							mapPanel.getWidth(), newHeight - controlPanelHeight);
+				controlPanel.setBounds(0, 0, CONTROL_PANEL_WIDTH, newHeight);
+				mapPanel.setBounds(CONTROL_PANEL_WIDTH, 0, newWidth
+						- CONTROL_PANEL_WIDTH, newHeight);
 
 				// update the frame
 				repaint();
@@ -177,24 +172,20 @@ public class ApplicationWindow extends JFrame {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
 		private JTextArea cityName;
-		private final static int MARGIN = 25;
+		private final static int MARGIN = 10;
 
 		public ControlPanel(int height, ActionListener ab) {
 			super();
 
-			// Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
-			// TitledBorder border = BorderFactory.createTitledBorder(
-			// BorderFactory.createLoweredBevelBorder(), "Control Panel");
-			// border.setTitleJustification(TitledBorder.LEFT);
-			// this.setBorder(border);
-
-			cityName = new JTextArea();
-			cityName.setBounds(MARGIN, height + MARGIN, 100, 20);
-			cityName.setBorder(new BevelBorder(1));
-			this.add(cityName);
+			this.cityName = new JTextArea();
+			this.cityName.setBounds(MARGIN, MARGIN, CONTROL_PANEL_WIDTH - 2
+					* MARGIN, 20);
+			this.cityName.setBorder(new BevelBorder(1));
+			this.add(this.cityName);
 
 			JScrollPane listScroller = new JScrollPane(listBox);
-			listScroller.setBounds(250, MARGIN - 10, 200, 65);
+			listScroller.setBounds(MARGIN, MARGIN * 3 + 40, CONTROL_PANEL_WIDTH
+					- MARGIN * 2, 100);
 			this.add(listScroller);
 
 			clear = new JButton();
@@ -206,7 +197,8 @@ public class ApplicationWindow extends JFrame {
 					listBox.updateUI();
 				}
 			});
-			clear.setBounds(455, height + MARGIN - 10, 100, 30);
+			clear.setBounds(MARGIN, MARGIN * 5 + 160, CONTROL_PANEL_WIDTH
+					- MARGIN * 2, 20);
 			clear.setText("Clear List");
 			this.add(clear);
 
@@ -250,7 +242,8 @@ public class ApplicationWindow extends JFrame {
 				}
 
 			});
-			add.setBounds(135, height + MARGIN - 10, 100, 30);
+			add.setBounds(MARGIN, MARGIN * 2 + 20, CONTROL_PANEL_WIDTH - MARGIN
+					* 2, 20);
 			add.setText("Add City");
 			this.add(add);
 
@@ -263,7 +256,8 @@ public class ApplicationWindow extends JFrame {
 					removeFromList(cityIndex);
 				}
 			});
-			remove.setBounds(135, height + MARGIN + 25, 110, 30);
+			remove.setBounds(MARGIN, MARGIN * 4 + 140, CONTROL_PANEL_WIDTH
+					- MARGIN * 2, 20);
 			remove.setText("Remove City");
 			this.add(remove);
 
@@ -279,7 +273,8 @@ public class ApplicationWindow extends JFrame {
 					ApplicationWindow.this.mapPanel.addPath(path);
 				}
 			});
-			pathTime.setBounds(455, height + MARGIN + 25, 100, 30);
+			pathTime.setBounds(MARGIN, MARGIN * 7 + 200, CONTROL_PANEL_WIDTH
+					- MARGIN * 2, 20);
 			pathTime.setText("Path Time");
 			this.add(pathTime);
 
@@ -296,12 +291,14 @@ public class ApplicationWindow extends JFrame {
 				}
 			});
 
-			pathDistance.setBounds(560, height + MARGIN + 25, 120, 30);
+			pathDistance.setBounds(MARGIN, MARGIN * 6 + 180,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);
 
 			restart = new JButton();
-			restart.setBounds(970, height + MARGIN - 5, 100, 30);
+			restart.setBounds(MARGIN, FRAME_HEIGHT - 58 - MARGIN,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			restart.setText("RESTART");
 			restart.addActionListener(ab);
 			this.add(restart);
