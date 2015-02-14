@@ -39,7 +39,7 @@ public class ApplicationWindow extends JFrame {
 		this.setLayout(box);
 
 		myList = new MyDataList<String>();
-		
+
 		list = new JList<String>(myList);
 		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 		list.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
@@ -120,7 +120,7 @@ public class ApplicationWindow extends JFrame {
 		contentContainer.add(myPanel, box);
 
 		// create and add mapPanel
-		mapPanel = new MapPanel(map,this);
+		mapPanel = new MapPanel(map, this);
 		mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH, FRAME_HEIGHT
 				- controlPanelHeight);
 		mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
@@ -162,15 +162,14 @@ public class ApplicationWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-	
-	public void addToList(String cityName){
+
+	public void addToList(String cityName) {
 		String cityText = cityName.toLowerCase();
 		ArrayList<City> cities = map.getElements();
 		for (City city : cities) {
 			String cityName1 = city.getName().toLowerCase();
 			if (cityName1.equals(cityText)) {
 				myList.add(city.getName());
-//				System.out.println(myList);
 				list.updateUI();
 				break;
 			}
@@ -256,24 +255,18 @@ public class ApplicationWindow extends JFrame {
 			add.setBounds(135, height + MARGIN - 10, 100, 30);
 			add.setText("Add City");
 			this.add(add);
-			
-			remove= new JButton();
+
+			remove = new JButton();
 			remove.addActionListener(new ActionListener() {
-				
+
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String cityText = cityName.getText().trim().toLowerCase();
-					for(String city: myList){
-						if(city.toLowerCase().equals(cityText)){
-							myList.remove(city);
-							list.updateUI();
-							break;
-						}
-					}
-					cityName.setText("");
+					int cityIndex = list.getSelectedIndex();
+					myList.remove(cityIndex);
+					list.updateUI();
 				}
 			});
-			remove.setBounds(135, height+ MARGIN+25, 110, 30);
+			remove.setBounds(135, height + MARGIN + 25, 110, 30);
 			remove.setText("Remove City");
 			this.add(remove);
 
