@@ -12,19 +12,19 @@ public class AStar
 		this.graph = graph;
 	}
 
-	public Path findShortestPathWithWayPoints(ArrayList<City> waypoints)
+	public Path findShortestPathWithWayPoints(ArrayList<String> waypoints)
 	{
 		if (waypoints.size() < 2)
 			return null;
 
 		// basically initializing the path
-		Path path = this.findShortestPathBetween(waypoints.get(0).getName(),
-				waypoints.get(1).getName());
+		Path path = this.findShortestPathBetween(waypoints.get(0),
+				waypoints.get(1));
 
-		for (int i = 2; i < waypoints.size() - 1; i++)
+		for (int i = 1; i < waypoints.size()-1; i++)
 		{
-			path.addToEndOfPath(this.findShortestPathBetween(waypoints.get(i)
-					.getName(), waypoints.get(i + 1).getName()));
+			path.addToEndOfPath(this.findShortestPathBetween
+					(waypoints.get(i), waypoints.get(i + 1)));
 		}
 
 		return path;

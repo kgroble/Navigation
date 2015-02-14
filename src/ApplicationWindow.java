@@ -301,9 +301,9 @@ public class ApplicationWindow extends JFrame {
 			pathTime.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-
+				public void actionPerformed(ActionEvent e) 
+				{
+					// TODO Action performed on path time
 				}
 			});
 			pathTime.setBounds(455, height + MARGIN + 25, 100, 30);
@@ -314,11 +314,14 @@ public class ApplicationWindow extends JFrame {
 			pathDistance.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-
+				public void actionPerformed(ActionEvent e) 
+				{
+					ArrayList<String> waypoints = new ArrayList<String>(ApplicationWindow.this.myList);
+					Path path = ApplicationWindow.this.a.findShortestPathWithWayPoints(waypoints);
+					ApplicationWindow.this.mapPanel.addPath(path);
 				}
 			});
+			
 			pathDistance.setBounds(560, height + MARGIN + 25, 120, 30);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);

@@ -77,7 +77,7 @@ public class AStarTest
 		
 	}
 	
-	@Test
+//	@Test
 	public void testFindFastestRoute()
 	{
 		Graph<City,Connection,String> map = new Graph<City,Connection,String>();
@@ -90,7 +90,7 @@ public class AStarTest
 		
 	}
 	
-	@Test
+//	@Test
 	public void testFindFastestRoute1()
 	{
 		Graph<City,Connection,String> map = new Graph<City,Connection,String>();
