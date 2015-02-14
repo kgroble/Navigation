@@ -61,6 +61,11 @@ public class ApplicationWindow extends JFrame {
 				setLayout(box);
 
 				myList = new MyDataList<String>();
+				
+				list = new JList<String>(myList);
+				list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+				list.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
+				list.setBorder(new BevelBorder(1));
 
 				// create and add myPanel
 				myPanel = new ControlPanel(0, restartListen);
@@ -162,7 +167,12 @@ public class ApplicationWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
-
+	
+	
+	/**
+	 * Adds cityName to the list if it is a proper city name, otherwise it does nothing
+	 * @param cityName
+	 */
 	public void addToList(String cityName) {
 		String cityText = cityName.toLowerCase();
 		ArrayList<City> cities = map.getElements();
@@ -175,7 +185,25 @@ public class ApplicationWindow extends JFrame {
 			}
 		}
 	}
+	
+	/**
+	 * removes an element from the specified index if that index is in myList's range
+	 * @param index
+	 */
+	public void removeFromList(int index){
+		if(index>=0&&index<myList.size()){
+			myList.remove(index);
+			list.updateUI();
+		}
+	}
 
+	/**
+	 * @return the list of cities in the path the user has created
+	 */
+	public String[] getCityNames(){
+		return (String[]) this.myList.toArray();
+	}
+	
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
@@ -262,8 +290,7 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					int cityIndex = list.getSelectedIndex();
-					myList.remove(cityIndex);
-					list.updateUI();
+					removeFromList(cityIndex);
 				}
 			});
 			remove.setBounds(135, height + MARGIN + 25, 110, 30);
