@@ -62,7 +62,7 @@ public class MapPanel extends JPanel {
 
 	int partitionWidth;
 	final int partitionCount = 30;
-	final int selectionMaxRadius = 20;
+	final int selectionMaxRadius = 40;
 
 	double zoom = 1.0;
 	double centerX = 0.0;
@@ -74,18 +74,22 @@ public class MapPanel extends JPanel {
 		this.map = map;
 		updateClickMap();
 		this.setLayout(null);
-		
+
 		addCityButton = new JButton();
 		addCityButton.setBounds(0, 0, 0, 0);
 		addCityButton.setText("Add City");
+		addCityButton.setBorderPainted(false);
+		addCityButton.setFocusPainted(false);
+		addCityButton.setBackground(Color.WHITE);
+		addCityButton.setContentAreaFilled(false);
 		addCityButton.addActionListener(new ActionListener() {
-			
+
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				if (selectedCity != null)
-				{
+				if (selectedCity != null) {
 					app.addToList(selectedCity.getName());
-//					System.out.println("You want to add: " + selectedCity.getName());
+					// System.out.println("You want to add: " +
+					// selectedCity.getName());
 				}
 				selectedCity = null;
 				repaint();
@@ -98,7 +102,7 @@ public class MapPanel extends JPanel {
 		this.addMouseListener(aHandler);
 		this.addMouseWheelListener(aHandler);
 		this.addMouseMotionListener(aHandler);
-		
+
 		// add border
 		TitledBorder border = BorderFactory.createTitledBorder(
 				BorderFactory.createLoweredBevelBorder(), "MAP");
@@ -108,8 +112,22 @@ public class MapPanel extends JPanel {
 		this.pathsToDraw = new ArrayList<Path>();
 	}
 
+	/**
+	 * Will add the path to the mapPanel and then draw it on
+	 * 
+	 * @param pathToAdd
+	 *            Path object to be drawn
+	 */
 	public void addPath(Path pathToAdd) {
 		this.pathsToDraw.add(pathToAdd);
+		this.repaint();
+	}
+
+	/**
+	 * Clears all the current paths
+	 */
+	public void clearPaths() {
+		this.pathsToDraw.clear();
 		this.repaint();
 	}
 
@@ -328,7 +346,8 @@ public class MapPanel extends JPanel {
 	}
 
 	/**
-	 * @param g2d the graphics object on which to draw
+	 * @param g2d
+	 *            the graphics object on which to draw
 	 */
 	private void drawSelectedCity(Graphics2D g2d) {
 		if (selectedCity != null) {
@@ -347,14 +366,12 @@ public class MapPanel extends JPanel {
 
 			g2d.translate(-translateX, -translateY);
 			g2d.setColor(CITY_COLOR);
-			
-			Point buttonPoint = new Point((int)translateX, (int)translateY);
+
+			Point buttonPoint = new Point((int) translateX, (int) translateY);
 			buttonPoint.x += centerX - 40;
 			buttonPoint.y += centerY + centerLinks + 20;
 			addCityButton.setBounds(buttonPoint.x, buttonPoint.y, 80, 20);
-		}
-		else
-		{
+		} else {
 			addCityButton.setBounds(0, 0, 0, 0);
 		}
 	}
