@@ -20,6 +20,7 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 import org.junit.experimental.max.MaxCore;
@@ -104,9 +105,10 @@ public class MapPanel extends JPanel {
 		this.addMouseMotionListener(aHandler);
 
 		// add border
-		TitledBorder border = BorderFactory.createTitledBorder(
-				BorderFactory.createLoweredBevelBorder(), "MAP");
-		border.setTitleJustification(TitledBorder.LEFT);
+		Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+//		TitledBorder border = BorderFactory.createTitledBorder(
+//				BorderFactory.createLoweredBevelBorder(), "MAP");
+//		border.setTitleJustification(TitledBorder.LEFT);
 		this.setBorder(border);
 
 		this.pathsToDraw = new ArrayList<Path>();

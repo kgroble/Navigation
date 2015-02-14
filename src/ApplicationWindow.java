@@ -1,3 +1,4 @@
+import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
@@ -15,6 +16,7 @@ import javax.swing.JList;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.border.BevelBorder;
+import javax.swing.border.Border;
 import javax.swing.border.TitledBorder;
 
 public class ApplicationWindow extends JFrame {
@@ -213,9 +215,10 @@ public class ApplicationWindow extends JFrame {
 		public ControlPanel(int height, ActionListener ab) {
 			super();
 
-			TitledBorder border = BorderFactory.createTitledBorder(
-					BorderFactory.createLoweredBevelBorder(), "Control Panel");
-			border.setTitleJustification(TitledBorder.LEFT);
+			Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+//			TitledBorder border = BorderFactory.createTitledBorder(
+//					BorderFactory.createLoweredBevelBorder(), "Control Panel");
+//			border.setTitleJustification(TitledBorder.LEFT);
 			this.setBorder(border);
 
 			cityName = new JTextArea();
