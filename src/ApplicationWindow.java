@@ -303,7 +303,9 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) 
 				{
-					// TODO Action performed on path time
+					ArrayList<String> waypoints = new ArrayList<String>(ApplicationWindow.this.myList);
+					Path path = ApplicationWindow.this.a.findFastestPathWithWayPoints(waypoints);
+					ApplicationWindow.this.mapPanel.addPath(path);
 				}
 			});
 			pathTime.setBounds(455, height + MARGIN + 25, 100, 30);
@@ -314,7 +316,7 @@ public class ApplicationWindow extends JFrame {
 			pathDistance.addActionListener(new ActionListener() {
 
 				@Override
-				public void actionPerformed(ActionEvent e) 
+				public void actionPerformed(ActionEvent e)
 				{
 					ArrayList<String> waypoints = new ArrayList<String>(ApplicationWindow.this.myList);
 					Path path = ApplicationWindow.this.a.findShortestPathWithWayPoints(waypoints);

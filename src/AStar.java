@@ -12,6 +12,24 @@ public class AStar
 		this.graph = graph;
 	}
 
+	public Path findFastestPathWithWayPoints(ArrayList<String> waypoints)
+	{
+		if (waypoints.size() < 2)
+			return null;
+
+		// basically initializing the path
+		Path path = this.findFastestPath(waypoints.get(0),
+				waypoints.get(1));
+
+		for (int i = 1; i < waypoints.size()-1; i++)
+		{
+			path.addToEndOfPath(this.findFastestPath
+					(waypoints.get(i), waypoints.get(i + 1)));
+		}
+
+		return path;
+	}
+	
 	public Path findShortestPathWithWayPoints(ArrayList<String> waypoints)
 	{
 		if (waypoints.size() < 2)
@@ -131,9 +149,13 @@ public class AStar
 
 		while (!open.isEmpty() && possiblePaths.size() < number)
 		{
+			System.out.println("Iteration");
+			
 			current = open.remove();
 			closed.add(current); // So the path is not checked twice. But when
 									// would that happen?
+			
+			System.out.println(current);
 
 			if (current.getEndpoint().equals(endCity))
 			{
