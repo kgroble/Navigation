@@ -176,6 +176,8 @@ public class AStar
 			// Adding possible paths to the PriorityQueue
 			for (City city : connections.keySet())
 			{
+				if (current.containsCity(city.getName()))
+					continue;
 				newPath = current.copy();
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathTime(endCity, this.maxSpeed); // for

@@ -136,11 +136,10 @@ public class Path implements Comparable<Path>
 		return copy;
 	}
 
-	public double setApproximatedPathTime(City endCity, double maxSpeed)
+	public void setApproximatedPathTime(City endCity, double maxSpeed)
 	{
-		this.setApproximatedPathLength(endCity);
-		double dist = this.getApproximatedPathLength();
-		return maxSpeed / dist;
+		double dist = this.getEndpoint().distanceTo(endCity);
+		this.approximatedTimeTaken = this.timeTaken + dist / maxSpeed;
 	}
 	
 	public void addToEndOfPath(Path otherPath)
