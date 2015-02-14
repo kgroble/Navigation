@@ -69,7 +69,7 @@ public class MapPanel extends JPanel {
 	double centerY = 0.0;
 	private ArrayList<Path> pathsToDraw;
 
-	public MapPanel(Graph<City, Connection, String> map) {
+	public MapPanel(Graph<City, Connection, String> map, ApplicationWindow app) {
 		super();
 		this.map = map;
 		updateClickMap();
@@ -84,7 +84,8 @@ public class MapPanel extends JPanel {
 			public void actionPerformed(ActionEvent e) {
 				if (selectedCity != null)
 				{
-					System.out.println("You want to add: " + selectedCity.getName());
+					app.addToList(selectedCity.getName());
+//					System.out.println("You want to add: " + selectedCity.getName());
 				}
 				selectedCity = null;
 				repaint();

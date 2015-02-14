@@ -28,6 +28,7 @@ public class ApplicationWindow extends JFrame {
 	private AStar a;
 	private ActionListener restartListen;
 	private MyDataList<String> myList;
+	private JList<String> list;
 
 	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
 		this.a = a;
@@ -38,6 +39,11 @@ public class ApplicationWindow extends JFrame {
 		this.setLayout(box);
 
 		myList = new MyDataList<String>();
+		
+		list = new JList<String>(myList);
+		list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		list.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
+		list.setBorder(new BevelBorder(1));
 
 		int controlPanelHeight = 95;
 
@@ -64,7 +70,7 @@ public class ApplicationWindow extends JFrame {
 				contentContainer.add(myPanel, box);
 
 				// create and add mapPanel
-				mapPanel = new MapPanel(map);
+				mapPanel = new MapPanel(map, ApplicationWindow.this);
 				mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH,
 						FRAME_HEIGHT - controlPanelHeight);
 				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
@@ -114,7 +120,7 @@ public class ApplicationWindow extends JFrame {
 		contentContainer.add(myPanel, box);
 
 		// create and add mapPanel
-		mapPanel = new MapPanel(map);
+		mapPanel = new MapPanel(map,this);
 		mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH, FRAME_HEIGHT
 				- controlPanelHeight);
 		mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
@@ -156,12 +162,25 @@ public class ApplicationWindow extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setVisible(true);
 	}
+	
+	public void addToList(String cityName){
+		String cityText = cityName.toLowerCase();
+		ArrayList<City> cities = map.getElements();
+		for (City city : cities) {
+			String cityName1 = city.getName().toLowerCase();
+			if (cityName1.equals(cityText)) {
+				myList.add(city.getName());
+//				System.out.println(myList);
+				list.updateUI();
+				break;
+			}
+		}
+	}
 
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
 		private JTextArea cityName;
-		private JList<String> list;
 		private final static int MARGIN = 25;
 
 		public ControlPanel(int height, ActionListener ab) {
@@ -176,11 +195,6 @@ public class ApplicationWindow extends JFrame {
 			cityName.setBounds(MARGIN, height + MARGIN, 100, 20);
 			cityName.setBorder(new BevelBorder(1));
 			this.add(cityName);
-
-			list = new JList<String>(myList);
-			list.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-			list.setBounds(250, MARGIN - 10, 200, 65);
-			list.setBorder(new BevelBorder(1));
 
 			JScrollPane listScroller = new JScrollPane(list);
 			listScroller.setBounds(250, MARGIN - 10, 200, 65);
@@ -204,18 +218,7 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					String cityText = cityName.getText().trim().toLowerCase();
-					ArrayList<City> cities = map.getElements();
-					for (City city : cities) {
-						String cityName = city.getName().toLowerCase();
-						if (cityName.equals(cityText)) {
-							myList.add(city.getName());
-							System.out.println(myList);
-							break;
-						}
-					}
-					cityName.setText("");
-					list.updateUI();
+					addToList(cityName.getText());
 					// //Take input from the user
 					// String toS = to.getText().toLowerCase().trim();
 					// String fromS = from.getText().toLowerCase().trim();
