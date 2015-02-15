@@ -47,7 +47,7 @@ public class MapPanel extends JPanel {
 	static final float CONNECTION_CITY_SIZE = 2.8f;
 
 	static final float CONNECTION_WIDTH = .2f;
-	static final float PATH_CONNECTION_WIDTH = 1.6f;
+	static final float PATH_CONNECTION_WIDTH = .3f;
 
 	static final Color SELECTED_CITY_COLOR = Color.RED;
 	static final Color CITY_COLOR = Color.BLACK;
@@ -228,7 +228,7 @@ public class MapPanel extends JPanel {
 							* (1 - (ZOOM_SPEED - 1)) * (centerX - arg0.getX()) + arg0
 							.getX());
 					centerY = (arg0.getPreciseWheelRotation()
-							* (1 - (ZOOM_SPEED - 1)) * (centerY - arg0.getY()) + arg0
+							* (1 - (ZOOM_SPEED - 1.001)) * (centerY - arg0.getY()) + arg0
 							.getY());
 				} else if (zoom <= ZOOM_MAX) {
 					zoom *= Math.abs(arg0.getPreciseWheelRotation()

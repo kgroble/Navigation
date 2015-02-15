@@ -874,3 +874,5 @@ Leenane--Westport--20--60
 Westport--Leenane--20--60
 Cavan--Longford--20--60
 Longford--Cavan--20--60
+Courtown Harbour--Rosslare Europort--20--60
+Rosslare Europort--Courtown Harbour--20--60
