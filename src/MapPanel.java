@@ -39,8 +39,8 @@ import com.sun.javafx.tk.FontMetrics;
 public class MapPanel extends JPanel {
 
 	static final float ZOOM_SPEED = 1.05f;
-	static final float ZOOM_MAX = 10.0f;
-	static final float ZOOM_MIN = 0.3f;
+	static final float ZOOM_MAX = 30.0f;
+	static final float ZOOM_MIN = 0.1f;
 
 	static final float SELECTED_CITY_SIZE = 3.0f;
 	static final float CITY_SIZE = 2.5f;
@@ -225,10 +225,10 @@ public class MapPanel extends JPanel {
 				if (arg0.getPreciseWheelRotation() > 0 && zoom >= ZOOM_MIN) {
 					zoom /= arg0.getPreciseWheelRotation() * ZOOM_SPEED;
 					centerX = (arg0.getPreciseWheelRotation()
-							* (1 - (ZOOM_SPEED - 1)) * (centerX - arg0.getX()) + arg0
+							* (1 / ZOOM_SPEED) * (centerX - arg0.getX()) + arg0
 							.getX());
 					centerY = (arg0.getPreciseWheelRotation()
-							* (1 - (ZOOM_SPEED - 1.001)) * (centerY - arg0.getY()) + arg0
+							* (1 / ZOOM_SPEED) * (centerY - arg0.getY()) + arg0
 							.getY());
 				} else if (zoom <= ZOOM_MAX) {
 					zoom *= Math.abs(arg0.getPreciseWheelRotation()
