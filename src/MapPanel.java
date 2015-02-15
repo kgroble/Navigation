@@ -41,6 +41,7 @@ public class MapPanel extends JPanel {
 	static final float ZOOM_SPEED = 1.05f;
 	static final float ZOOM_MAX = 30.0f;
 	static final float ZOOM_MIN = 0.1f;
+	static final float ZOOM_NAME_POINT = 0.1f;
 
 	static final float SELECTED_CITY_SIZE = 3.0f;
 	static final float CITY_SIZE = 2.5f;
@@ -62,7 +63,7 @@ public class MapPanel extends JPanel {
 	private JButton addCityButton;
 
 	int partitionWidth;
-	final int partitionCount = 30;
+	final int partitionCount = 300;
 	final int selectionMaxRadius = 40;
 
 	double zoom = 1.0;
@@ -106,24 +107,23 @@ public class MapPanel extends JPanel {
 		this.addMouseMotionListener(aHandler);
 
 		// add border
-//		Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
-//		TitledBorder border = BorderFactory.createTitledBorder(
-//				BorderFactory.createLoweredBevelBorder(), "MAP");
-//		border.setTitleJustification(TitledBorder.LEFT);
-//		this.setBorder(border);
+		// Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
+		// TitledBorder border = BorderFactory.createTitledBorder(
+		// BorderFactory.createLoweredBevelBorder(), "MAP");
+		// border.setTitleJustification(TitledBorder.LEFT);
+		// this.setBorder(border);
 
 		this.pathsToDraw = new ArrayList<Path>();
-		
+
 		// Get the map is a position where we can see it
-		if (map.getElements().size() > 0)
-		{
+		if (map.getElements().size() > 0) {
 			City centerCity = map.getElements().get(0);
-			centerX = -centerCity.getXCoord() ;
-			centerY = -centerCity.getYCoord() ;
+			centerX = -centerCity.getXCoord();
+			centerY = -centerCity.getYCoord();
 			System.out.println(centerX);
 			System.out.println(centerY);
 		}
-		
+
 		this.repaint();
 	}
 
@@ -180,6 +180,7 @@ public class MapPanel extends JPanel {
 			int closestCityDist = selectionMaxRadius;
 			City closestCity = null;
 			for (City city : citiesToSearch) {
+				System.out.println(city);
 				int xDistSquared = (int) Math.pow(city.getXCoord()
 						- clickPoint.x, 2);
 				int yDistSquared = (int) Math.pow(city.getYCoord()
@@ -222,25 +223,34 @@ public class MapPanel extends JPanel {
 		public void mouseWheelMoved(MouseWheelEvent arg0) {
 			// TODO Auto-generated method stub
 			if (arg0.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-				if (arg0.getPreciseWheelRotation() > 0 && zoom >= ZOOM_MIN) {
-					zoom /= arg0.getPreciseWheelRotation() * ZOOM_SPEED;
-					centerX = (arg0.getPreciseWheelRotation()
-							* (1 / ZOOM_SPEED) * (centerX - arg0.getX()) + arg0
-							.getX());
-					centerY = (arg0.getPreciseWheelRotation()
-							* (1 / ZOOM_SPEED) * (centerY - arg0.getY()) + arg0
-							.getY());
-				} else if (zoom <= ZOOM_MAX) {
-					zoom *= Math.abs(arg0.getPreciseWheelRotation()
-							* ZOOM_SPEED);
-					centerX = (Math.abs(arg0.getPreciseWheelRotation())
-							* ZOOM_SPEED * (centerX - arg0.getX()) + arg0
-							.getX());
-					centerY = (Math.abs(arg0.getPreciseWheelRotation())
-							* ZOOM_SPEED * (centerY - arg0.getY()) + arg0
-							.getY());
+				System.out.println(arg0.getPreciseWheelRotation());
+
+				int mouseDirection = 0;
+				if (arg0.getPreciseWheelRotation() > 0)
+					mouseDirection = 1;
+				else
+					mouseDirection = -1;
+				
+					if (mouseDirection > 0 && zoom >= ZOOM_MIN) {
+						zoom /= mouseDirection * ZOOM_SPEED;
+						centerX = (mouseDirection
+								* (1 / ZOOM_SPEED) * (centerX - arg0.getX()) + arg0
+								.getX());
+						centerY = (mouseDirection
+								* (1 / ZOOM_SPEED) * (centerY - arg0.getY()) + arg0
+								.getY());
+					} else if (zoom <= ZOOM_MAX) {
+						zoom *= Math.abs(mouseDirection
+								* ZOOM_SPEED);
+						centerX = (Math.abs(mouseDirection)
+								* ZOOM_SPEED * (centerX - arg0.getX()) + arg0
+								.getX());
+						centerY = (Math.abs(mouseDirection)
+								* ZOOM_SPEED * (centerY - arg0.getY()) + arg0
+								.getY());
+					}
 				}
-			}
+			
 			repaint();
 		}
 
@@ -268,7 +278,7 @@ public class MapPanel extends JPanel {
 				RenderingHints.VALUE_STROKE_PURE);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_ON);
-		
+
 		// Translate for pan
 		g2d.translate(centerX, centerY);
 
@@ -325,16 +335,15 @@ public class MapPanel extends JPanel {
 
 		// Translate for pan
 		g2d.translate(-centerX, -centerY);
-		
-		
+
 		// Draw border
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_OFF);
-		g2d.setColor(new Color(160,160,160));
+		g2d.setColor(new Color(160, 160, 160));
 		g2d.setStroke(new BasicStroke(2));
-	    g2d.drawRect(1, 1, this.getWidth()-18, this.getHeight()-41);
-	    g2d.setColor(Color.LIGHT_GRAY);
-	    g2d.drawRect(3, 3, this.getWidth()-22, this.getHeight()-45);
+		g2d.drawRect(1, 1, this.getWidth() - 18, this.getHeight() - 41);
+		g2d.setColor(Color.LIGHT_GRAY);
+		g2d.drawRect(3, 3, this.getWidth() - 22, this.getHeight() - 45);
 	}
 
 	private void drawPaths(Graphics2D g2d) {
@@ -406,10 +415,13 @@ public class MapPanel extends JPanel {
 
 		// Find out how wide the map is
 		int maxX = Integer.MIN_VALUE;
+		int minX = Integer.MAX_VALUE;
 		for (City city : map.getElements())
 			if (city.getXCoord() > maxX)
 				maxX = (int) city.getXCoord();
-
+			else if (city.getXCoord() < minX)
+				minX = (int) city.getXCoord();
+		int width = maxX - minX;
 
 		// Prime the clickMap hashMap with emtpy arrayLists;
 		partitionWidth = maxX / partitionCount;
