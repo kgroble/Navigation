@@ -66,6 +66,8 @@ public class MapPanel extends JPanel {
 	final int partitionCount = 300;
 	final int selectionMaxRadius = 40;
 
+	private int xMin, xMax, yMin, yMax;
+
 	double zoom = 1.0;
 	double centerX = 0.0;
 	double centerY = 0.0;
@@ -74,9 +76,11 @@ public class MapPanel extends JPanel {
 	public MapPanel(Graph<City, Connection, String> map, ApplicationWindow app) {
 		super();
 		this.map = map;
-		updateClickMap();
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
+		
+		findBounds();
+		updateClickMap();
 
 		addCityButton = new JButton();
 		addCityButton.setBounds(0, 0, 0, 0);
@@ -116,13 +120,9 @@ public class MapPanel extends JPanel {
 		this.pathsToDraw = new ArrayList<Path>();
 
 		// Get the map is a position where we can see it
-		if (map.getElements().size() > 0) {
-			City centerCity = map.getElements().get(0);
-			centerX = -centerCity.getXCoord();
-			centerY = -centerCity.getYCoord();
-			System.out.println(centerX);
-			System.out.println(centerY);
-		}
+
+		centerX = -xMin;
+	    centerY = -yMin;
 
 		this.repaint();
 	}
@@ -230,27 +230,22 @@ public class MapPanel extends JPanel {
 					mouseDirection = 1;
 				else
 					mouseDirection = -1;
-				
-					if (mouseDirection > 0 && zoom >= ZOOM_MIN) {
-						zoom /= mouseDirection * ZOOM_SPEED;
-						centerX = (mouseDirection
-								* (1 / ZOOM_SPEED) * (centerX - arg0.getX()) + arg0
-								.getX());
-						centerY = (mouseDirection
-								* (1 / ZOOM_SPEED) * (centerY - arg0.getY()) + arg0
-								.getY());
-					} else if (zoom <= ZOOM_MAX) {
-						zoom *= Math.abs(mouseDirection
-								* ZOOM_SPEED);
-						centerX = (Math.abs(mouseDirection)
-								* ZOOM_SPEED * (centerX - arg0.getX()) + arg0
-								.getX());
-						centerY = (Math.abs(mouseDirection)
-								* ZOOM_SPEED * (centerY - arg0.getY()) + arg0
-								.getY());
-					}
+
+				if (mouseDirection > 0 && zoom >= ZOOM_MIN) {
+					zoom /= mouseDirection * ZOOM_SPEED;
+					centerX = (mouseDirection * (1 / ZOOM_SPEED)
+							* (centerX - arg0.getX()) + arg0.getX());
+					centerY = (mouseDirection * (1 / ZOOM_SPEED)
+							* (centerY - arg0.getY()) + arg0.getY());
+				} else if (zoom <= ZOOM_MAX) {
+					zoom *= Math.abs(mouseDirection * ZOOM_SPEED);
+					centerX = (Math.abs(mouseDirection) * ZOOM_SPEED
+							* (centerX - arg0.getX()) + arg0.getX());
+					centerY = (Math.abs(mouseDirection) * ZOOM_SPEED
+							* (centerY - arg0.getY()) + arg0.getY());
 				}
-			
+			}
+
 			repaint();
 		}
 
@@ -410,21 +405,30 @@ public class MapPanel extends JPanel {
 		}
 	}
 
+	private void findBounds() {
+		xMin = Integer.MAX_VALUE;
+		xMax = Integer.MIN_VALUE;
+		yMin = Integer.MAX_VALUE;
+		yMax = Integer.MIN_VALUE;
+
+		for (City city : map.getElements()) {
+			if (city.getXCoord() > xMax)
+				xMax = (int) city.getXCoord();
+			else if (city.getXCoord() < xMin)
+				xMin = (int) city.getXCoord();
+			if (city.getYCoord() > yMax)
+				yMax = (int) city.getYCoord();
+			else if (city.getYCoord() < yMin)
+				yMin = (int) city.getYCoord();
+		}
+
+	}
+
 	private void updateClickMap() {
 		clickMap.clear();
 
-		// Find out how wide the map is
-		int maxX = Integer.MIN_VALUE;
-		int minX = Integer.MAX_VALUE;
-		for (City city : map.getElements())
-			if (city.getXCoord() > maxX)
-				maxX = (int) city.getXCoord();
-			else if (city.getXCoord() < minX)
-				minX = (int) city.getXCoord();
-		int width = maxX - minX;
-
 		// Prime the clickMap hashMap with emtpy arrayLists;
-		partitionWidth = maxX / partitionCount;
+		partitionWidth = xMax / partitionCount;
 		for (int i = 0; i < partitionCount; i++)
 			clickMap.put(i, new ArrayList<City>());
 
