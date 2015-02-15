@@ -62,70 +62,22 @@ public class ApplicationWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				setVisible(false);
-				remove(controlPanel);
-				remove(mapPanel);
-				Container contentContainer = getContentPane();
-				BoxLayout box = new BoxLayout(contentContainer,
-						BoxLayout.Y_AXIS);
-				setLayout(box);
+				containerPanel.remove(mapPanel);				
+				citiesList.clear();
 
-				citiesList = new MyDataList<String>();
-
-				listBox = new JList<String>(citiesList);
-				listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-				listBox.setBounds(250, ControlPanel.MARGIN - 10, 200, 65);
-				listBox.setBorder(new BevelBorder(1));
-
-				// create and add myPanel
-				controlPanel = new ControlPanel(0, restartListen);
-				controlPanel.setBounds(0, 0, FRAME_WIDTH, controlPanelHeight);
-				controlPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
-						controlPanelHeight));
-				contentContainer.add(controlPanel, box);
+				listBox.updateUI();
 
 				// create and add mapPanel
 				mapPanel = new MapPanel(map, ApplicationWindow.this);
 				mapPanel.setBounds(0, controlPanelHeight, FRAME_WIDTH,
 						FRAME_HEIGHT - controlPanelHeight);
-				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
-						FRAME_HEIGHT - controlPanelHeight));
-				contentContainer.add(mapPanel, box);
+				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT
+						- controlPanelHeight));
+				containerPanel.add(mapPanel);
 
 				setSize(FRAME_WIDTH, FRAME_HEIGHT);
 				setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
-
-				addComponentListener(new ComponentAdapter() {
-
-					@Override
-					public void componentResized(ComponentEvent e) {
-						// retrieve new height and width info
-						int newWidth = getWidth();
-						int newHeight = getHeight();
-
-						mapPanel.setPreferredSize(new Dimension(newWidth,
-								newHeight - controlPanelHeight));
-						controlPanel.setPreferredSize(new Dimension(newWidth,
-								controlPanelHeight));
-
-						// manipulate the panels
-						if (newWidth != FRAME_WIDTH) {
-							controlPanel.setBounds(0, 0, newWidth,
-									controlPanelHeight);
-							mapPanel.setBounds(0, controlPanelHeight, newWidth,
-									mapPanel.getHeight());
-						}
-						if (newHeight != FRAME_HEIGHT)
-							mapPanel.setBounds(0, controlPanelHeight,
-									mapPanel.getWidth(), newHeight
-											- controlPanelHeight);
-
-						// update the frame
-						repaint();
-					}
-				});
-				setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-				setVisible(true);
+				repaint();
 			}
 
 		};
