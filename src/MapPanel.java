@@ -275,7 +275,7 @@ public class MapPanel extends JPanel {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
 		
-		BufferedImage nameCollisionBufferedImage = new BufferedImage(this.getWidth(), this.getHeight(), null);
+		//BufferedImage nameCollisionBufferedImage = new BufferedImage(this.getWidth(), this.getHeight(), null);
 		
 		g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
 				RenderingHints.VALUE_STROKE_PURE);
