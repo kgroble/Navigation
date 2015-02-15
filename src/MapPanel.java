@@ -13,6 +13,7 @@ import java.awt.event.MouseMotionListener;
 import java.awt.event.MouseWheelEvent;
 import java.awt.event.MouseWheelListener;
 import java.awt.geom.Ellipse2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -78,7 +79,7 @@ public class MapPanel extends JPanel {
 		this.map = map;
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
-		
+
 		findBounds();
 		updateClickMap();
 
@@ -122,7 +123,7 @@ public class MapPanel extends JPanel {
 		// Get the map is a position where we can see it
 
 		centerX = -xMin;
-	    centerY = -yMin;
+		centerY = -yMin;
 
 		this.repaint();
 	}
@@ -136,6 +137,11 @@ public class MapPanel extends JPanel {
 	public void addPath(Path pathToAdd) {
 		this.pathsToDraw.add(pathToAdd);
 		this.repaint();
+	}
+	
+	public ArrayList<Path> getPaths()
+	{
+		return this.pathsToDraw;
 	}
 
 	/**
@@ -223,7 +229,7 @@ public class MapPanel extends JPanel {
 		public void mouseWheelMoved(MouseWheelEvent arg0) {
 			// TODO Auto-generated method stub
 			if (arg0.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-				System.out.println(arg0.getPreciseWheelRotation());
+				System.out.println(zoom);
 
 				int mouseDirection = 0;
 				if (arg0.getPreciseWheelRotation() > 0)
@@ -267,8 +273,10 @@ public class MapPanel extends JPanel {
 
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-
 		Graphics2D g2d = (Graphics2D) g;
+		
+		BufferedImage nameCollisionBufferedImage = new BufferedImage(this.getWidth(), this.getHeight(), null);
+		
 		g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
 				RenderingHints.VALUE_STROKE_PURE);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -307,10 +315,12 @@ public class MapPanel extends JPanel {
 			g2d.translate(translateX, translateY);
 
 			// Draw city names:
-			java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
-			int stringWidth = fontMetric.stringWidth(city.getName());
-			g2d.drawString(city.getName(), (int) (-stringWidth / 2),
-					(int) (CITY_SIZE * zoom + 10));
+			if (zoom < 1) {
+				java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
+				int stringWidth = fontMetric.stringWidth(city.getName());
+				g2d.drawString(city.getName(), (int) (-stringWidth / 2),
+						(int) (CITY_SIZE * zoom + 10));
+			}
 
 			// Draw city
 			Ellipse2D.Double circle = new Ellipse2D.Double();
