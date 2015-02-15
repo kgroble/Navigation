@@ -26,10 +26,10 @@ public class Setup {
 			sc = new Scanner(new File("cities.txt"));
 			while(sc.hasNextLine()){
 				String city = sc.nextLine();
-				String[] cityInfo = city.split("--");
+				String[] cityInfo = city.split("\\|\\|");
 				if(cityInfo.length != 5){
 					System.out.println("The line \"" + city + "\" is of invalid format.");
-					System.out.println("Please use format: name--population--interest--xCoordinate--yCoordinate");
+					System.out.println("Please use format: name||population||interest||xCoordinate||yCoordinate");
 				} else {
 					String name = cityInfo[0];
 					int population = Integer.parseInt(cityInfo[1]);

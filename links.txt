@@ -1,46 +1,876 @@
-Oradea--Zerind--71--50
-Zerind--Oradea--71--50
-Oradea--Sibiu--151--50
-Sibiu--Oradea--151--50
-Zerind--Arad--75--50
-Arad--Zerind--75--50
-Arad--Sibiu--140--50
-Sibiu--Arad--140--50
-Arad--Timisorara--118--50
-Timisorara--Arad--118--50
-Timisorara--Lugoj--111--50
-Lugoj--Timisorara--111--50
-Sibiu--Fagaras--99--50
-Fagaras--Sibiu--99--50
-Sibiu--Rimnicu Vilcea--80--50
-Rimnicu Vilcea--Sibiu--80--50
-Fagaras--Bucharest--211--50
-Bucharest--Fagaras--211--50
-Lugoj--Mehadia--70--50
-Mehadia--Lugoj--70--50
-Mehadia--Drobeta--75--50
-Drobeta--Mehadia--75--50
-Drobeta--Craiova--120--50
-Craiova--Drobeta--120--50
-Rimnicu Vilcea--Pitesti--97--50
-Pitesti--Rimnicu Vilcea--97--50
-Rimnicu Vilcea--Craiova--146--50
-Craiova--Rimnicu Vilcea--146--50
-Craiova--Pitesti--138--5
-Pitesti--Craiova--138--5
-Pitesti--Bucharest--101--50
-Bucharest--Pitesti--101--50
-Bucharest--Urziceni--85--50
-Urziceni--Bucharest--85--50
-Bucharest--Giurgiu--90--50
-Giurgiu--Bucharest--90--50
-Urziceni--Vaslui--142--50
-Vaslui--Urziceni--142--50
-Urziceni--Hirsova--98--50
-Hirsova--Urziceni--98--50
-Hirsova--Eforie--86--50
-Eforie--Hirsova--86--50
-Vaslui--Iasi--92--50
-Iasi--Vaslui--92--50
-Iasi--Neamt--87--50
-Neamt--Iasi--87--50
+Blessington--Straffan--17.674453767382154--21
+Straffan--Blessington--17.674453767382154--21
+Blessington--Holywood--11.153764962416247--24
+Holywood--Blessington--11.153764962416247--24
+Blessington--Newcastle--14.771346318463284--34
+Newcastle--Blessington--14.771346318463284--34
+Glandore--Skibbereen--15.570967172996939--37
+Skibbereen--Glandore--15.570967172996939--37
+Glandore--Clonakilty--26.25648966479403--52
+Clonakilty--Glandore--26.25648966479403--52
+Glandore--Dunmanway--17.16211498970332--56
+Dunmanway--Glandore--17.16211498970332--56
+Dingle--Waterville--35.623433808945755--51
+Waterville--Dingle--35.623433808945755--51
+Dingle--Caherdaniel--44.81161074338941--21
+Caherdaniel--Dingle--44.81161074338941--21
+Enniskillen--Coleraine--22.0548720114191--33
+Coleraine--Enniskillen--22.0548720114191--33
+Enniskillen--Birr--24.43208862438985--30
+Birr--Enniskillen--24.43208862438985--30
+Carrick-on-Shan--Ballinafad--28.72550416448857--36
+Ballinafad--Carrick-on-Shan--28.72550416448857--36
+Carrick-on-Shan--Boyle--23.48174608232821--31
+Boyle--Carrick-on-Shan--23.48174608232821--31
+Carrick-on-Shan--Castlebaldwin--35.179437189353784--33
+Castlebaldwin--Carrick-on-Shan--35.179437189353784--33
+Ballyliffin--Ballymena--23.551490055459524--35
+Ballymena--Ballyliffin--23.551490055459524--35
+Ballyliffin--Buncrana--17.106283546581214--39
+Buncrana--Ballyliffin--17.106283546581214--39
+Ballyliffin--Fahan--22.685091543511046--31
+Fahan--Ballyliffin--22.685091543511046--31
+Moycullen--Furbo--10.185191063615383--42
+Furbo--Moycullen--10.185191063615383--42
+Moycullen--Galway City--15.644495212285955--36
+Galway City--Moycullen--15.644495212285955--36
+Moycullen--Spiddal--14.505910534722235--32
+Spiddal--Moycullen--14.505910534722235--32
+Ennis--Shannon--19.551708641426345--28
+Shannon--Ennis--19.551708641426345--28
+Ennis--Bunratty--25.469904571248744--23
+Bunratty--Ennis--25.469904571248744--23
+Ennis--Ballyvaughan--34.382950674093266--46
+Ballyvaughan--Ennis--34.382950674093266--46
+Recess--Roundstone--22.790048238825612--25
+Roundstone--Recess--22.790048238825612--25
+Recess--Leenane--14.697221184350557--56
+Leenane--Recess--14.697221184350557--56
+Recess--Letterfrack--26.5305106963877--45
+Letterfrack--Recess--26.5305106963877--45
+Westport--Castlebar--25.576308176314487--49
+Castlebar--Westport--25.576308176314487--49
+Westport--Newport--9.800810695238043--48
+Newport--Westport--9.800810695238043--48
+Fermoy--Cobh--31.859378333577936--25
+Cobh--Fermoy--31.859378333577936--25
+Fermoy--Midleton--27.29975124380197--25
+Midleton--Fermoy--27.29975124380197--25
+Cong--Spiddal--31.737103242307587--46
+Spiddal--Cong--31.737103242307587--46
+Cong--Oughterard--13.04283472862761--31
+Oughterard--Cong--13.04283472862761--31
+Cong--Moycullen--24.98323364934318--49
+Moycullen--Cong--24.98323364934318--49
+Howth--Malahide--11.815289175310413--23
+Malahide--Howth--11.815289175310413--23
+Howth--Portmarnock--8.562501850017167--26
+Portmarnock--Howth--8.562501850017167--26
+Greystones--Bray--6.6808156194007795--54
+Bray--Greystones--6.6808156194007795--54
+Greystones--Shankill--10.466681865702569--40
+Shankill--Greystones--10.466681865702569--40
+Greystones--Dalkey--14.464071123671422--33
+Dalkey--Greystones--14.464071123671422--33
+Bantry--Durrus--10.370686623571247--50
+Durrus--Bantry--10.370686623571247--50
+Bantry--Glengarriff--13.70227619600403--56
+Glengarriff--Bantry--13.70227619600403--56
+Banagher--Ballinasloe--29.900067280915373--39
+Ballinasloe--Banagher--29.900067280915373--39
+Banagher--Birr--13.54520508388949--37
+Birr--Banagher--13.54520508388949--37
+Banagher--Athlone--26.804674742809226--44
+Athlone--Banagher--26.804674742809226--44
+Bunclody--Carlow--22.904326301620557--22
+Carlow--Bunclody--22.904326301620557--22
+Bunclody--Enniscorthy--19.29922915158521--44
+Enniscorthy--Bunclody--19.29922915158521--44
+Bunclody--Castledermot--35.22592341937561--57
+Castledermot--Bunclody--35.22592341937561--57
+Lisdoonvarna--Doolin--9.27327895949027--48
+Doolin--Lisdoonvarna--9.27327895949027--48
+Lisdoonvarna--Ennistymon--9.886207701931008--24
+Ennistymon--Lisdoonvarna--9.886207701931008--24
+Carlingford--Drogheda--40.283603324347254--43
+Drogheda--Carlingford--40.283603324347254--43
+Carlingford--Dundalk--24.587495654959085--35
+Dundalk--Carlingford--24.587495654959085--35
+Tralee--Ballybunnion--26.56646232717385--39
+Ballybunnion--Tralee--26.56646232717385--39
+Tralee--Killarney--31.67191907528676--28
+Killarney--Tralee--31.67191907528676--28
+Tralee--Caragh Lake--30.479793696204506--42
+Caragh Lake--Tralee--30.479793696204506--42
+Skull--Durrus--10.817397785262392--34
+Durrus--Skull--10.817397785262392--34
+Skull--Ahakista--12.261461684262171--34
+Ahakista--Skull--12.261461684262171--34
+Ballyconnell--Clones--39.48367260577604--29
+Clones--Ballyconnell--39.48367260577604--29
+Ballyconnell--Cavan--27.963734379238367--38
+Cavan--Ballyconnell--27.963734379238367--38
+Ballyconnell--Belturbet--14.855149082945182--59
+Belturbet--Ballyconnell--14.855149082945182--59
+Dalkey--Shankill--5.291482610570737--26
+Shankill--Dalkey--5.291482610570737--26
+Dalkey--Dun Laoghaire--3.57999164191513--37
+Dun Laoghaire--Dalkey--3.57999164191513--37
+Letterkenny--Ballybofey--18.447014953763016--24
+Ballybofey--Letterkenny--18.447014953763016--24
+Letterkenny--Rathmullan--26.750472743681186--38
+Rathmullan--Letterkenny--26.750472743681186--38
+Navan--Slane--16.629477282105743--26
+Slane--Navan--16.629477282105743--26
+Navan--Maynooth--31.572751918060753--23
+Maynooth--Navan--31.572751918060753--23
+Ballybofey--Letterkenny--18.447014953763016--46
+Letterkenny--Ballybofey--18.447014953763016--46
+Ballybofey--Donegal--38.83952825626771--48
+Donegal--Ballybofey--38.83952825626771--48
+Longford--Roscommon--44.92506515474252--56
+Roscommon--Longford--44.92506515474252--56
+Longford--Carrick-on-Shan--40.09633008001665--24
+Carrick-on-Shan--Longford--40.09633008001665--24
+Longford--Athlone--37.13493139971456--22
+Athlone--Longford--37.13493139971456--22
+Athy--Newbridge--28.33048554485706--48
+Newbridge--Athy--28.33048554485706--48
+Athy--Castledermot--17.73963457359861--33
+Castledermot--Athy--17.73963457359861--33
+Belturbet--Cavan--15.5211342881982--24
+Cavan--Belturbet--15.5211342881982--24
+Belturbet--Ballyconnell--14.855149082945182--43
+Ballyconnell--Belturbet--14.855149082945182--43
+Lahinch--Ennistymon--4.823284181694208--58
+Ennistymon--Lahinch--4.823284181694208--58
+Lahinch--Doolin--10.14693874604992--57
+Doolin--Lahinch--10.14693874604992--57
+Lahinch--Lisdoonvarna--11.902653733567643--58
+Lisdoonvarna--Lahinch--11.902653733567643--58
+Rosslare Europort--Rosslare--6.292453924212952--39
+Rosslare--Rosslare Europort--6.292453924212952--39
+Rosslare Europort--Wexford--16.766662674462253--43
+Wexford--Rosslare Europort--16.766662674462253--43
+Rosslare Europort--Enniscorthy--37.223280500380454--21
+Enniscorthy--Rosslare Europort--37.223280500380454--21
+Clifden--Letterfrack--10.454402698912894--56
+Letterfrack--Clifden--10.454402698912894--56
+Clifden--Ballyconneely--8.722721580548805--38
+Ballyconneely--Clifden--8.722721580548805--38
+Roundstone--Ballyconneely--17.00813239491688--57
+Ballyconneely--Roundstone--17.00813239491688--57
+Roundstone--Clifden--14.901200707851864--45
+Clifden--Roundstone--14.901200707851864--45
+Blarney--Cork City--9.781657555575187--40
+Cork City--Blarney--9.781657555575187--40
+Blarney--Larne--16.187886015950525--57
+Larne--Blarney--16.187886015950525--57
+Cappoquin--Ballymacarbry--19.83251683137445--36
+Ballymacarbry--Cappoquin--19.83251683137445--36
+Cappoquin--Youghal--21.14285992155662--40
+Youghal--Cappoquin--21.14285992155662--40
+Cappoquin--Ardmore--25.588481172551553--41
+Ardmore--Cappoquin--25.588481172551553--41
+Larne--Cork City--6.487288217626967--26
+Cork City--Larne--6.487288217626967--26
+Larne--Aldergrove--14.494610613246522--32
+Aldergrove--Larne--14.494610613246522--32
+Killarney--Kenmare--21.610813020442542--39
+Kenmare--Killarney--21.610813020442542--39
+Killarney--Gougane Barra--31.99415814048503--50
+Gougane Barra--Killarney--31.99415814048503--50
+Killarney--Tralee--31.67191907528676--37
+Tralee--Killarney--31.67191907528676--37
+Achill Island--Renvyle--40.86042268341232--27
+Renvyle--Achill Island--40.86042268341232--27
+Achill Island--Letterfrack--45.534303480502444--33
+Letterfrack--Achill Island--45.534303480502444--33
+Achill Island--Cashel Bay--3.7181474057348165--22
+Cashel Bay--Achill Island--3.7181474057348165--22
+Newport--Westport--9.800810695238043--39
+Westport--Newport--9.800810695238043--39
+Newport--Castlebar--28.623094941377804--32
+Castlebar--Newport--28.623094941377804--32
+Banteer--Macroom--25.23195880348814--35
+Macroom--Banteer--25.23195880348814--35
+Banteer--Kanturk--5.387835445844162--31
+Kanturk--Banteer--5.387835445844162--31
+Banteer--Newmarket--14.13660016452028--43
+Newmarket--Banteer--14.13660016452028--43
+Fahan--Buncrana--5.578927517490587--27
+Buncrana--Fahan--5.578927517490587--27
+Fahan--Rathmullan--7.104906067692312--33
+Rathmullan--Fahan--7.104906067692312--33
+Kanturk--Banteer--5.387835445844162--51
+Banteer--Kanturk--5.387835445844162--51
+Kanturk--Mallow--27.956467565657633--51
+Mallow--Kanturk--27.956467565657633--51
+Kanturk--Newmarket--11.504957149612487--53
+Newmarket--Kanturk--11.504957149612487--53
+Letterfrack--Renvyle--4.698274343543938--31
+Renvyle--Letterfrack--4.698274343543938--31
+Letterfrack--Clifden--10.454402698912894--26
+Clifden--Letterfrack--10.454402698912894--26
+Roscommon--Athlone--35.33411108397589--49
+Athlone--Roscommon--35.33411108397589--49
+Roscommon--Ballinasloe--33.13377955530649--39
+Ballinasloe--Roscommon--33.13377955530649--39
+Ballinasloe--Banagher--29.900067280915373--58
+Banagher--Ballinasloe--29.900067280915373--58
+Ballinasloe--Roscommon--33.13377955530649--60
+Roscommon--Ballinasloe--33.13377955530649--60
+Clonmel--Cahir/Caher--26.1315462765509--34
+Cahir/Caher--Clonmel--26.1315462765509--34
+Clonmel--Ballymacarbry--10.215632033780661--59
+Ballymacarbry--Clonmel--10.215632033780661--59
+Clonmel--Cashel--28.017869726787033--58
+Cashel--Clonmel--28.017869726787033--58
+Ballinafad--Castlebaldwin--7.364181893782498--33
+Castlebaldwin--Ballinafad--7.364181893782498--33
+Ballinafad--Carrick-on-Shan--28.72550416448857--31
+Carrick-on-Shan--Ballinafad--28.72550416448857--31
+Ballinafad--Boyle--7.266776586528082--52
+Boyle--Ballinafad--7.266776586528082--52
+Innishannon--Kinsale--16.08976141380296--53
+Kinsale--Innishannon--16.08976141380296--53
+Innishannon--Bandon--8.527140280837948--20
+Bandon--Innishannon--8.527140280837948--20
+Portrush--Ballymena--59.88484544666557--39
+Ballymena--Portrush--59.88484544666557--39
+Portrush--Dunadry--78.88626331795183--20
+Dunadry--Portrush--78.88626331795183--20
+Portrush--Ballyliffin--81.94509774970433--31
+Ballyliffin--Portrush--81.94509774970433--31
+Waterville--Caherdaniel--10.597536647281277--52
+Caherdaniel--Waterville--10.597536647281277--52
+Waterville--Parknasilla--33.317932003251435--31
+Parknasilla--Waterville--33.317932003251435--31
+Waterville--Dingle--35.623433808945755--21
+Dingle--Waterville--35.623433808945755--21
+Buncrana--Ballyliffin--17.106283546581214--53
+Ballyliffin--Buncrana--17.106283546581214--53
+Buncrana--Rathmullan--10.00805721303871--42
+Rathmullan--Buncrana--10.00805721303871--42
+Buncrana--Fahan--5.578927517490587--60
+Fahan--Buncrana--5.578927517490587--60
+Gougane Barra--Bantry--22.819738746508172--55
+Bantry--Gougane Barra--22.819738746508172--55
+Gougane Barra--Dunmanway--25.77901338482487--44
+Dunmanway--Gougane Barra--25.77901338482487--44
+Gougane Barra--Glengarriff--27.9079536214984--60
+Glengarriff--Gougane Barra--27.9079536214984--60
+Portlaoise--Athy--34.73094505776006--48
+Athy--Portlaoise--34.73094505776006--48
+Portlaoise--Abbeyleix--14.011310111402091--33
+Abbeyleix--Portlaoise--14.011310111402091--33
+Leenane--Letterfrack--28.43855226779136--54
+Letterfrack--Leenane--28.43855226779136--54
+Leenane--Renvyle--29.128957032465074--20
+Renvyle--Leenane--29.128957032465074--20
+Leenane--Recess--14.697221184350557--23
+Recess--Leenane--14.697221184350557--23
+Ardmore--Dungarvan--19.477552980916617--28
+Dungarvan--Ardmore--19.477552980916617--28
+Ardmore--Youghal--13.407197914934521--34
+Youghal--Ardmore--13.407197914934521--34
+Ardmore--Cappoquin--25.588481172551553--30
+Cappoquin--Ardmore--25.588481172551553--30
+Rathmullan--Fahan--7.104906067692312--33
+Fahan--Rathmullan--7.104906067692312--33
+Rathmullan--Buncrana--10.00805721303871--47
+Buncrana--Rathmullan--10.00805721303871--47
+Shanagarry--Youghal--22.998463075150134--28
+Youghal--Shanagarry--22.998463075150134--28
+Shanagarry--Midleton--17.03169506577489--23
+Midleton--Shanagarry--17.03169506577489--23
+Shanagarry--Ballycotton--3.3477970969370237--58
+Ballycotton--Shanagarry--3.3477970969370237--58
+Straffan--Bushmills--1.5784645109563684--56
+Bushmills--Straffan--1.5784645109563684--56
+Straffan--Newcastle--11.932237356087823--53
+Newcastle--Straffan--11.932237356087823--53
+Straffan--Maynooth--7.859522592889944--38
+Maynooth--Straffan--7.859522592889944--38
+Bundoran--Ballyshannon--9.805549492124305--54
+Ballyshannon--Bundoran--9.805549492124305--54
+Bundoran--Rossnowlagh--11.588643767453128--30
+Rossnowlagh--Bundoran--11.588643767453128--30
+Bundoran--Donegal--26.642544797127073--30
+Donegal--Bundoran--26.642544797127073--30
+Kenmare--Bantry--26.465081550932894--50
+Bantry--Kenmare--26.465081550932894--50
+Kenmare--Glengarriff--14.715895949979057--34
+Glengarriff--Kenmare--14.715895949979057--34
+Kenmare--Killarney--21.610813020442542--47
+Killarney--Kenmare--21.610813020442542--47
+Lucan--Newcastle--8.458604058685905--32
+Newcastle--Lucan--8.458604058685905--32
+Lucan--Clondalkin--7.1651497177150505--31
+Clondalkin--Lucan--7.1651497177150505--31
+Mallow--Banteer--27.898463217303533--30
+Banteer--Mallow--27.898463217303533--30
+Mallow--Blarney--24.456035026682592--51
+Blarney--Mallow--24.456035026682592--51
+Oughterard--Moycullen--18.062097446929243--51
+Moycullen--Oughterard--18.062097446929243--51
+Oughterard--Cong--13.04283472862761--38
+Cong--Oughterard--13.04283472862761--38
+Rosslare--Rosslare Europort--6.292453924212952--25
+Rosslare Europort--Rosslare--6.292453924212952--25
+Rosslare--Wexford--10.835535878572355--57
+Wexford--Rosslare--10.835535878572355--57
+Stillorgan--Blackrock--3.246793847389327--37
+Blackrock--Stillorgan--3.246793847389327--37
+Stillorgan--Dundrum--4.369046281781089--23
+Dundrum--Stillorgan--4.369046281781089--23
+Ballina--Castlebar--32.112306961654205--41
+Castlebar--Ballina--32.112306961654205--41
+Ballina--Crossmolina--17.758224928566833--53
+Crossmolina--Ballina--17.758224928566833--53
+Newmarket--Banteer--14.13660016452028--22
+Banteer--Newmarket--14.13660016452028--22
+Newmarket--Kanturk--11.504957149612487--60
+Kanturk--Newmarket--11.504957149612487--60
+Templeglantine--Newmarket--27.488786666187035--28
+Newmarket--Templeglantine--27.488786666187035--28
+Templeglantine--Kanturk--38.1290525338867--49
+Kanturk--Templeglantine--38.1290525338867--49
+Furbo--Spiddal--8.465984548178678--60
+Spiddal--Furbo--8.465984548178678--60
+Furbo--Ballyvaughan--15.919495076438132--59
+Ballyvaughan--Furbo--15.919495076438132--59
+Furbo--Moycullen--10.185191063615383--55
+Moycullen--Furbo--10.185191063615383--55
+Carrickmacross--Dundalk--34.485364491324724--32
+Dundalk--Carrickmacross--34.485364491324724--32
+Carrickmacross--Slane--35.34139329843305--41
+Slane--Carrickmacross--35.34139329843305--41
+Carrickmacross--Castleblaney--15.862634470057678--47
+Castleblaney--Carrickmacross--15.862634470057678--47
+Drogheda--Navan--36.79190659796545--23
+Navan--Drogheda--36.79190659796545--23
+Drogheda--Slane--20.65564921405583--42
+Slane--Drogheda--20.65564921405583--42
+Drogheda--Dundalk--31.29413467295203--20
+Dundalk--Drogheda--31.29413467295203--20
+Cork City--Larne--6.487288217626967--42
+Larne--Cork City--6.487288217626967--42
+Cork City--Blarney--9.781657555575187--53
+Blarney--Cork City--9.781657555575187--53
+Galway City--Furbo--16.479708503217772--60
+Furbo--Galway City--16.479708503217772--60
+Galway City--Moycullen--15.644495212285955--57
+Moycullen--Galway City--15.644495212285955--57
+Newcastle--Lucan--8.458604058685905--30
+Lucan--Newcastle--8.458604058685905--30
+Newcastle--Clondalkin--11.88603548913781--38
+Clondalkin--Newcastle--11.88603548913781--38
+Ballymena--Ballyliffin--23.551490055459524--53
+Ballyliffin--Ballymena--23.551490055459524--53
+Ballymena--Fahan--40.74000316296494--47
+Fahan--Ballymena--40.74000316296494--47
+Ballymena--Buncrana--35.969360163346934--56
+Buncrana--Ballymena--35.969360163346934--56
+Ballyvaughan--Furbo--15.919495076438132--23
+Furbo--Ballyvaughan--15.919495076438132--23
+Ballyvaughan--Lisdoonvarna--18.06411305218313--58
+Lisdoonvarna--Ballyvaughan--18.06411305218313--58
+Ballyvaughan--Galway City--19.872134623070785--44
+Galway City--Ballyvaughan--19.872134623070785--44
+Abbeyleix--Kilkenny--30.882751998579437--50
+Kilkenny--Abbeyleix--30.882751998579437--50
+Abbeyleix--Portlaoise--14.011310111402091--29
+Portlaoise--Abbeyleix--14.011310111402091--29
+Portmarnock--Dun Laoghaire--14.433760761055694--57
+Dun Laoghaire--Portmarnock--14.433760761055694--57
+Portmarnock--Howth--8.562501850017167--34
+Howth--Portmarnock--8.562501850017167--34
+Portmarnock--Malahide--3.451204729227012--35
+Malahide--Portmarnock--3.451204729227012--35
+Castleblaney--Dundalk--39.118582359234054--39
+Dundalk--Castleblaney--39.118582359234054--39
+Castleblaney--Carrickmacross--15.862634470057678--29
+Carrickmacross--Castleblaney--15.862634470057678--29
+Castleblaney--Armagh--26.897630178740087--56
+Armagh--Castleblaney--26.897630178740087--56
+Castledermot--Athy--17.73963457359861--60
+Athy--Castledermot--17.73963457359861--60
+Castledermot--Carlow--20.90105791431196--26
+Carlow--Castledermot--20.90105791431196--26
+Malahide--Portmarnock--3.451204729227012--28
+Portmarnock--Malahide--3.451204729227012--28
+Malahide--Howth--11.815289175310413--56
+Howth--Malahide--11.815289175310413--56
+Virginia--Cavan--35.42372361916611--33
+Cavan--Virginia--35.42372361916611--33
+Virginia--Clones--41.38070039609964--41
+Clones--Virginia--41.38070039609964--41
+Aherlow--Tipperary--6.8160408612677905--60
+Tipperary--Aherlow--6.8160408612677905--60
+Aherlow--Cahir/Caher--29.592015128606615--38
+Cahir/Caher--Aherlow--29.592015128606615--38
+Aherlow--Derry--20.404549588020345--34
+Derry--Aherlow--20.404549588020345--34
+Glengarriff--Bantry--13.70227619600403--50
+Bantry--Glengarriff--13.70227619600403--50
+Glengarriff--Kenmare--14.715895949979057--39
+Kenmare--Glengarriff--14.715895949979057--39
+Glengarriff--Durrus--14.501213178178686--26
+Durrus--Glengarriff--14.501213178178686--26
+Courtown Harbour--Gorey--7.807320269411396--37
+Gorey--Courtown Harbour--7.807320269411396--37
+Courtown Harbour--Arklow--18.26950679994284--25
+Arklow--Courtown Harbour--18.26950679994284--25
+Dundalk--Drogheda--31.29413467295203--21
+Drogheda--Dundalk--31.29413467295203--21
+Dundalk--Carrickmacross--34.485364491324724--51
+Carrickmacross--Dundalk--34.485364491324724--51
+Dundalk--Carlingford--24.587495654959085--23
+Carlingford--Dundalk--24.587495654959085--23
+Dun Laoghaire--Dalkey--3.57999164191513--41
+Dalkey--Dun Laoghaire--3.57999164191513--41
+Dun Laoghaire--Blackrock--4.800430227874491--40
+Blackrock--Dun Laoghaire--4.800430227874491--40
+Dun Laoghaire--Shankill--6.817881660020597--55
+Shankill--Dun Laoghaire--6.817881660020597--55
+Bunratty--Shannon--6.975552540281682--57
+Shannon--Bunratty--6.975552540281682--57
+Bunratty--Adare--14.995749311097821--22
+Adare--Bunratty--14.995749311097821--22
+Derry--Killaloe--31.96290518889042--22
+Killaloe--Derry--31.96290518889042--22
+Derry--Aherlow--20.404549588020345--28
+Aherlow--Derry--20.404549588020345--28
+Derry--Tipperary--16.564177555582344--29
+Tipperary--Derry--16.564177555582344--29
+Youghal--Cappoquin--21.14285992155662--38
+Cappoquin--Youghal--21.14285992155662--38
+Youghal--Ardmore--13.407197914934521--58
+Ardmore--Youghal--13.407197914934521--58
+Rathnew--Greystones--17.00116787185302--33
+Greystones--Rathnew--17.00116787185302--33
+Rathnew--Wicklow--4.469409594027816--52
+Wicklow--Rathnew--4.469409594027816--52
+Strabane--Fahan--35.09300014520181--59
+Fahan--Strabane--35.09300014520181--59
+Strabane--Rathmullan--38.559200847032116--40
+Rathmullan--Strabane--38.559200847032116--40
+Strabane--Buncrana--39.64957548558171--32
+Buncrana--Strabane--39.64957548558171--32
+Castlebaldwin--Boyle--14.608248665909256--29
+Boyle--Castlebaldwin--14.608248665909256--29
+Castlebaldwin--Ballinafad--7.364181893782498--49
+Ballinafad--Castlebaldwin--7.364181893782498--49
+Wicklow--Greystones--18.903218259640152--24
+Greystones--Wicklow--18.903218259640152--24
+Wicklow--Rathnew--4.469409594027816--45
+Rathnew--Wicklow--4.469409594027816--45
+Kilkenny--Mullinavat--32.40133775315067--27
+Mullinavat--Kilkenny--32.40133775315067--27
+Kilkenny--Thomastown--18.199580034431214--43
+Thomastown--Kilkenny--18.199580034431214--43
+Kilkenny--Abbeyleix--30.882751998579437--56
+Abbeyleix--Kilkenny--30.882751998579437--56
+Shannon--Bunratty--6.975552540281682--23
+Bunratty--Shannon--6.975552540281682--23
+Shannon--Adare--18.64957676467607--28
+Adare--Shannon--18.64957676467607--28
+Wexford--Rosslare Europort--16.766662674462253--21
+Rosslare Europort--Wexford--16.766662674462253--21
+Wexford--Rosslare--10.835535878572355--23
+Rosslare--Wexford--10.835535878572355--23
+Tahilla--Caragh Lake--24.63689043563957--56
+Caragh Lake--Tahilla--24.63689043563957--56
+Tahilla--Parknasilla--5.596712694255583--41
+Parknasilla--Tahilla--5.596712694255583--41
+Dublin--Dundrum--6.932429054720146--59
+Dundrum--Dublin--6.932429054720146--59
+Dublin--Stillorgan--9.245784923911248--57
+Stillorgan--Dublin--9.245784923911248--57
+Dublin--Blackrock--10.626126399553451--44
+Blackrock--Dublin--10.626126399553451--44
+Armagh--Castleblaney--26.897630178740087--53
+Castleblaney--Armagh--26.897630178740087--53
+Armagh--Carrickmacross--41.44967553986039--29
+Carrickmacross--Armagh--41.44967553986039--29
+Rosapenna--Letterkenny--27.704356225355024--42
+Letterkenny--Rosapenna--27.704356225355024--42
+Rosapenna--Dunfanaghy--16.116875591637648--46
+Dunfanaghy--Rosapenna--16.116875591637648--46
+Skibbereen--Dunmanway--24.661381904988158--26
+Dunmanway--Skibbereen--24.661381904988158--26
+Skibbereen--Glandore--15.570967172996939--39
+Glandore--Skibbereen--15.570967172996939--39
+Rathlin Island--Sligo--57.89232453052995--41
+Sligo--Rathlin Island--57.89232453052995--41
+Rathlin Island--Ardara--47.934557904300206--41
+Ardara--Rathlin Island--47.934557904300206--41
+Ennistymon--Lahinch--4.823284181694208--21
+Lahinch--Ennistymon--4.823284181694208--21
+Ennistymon--Doolin--12.184085385695553--28
+Doolin--Ennistymon--12.184085385695553--28
+Ennistymon--Lisdoonvarna--9.886207701931008--43
+Lisdoonvarna--Ennistymon--9.886207701931008--43
+Ahakista--Durrus--12.355854359842567--36
+Durrus--Ahakista--12.355854359842567--36
+Ahakista--Skull--12.261461684262171--41
+Skull--Ahakista--12.261461684262171--41
+Glendalough--Blessington--28.38163759951916--54
+Blessington--Glendalough--28.38163759951916--54
+Glendalough--Rathnew--27.240247570276075--28
+Rathnew--Glendalough--27.240247570276075--28
+Renvyle--Ballyconneely--22.030400551738275--36
+Ballyconneely--Renvyle--22.030400551738275--36
+Renvyle--Clifden--13.417683614841957--56
+Clifden--Renvyle--13.417683614841957--56
+Renvyle--Letterfrack--4.698274343543938--60
+Letterfrack--Renvyle--4.698274343543938--60
+Aran Islands--Lahinch--39.54608869563217--33
+Lahinch--Aran Islands--39.54608869563217--33
+Aran Islands--Lisdoonvarna--40.99641062343719--54
+Lisdoonvarna--Aran Islands--40.99641062343719--54
+Aran Islands--Doolin--32.37196876094369--26
+Doolin--Aran Islands--32.37196876094369--26
+Blackrock--Dun Laoghaire--4.800430227874491--56
+Dun Laoghaire--Blackrock--4.800430227874491--56
+Blackrock--Stillorgan--3.246793847389327--54
+Stillorgan--Blackrock--3.246793847389327--54
+Dundrum--Dublin--6.932429054720146--45
+Dublin--Dundrum--6.932429054720146--45
+Dundrum--Stillorgan--4.369046281781089--33
+Stillorgan--Dundrum--4.369046281781089--33
+Boyle--Ballinafad--7.266776586528082--40
+Ballinafad--Boyle--7.266776586528082--40
+Boyle--Carrick-on-Shan--23.48174608232821--44
+Carrick-on-Shan--Boyle--23.48174608232821--44
+Boyle--Castlebaldwin--14.608248665909256--56
+Castlebaldwin--Boyle--14.608248665909256--56
+Cavan--Belturbet--15.5211342881982--35
+Belturbet--Cavan--15.5211342881982--35
+Cavan--Clones--25.382814584498636--26
+Clones--Cavan--25.382814584498636--26
+Cashel Bay--Renvyle--39.631790635382714--40
+Renvyle--Cashel Bay--39.631790635382714--40
+Cashel Bay--Achill Island--3.7181474057348165--55
+Achill Island--Cashel Bay--3.7181474057348165--55
+Clondalkin--Newcastle--11.88603548913781--23
+Newcastle--Clondalkin--11.88603548913781--23
+Clondalkin--Lucan--7.1651497177150505--55
+Lucan--Clondalkin--7.1651497177150505--55
+Hillsborough--Dunlavin--13.611206839434436--21
+Dunlavin--Hillsborough--13.611206839434436--21
+Hillsborough--Newbridge--4.65050155554569--28
+Newbridge--Hillsborough--4.65050155554569--28
+Clones--Ballyconnell--39.48367260577604--45
+Ballyconnell--Clones--39.48367260577604--45
+Clones--Cavan--25.382814584498636--20
+Cavan--Clones--25.382814584498636--20
+Clones--Belturbet--25.56422307469639--38
+Belturbet--Clones--25.56422307469639--38
+Maynooth--Bushmills--8.330260544323824--21
+Bushmills--Maynooth--8.330260544323824--21
+Maynooth--Straffan--7.859522592889944--47
+Straffan--Maynooth--7.859522592889944--47
+Birr--Banagher--13.54520508388949--41
+Banagher--Birr--13.54520508388949--41
+Birr--Coleraine--32.20361578577816--24
+Coleraine--Birr--32.20361578577816--24
+Birr--Enniskillen--24.43208862438985--51
+Enniskillen--Birr--24.43208862438985--51
+Shankill--Bray--3.82360289965052--42
+Bray--Shankill--3.82360289965052--42
+Shankill--Dalkey--5.291482610570737--30
+Dalkey--Shankill--5.291482610570737--30
+Dunmanway--Skibbereen--24.661381904988158--36
+Skibbereen--Dunmanway--24.661381904988158--36
+Dunmanway--Glandore--17.16211498970332--37
+Glandore--Dunmanway--17.16211498970332--37
+Rossnowlagh--Bundoran--11.588643767453128--59
+Bundoran--Rossnowlagh--11.588643767453128--59
+Rossnowlagh--Donegal--15.060858565031259--26
+Donegal--Rossnowlagh--15.060858565031259--26
+Rossnowlagh--Ballyshannon--6.1853885105351765--49
+Ballyshannon--Rossnowlagh--6.1853885105351765--49
+Kilrush--Kilkee--18.037454651851572--43
+Kilkee--Kilrush--18.037454651851572--43
+Kilrush--Ballybunnion--24.850843378426983--22
+Ballybunnion--Kilrush--24.850843378426983--22
+Carrick-on-Suir--Clonmel--29.854794946077394--56
+Clonmel--Carrick-on-Suir--29.854794946077394--56
+Carrick-on-Suir--Mullinavat--27.38418132917087--23
+Mullinavat--Carrick-on-Suir--27.38418132917087--23
+Carrick-on-Suir--Waterford City--33.41249914909651--57
+Waterford City--Carrick-on-Suir--33.41249914909651--57
+Kilkee--Kilrush--18.037454651851572--34
+Kilrush--Kilkee--18.037454651851572--34
+Kilkee--Ballybunnion--19.116258769566002--53
+Ballybunnion--Kilkee--19.116258769566002--53
+Limerick City--Killaloe--25.40157940871887--59
+Killaloe--Limerick City--25.40157940871887--59
+Limerick City--Adare--21.054437984760792--23
+Adare--Limerick City--21.054437984760792--23
+Limerick City--Bunratty--20.15716025518887--59
+Bunratty--Limerick City--20.15716025518887--59
+Dunfanaghy--Rosapenna--16.116875591637648--23
+Rosapenna--Dunfanaghy--16.116875591637648--23
+Dunfanaghy--Letterkenny--36.00138187890383--44
+Letterkenny--Dunfanaghy--36.00138187890383--44
+Dunfanaghy--Ballybofey--47.00221691425422--30
+Ballybofey--Dunfanaghy--47.00221691425422--30
+Midleton--Shanagarry--17.03169506577489--49
+Shanagarry--Midleton--17.03169506577489--49
+Midleton--Cobh--15.1276333522025--52
+Cobh--Midleton--15.1276333522025--52
+Midleton--Ballycotton--20.10918375185873--37
+Ballycotton--Midleton--20.10918375185873--37
+Killaloe--Derry--31.96290518889042--50
+Derry--Killaloe--31.96290518889042--50
+Killaloe--Limerick City--25.40157940871887--37
+Limerick City--Killaloe--25.40157940871887--37
+Durrus--Bantry--10.370686623571247--27
+Bantry--Durrus--10.370686623571247--27
+Durrus--Ahakista--12.355854359842567--39
+Ahakista--Durrus--12.355854359842567--39
+Durrus--Skull--10.817397785262392--27
+Skull--Durrus--10.817397785262392--27
+Ardara--Rossnowlagh--32.062950838447364--50
+Rossnowlagh--Ardara--32.062950838447364--50
+Ardara--Bundoran--34.81977515505536--49
+Bundoran--Ardara--34.81977515505536--49
+Thomastown--Mullinavat--17.74491739914804--35
+Mullinavat--Thomastown--17.74491739914804--35
+Thomastown--Kilkenny--18.199580034431214--37
+Kilkenny--Thomastown--18.199580034431214--37
+Slane--Dundalk--35.243432132258306--51
+Dundalk--Slane--35.243432132258306--51
+Slane--Navan--16.629477282105743--56
+Navan--Slane--16.629477282105743--56
+Slane--Drogheda--20.65564921405583--20
+Drogheda--Slane--20.65564921405583--20
+Tramore--New Ross--34.075684032155--48
+New Ross--Tramore--34.075684032155--48
+Tramore--Waterford City--10.706906420296901--53
+Waterford City--Tramore--10.706906420296901--53
+Tramore--Mullinavat--22.95537038314664--47
+Mullinavat--Tramore--22.95537038314664--47
+Dunlavin--Holywood--11.886227952892172--51
+Holywood--Dunlavin--11.886227952892172--51
+Dunlavin--Hillsborough--13.611206839434436--60
+Hillsborough--Dunlavin--13.611206839434436--60
+Sligo--Ballinafad--31.5767772999806--35
+Ballinafad--Sligo--31.5767772999806--35
+Sligo--Castlebaldwin--24.347864230286145--34
+Castlebaldwin--Sligo--24.347864230286145--34
+Sligo--Bundoran--31.167915756473523--29
+Bundoran--Sligo--31.167915756473523--29
+Castlebar--Westport--25.576308176314487--53
+Westport--Castlebar--25.576308176314487--53
+Castlebar--Crossmolina--27.16165537987099--60
+Crossmolina--Castlebar--27.16165537987099--60
+Aldergrove--Larne--14.494610613246522--31
+Larne--Aldergrove--14.494610613246522--31
+Aldergrove--Kinsale--5.484478529147--31
+Kinsale--Aldergrove--5.484478529147--31
+Newbridge--Dunlavin--17.170853445056--22
+Dunlavin--Newbridge--17.170853445056--22
+Newbridge--Hillsborough--4.65050155554569--35
+Hillsborough--Newbridge--4.65050155554569--35
+Kinsale--Aldergrove--5.484478529147--25
+Aldergrove--Kinsale--5.484478529147--25
+Kinsale--Innishannon--16.08976141380296--36
+Innishannon--Kinsale--16.08976141380296--36
+Caherdaniel--Tahilla--31.221977031022718--50
+Tahilla--Caherdaniel--31.221977031022718--50
+Caherdaniel--Waterville--10.597536647281277--25
+Waterville--Caherdaniel--10.597536647281277--25
+Caherdaniel--Parknasilla--25.62672451604792--20
+Parknasilla--Caherdaniel--25.62672451604792--20
+Macroom--Banteer--25.23195880348814--30
+Banteer--Macroom--25.23195880348814--30
+Macroom--Dunmanway--26.197649908073995--46
+Dunmanway--Macroom--26.197649908073995--46
+Ballybunnion--Kilkee--19.116258769566002--41
+Kilkee--Ballybunnion--19.116258769566002--41
+Ballybunnion--Tralee--26.56646232717385--53
+Tralee--Ballybunnion--26.56646232717385--53
+Ballybunnion--Kilrush--24.850843378426983--31
+Kilrush--Ballybunnion--24.850843378426983--31
+Arklow--Courtown Harbour--18.26950679994284--57
+Courtown Harbour--Arklow--18.26950679994284--57
+Arklow--Gorey--19.96123601440415--35
+Gorey--Arklow--19.96123601440415--35
+Clonakilty--Bandon--22.03891636663035--22
+Bandon--Clonakilty--22.03891636663035--22
+Clonakilty--Glandore--26.25648966479403--44
+Glandore--Clonakilty--26.25648966479403--44
+Clonakilty--Dunmanway--26.928337883392835--48
+Dunmanway--Clonakilty--26.928337883392835--48
+Athlone--Banagher--26.804674742809226--24
+Banagher--Athlone--26.804674742809226--24
+Athlone--Ballinasloe--33.182923886649576--32
+Ballinasloe--Athlone--33.182923886649576--32
+Bandon--Kinsale--23.44293235411307--58
+Kinsale--Bandon--23.44293235411307--58
+Bandon--Innishannon--8.527140280837948--46
+Innishannon--Bandon--8.527140280837948--46
+Bandon--Clonakilty--22.03891636663035--39
+Clonakilty--Bandon--22.03891636663035--39
+Bray--Greystones--6.6808156194007795--30
+Greystones--Bray--6.6808156194007795--30
+Bray--Shankill--3.82360289965052--49
+Shankill--Bray--3.82360289965052--49
+Ballyshannon--Rossnowlagh--6.1853885105351765--58
+Rossnowlagh--Ballyshannon--6.1853885105351765--58
+Ballyshannon--Bundoran--9.805549492124305--52
+Bundoran--Ballyshannon--9.805549492124305--52
+Ballyshannon--Donegal--18.894943859518435--27
+Donegal--Ballyshannon--18.894943859518435--27
+Donegal--Rossnowlagh--15.060858565031259--23
+Rossnowlagh--Donegal--15.060858565031259--23
+Donegal--Ballyshannon--18.894943859518435--43
+Ballyshannon--Donegal--18.894943859518435--43
+Tipperary--Derry--16.564177555582344--50
+Derry--Tipperary--16.564177555582344--50
+Tipperary--Cahir/Caher--28.037907131718473--42
+Cahir/Caher--Tipperary--28.037907131718473--42
+Tipperary--Aherlow--6.8160408612677905--43
+Aherlow--Tipperary--6.8160408612677905--43
+Parknasilla--Caragh Lake--25.48183089126524--20
+Caragh Lake--Parknasilla--25.48183089126524--20
+Parknasilla--Tahilla--5.596712694255583--51
+Tahilla--Parknasilla--5.596712694255583--51
+Gorey--Arklow--19.96123601440415--44
+Arklow--Gorey--19.96123601440415--44
+Gorey--Courtown Harbour--7.807320269411396--27
+Courtown Harbour--Gorey--7.807320269411396--27
+Spiddal--Moycullen--14.505910534722235--31
+Moycullen--Spiddal--14.505910534722235--31
+Spiddal--Furbo--8.465984548178678--40
+Furbo--Spiddal--8.465984548178678--40
+Spiddal--Oughterard--19.71936763589987--58
+Oughterard--Spiddal--19.71936763589987--58
+Dungarvan--Ardmore--19.477552980916617--33
+Ardmore--Dungarvan--19.477552980916617--33
+Dungarvan--Ballymacarbry--21.8714409553646--55
+Ballymacarbry--Dungarvan--21.8714409553646--55
+Mullingar--Virginia--44.152610367616475--51
+Virginia--Mullingar--44.152610367616475--51
+Mullingar--Cavan--51.186594790697036--45
+Cavan--Mullingar--51.186594790697036--45
+New Ross--Waterford City--25.224876724889267--21
+Waterford City--New Ross--25.224876724889267--21
+New Ross--Mullinavat--24.79387255257184--21
+Mullinavat--New Ross--24.79387255257184--21
+New Ross--Thomastown--25.526531729096078--32
+Thomastown--New Ross--25.526531729096078--32
+Coleraine--Birr--32.20361578577816--49
+Birr--Coleraine--32.20361578577816--49
+Coleraine--Abbeyleix--34.53321935364444--50
+Abbeyleix--Coleraine--34.53321935364444--50
+Coleraine--Enniskillen--22.0548720114191--47
+Enniskillen--Coleraine--22.0548720114191--47
+Caragh Lake--Tahilla--24.63689043563957--41
+Tahilla--Caragh Lake--24.63689043563957--41
+Caragh Lake--Tralee--30.479793696204506--39
+Tralee--Caragh Lake--30.479793696204506--39
+Caragh Lake--Parknasilla--25.48183089126524--29
+Parknasilla--Caragh Lake--25.48183089126524--29
+Dunadry--Armagh--68.23721776582036--46
+Armagh--Dunadry--68.23721776582036--46
+Dunadry--Belfast--25.512883839081617--47
+Belfast--Dunadry--25.512883839081617--47
+Ballyconneely--Roundstone--17.00813239491688--40
+Roundstone--Ballyconneely--17.00813239491688--40
+Ballyconneely--Clifden--8.722721580548805--32
+Clifden--Ballyconneely--8.722721580548805--32
+Crossmolina--Castlebar--27.16165537987099--21
+Castlebar--Crossmolina--27.16165537987099--21
+Crossmolina--Ballina--17.758224928566833--55
+Ballina--Crossmolina--17.758224928566833--55
+Carlow--Castledermot--20.90105791431196--51
+Castledermot--Carlow--20.90105791431196--51
+Carlow--Bunclody--22.904326301620557--47
+Bunclody--Carlow--22.904326301620557--47
+Knock--Ballina--44.016548469006864--39
+Ballina--Knock--44.016548469006864--39
+Knock--Cong--48.29141218587717--53
+Cong--Knock--48.29141218587717--53
+Knock--Castlebar--40.93856621544022--50
+Castlebar--Knock--40.93856621544022--50
+Cahir/Caher--Cashel--16.23238032008398--34
+Cashel--Cahir/Caher--16.23238032008398--34
+Cahir/Caher--Ballymacarbry--25.892746833923848--43
+Ballymacarbry--Cahir/Caher--25.892746833923848--43
+Enniscorthy--Wexford--21.410176345909544--30
+Wexford--Enniscorthy--21.410176345909544--30
+Enniscorthy--Bunclody--19.29922915158521--47
+Bunclody--Enniscorthy--19.29922915158521--47
+Enniscorthy--Rosslare--31.9328275053964--25
+Rosslare--Enniscorthy--31.9328275053964--25
+Cobh--Midleton--15.1276333522025--20
+Midleton--Cobh--15.1276333522025--20
+Cobh--Larne--15.96478768866987--32
+Larne--Cobh--15.96478768866987--32
+Cobh--Cork City--21.7352160772125--49
+Cork City--Cobh--21.7352160772125--49
+Doolin--Lisdoonvarna--9.27327895949027--42
+Lisdoonvarna--Doolin--9.27327895949027--42
+Doolin--Lahinch--10.14693874604992--50
+Lahinch--Doolin--10.14693874604992--50
+Bushmills--Maynooth--8.330260544323824--26
+Maynooth--Bushmills--8.330260544323824--26
+Bushmills--Newcastle--13.506255234521948--38
+Newcastle--Bushmills--13.506255234521948--38
+Bushmills--Straffan--1.5784645109563684--47
+Straffan--Bushmills--1.5784645109563684--47
+Belfast--Carlingford--67.77797875718981--25
+Carlingford--Belfast--67.77797875718981--25
+Belfast--Armagh--84.26179859141392--50
+Armagh--Belfast--84.26179859141392--50
+Belfast--Dunadry--25.512883839081617--38
+Dunadry--Belfast--25.512883839081617--38
+Cashel--Tipperary--30.527542276099673--39
+Tipperary--Cashel--30.527542276099673--39
+Cashel--Cahir/Caher--16.23238032008398--47
+Cahir/Caher--Cashel--16.23238032008398--47
+Cashel--Clonmel--28.017869726787033--34
+Clonmel--Cashel--28.017869726787033--34
+Mullinavat--Waterford City--13.182849431121456--31
+Waterford City--Mullinavat--13.182849431121456--31
+Mullinavat--Tramore--22.95537038314664--59
+Tramore--Mullinavat--22.95537038314664--59
+Mullinavat--Thomastown--17.74491739914804--46
+Thomastown--Mullinavat--17.74491739914804--46
+Waterford City--Mullinavat--13.182849431121456--39
+Mullinavat--Waterford City--13.182849431121456--39
+Waterford City--Tramore--10.706906420296901--29
+Tramore--Waterford City--10.706906420296901--29
+Ballycotton--Midleton--20.10918375185873--41
+Midleton--Ballycotton--20.10918375185873--41
+Ballycotton--Shanagarry--3.3477970969370237--29
+Shanagarry--Ballycotton--3.3477970969370237--29
+Ballymacarbry--Clonmel--10.215632033780661--41
+Clonmel--Ballymacarbry--10.215632033780661--41
+Ballymacarbry--Cappoquin--19.83251683137445--50
+Cappoquin--Ballymacarbry--19.83251683137445--50
+Holywood--Blessington--11.153764962416247--27
+Blessington--Holywood--11.153764962416247--27
+Holywood--Dunlavin--11.886227952892172--44
+Dunlavin--Holywood--11.886227952892172--44
+Holywood--Hillsborough--19.816689950023704--30
+Hillsborough--Holywood--19.816689950023704--30
+Kilternan--Blackrock--7.36497658122651--31
+Blackrock--Kilternan--7.36497658122651--31
+Kilternan--Stillorgan--5.80289289348817--46
+Stillorgan--Kilternan--5.80289289348817--46
+Kilternan--Shankill--7.708511703829274--33
+Shankill--Kilternan--7.708511703829274--33
+Adare--Bunratty--14.995749311097821--34
+Bunratty--Adare--14.995749311097821--34
+Adare--Shannon--18.64957676467607--20
+Shannon--Adare--18.64957676467607--20
+Leenane--Westport--20--60
+Westport--Leenane--20--60
+Cavan--Longford--20--60
+Longford--Cavan--20--60

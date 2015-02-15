@@ -42,11 +42,11 @@ public class MapPanel extends JPanel {
 	static final float ZOOM_MAX = 10.0f;
 	static final float ZOOM_MIN = 0.3f;
 
-	static final float SELECTED_CITY_SIZE = 13.0f;
-	static final float CITY_SIZE = 10.0f;
-	static final float CONNECTION_CITY_SIZE = 12.0f;
+	static final float SELECTED_CITY_SIZE = 3.0f;
+	static final float CITY_SIZE = 2.5f;
+	static final float CONNECTION_CITY_SIZE = 2.8f;
 
-	static final float CONNECTION_WIDTH = 1.2f;
+	static final float CONNECTION_WIDTH = .2f;
 	static final float PATH_CONNECTION_WIDTH = 1.6f;
 
 	static final Color SELECTED_CITY_COLOR = Color.RED;
@@ -113,6 +113,18 @@ public class MapPanel extends JPanel {
 //		this.setBorder(border);
 
 		this.pathsToDraw = new ArrayList<Path>();
+		
+		// Get the map is a position where we can see it
+		if (map.getElements().size() > 0)
+		{
+			City centerCity = map.getElements().get(0);
+			centerX = -centerCity.getXCoord() ;
+			centerY = -centerCity.getYCoord() ;
+			System.out.println(centerX);
+			System.out.println(centerY);
+		}
+		
+		this.repaint();
 	}
 
 	/**
@@ -393,10 +405,11 @@ public class MapPanel extends JPanel {
 		clickMap.clear();
 
 		// Find out how wide the map is
-		int maxX = 0;
+		int maxX = Integer.MIN_VALUE;
 		for (City city : map.getElements())
 			if (city.getXCoord() > maxX)
 				maxX = (int) city.getXCoord();
+
 
 		// Prime the clickMap hashMap with emtpy arrayLists;
 		partitionWidth = maxX / partitionCount;
