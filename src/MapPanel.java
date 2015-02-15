@@ -138,9 +138,8 @@ public class MapPanel extends JPanel {
 		this.pathsToDraw.add(pathToAdd);
 		this.repaint();
 	}
-	
-	public ArrayList<Path> getPaths()
-	{
+
+	public ArrayList<Path> getPaths() {
 		return this.pathsToDraw;
 	}
 
@@ -229,7 +228,6 @@ public class MapPanel extends JPanel {
 		public void mouseWheelMoved(MouseWheelEvent arg0) {
 			// TODO Auto-generated method stub
 			if (arg0.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
-				System.out.println(zoom);
 
 				int mouseDirection = 0;
 				if (arg0.getPreciseWheelRotation() > 0)
@@ -274,9 +272,14 @@ public class MapPanel extends JPanel {
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
 		Graphics2D g2d = (Graphics2D) g;
-		
-		//BufferedImage nameCollisionBufferedImage = new BufferedImage(this.getWidth(), this.getHeight(), null);
-		
+
+		BufferedImage nameCollisionImage = new BufferedImage(this.getWidth(),
+				this.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
+		Graphics2D nameMask = (Graphics2D) nameCollisionImage.getGraphics();
+		nameMask.setColor(Color.WHITE);
+		nameMask.drawLine(0, 0, 100, 100);
+	
+
 		g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
 				RenderingHints.VALUE_STROKE_PURE);
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -284,6 +287,7 @@ public class MapPanel extends JPanel {
 
 		// Translate for pan
 		g2d.translate(centerX, centerY);
+		nameMask.translate(centerX, centerY);
 
 		// Draw links
 		g2d.setColor(CONNECTION_COLOR);
@@ -313,14 +317,15 @@ public class MapPanel extends JPanel {
 			double translateX = city.getXCoord() * zoom;
 			double translateY = city.getYCoord() * zoom;
 			g2d.translate(translateX, translateY);
+			nameMask.translate(translateX, translateY);
 
 			// Draw city names:
-			if (zoom < 1) {
-				java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
-				int stringWidth = fontMetric.stringWidth(city.getName());
-				g2d.drawString(city.getName(), (int) (-stringWidth / 2),
-						(int) (CITY_SIZE * zoom + 10));
-			}
+			java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
+			int stringWidth = fontMetric.stringWidth(city.getName());
+			g2d.drawString(city.getName(), (int) (-stringWidth / 2),
+					(int) (CITY_SIZE * zoom + 10));
+			
+			nameMask.fillRect(0, 0, stringWidth, 10);
 
 			// Draw city
 			Ellipse2D.Double circle = new Ellipse2D.Double();
@@ -333,6 +338,7 @@ public class MapPanel extends JPanel {
 			g2d.translate(centerLinks, centerLinks);
 
 			g2d.translate(-translateX, -translateY);
+			nameMask.translate(-translateX, -translateY);
 		}
 
 		drawPaths(g2d);
@@ -340,6 +346,7 @@ public class MapPanel extends JPanel {
 
 		// Translate for pan
 		g2d.translate(-centerX, -centerY);
+		nameMask.translate(-centerX, -centerY);
 
 		// Draw border
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
@@ -349,6 +356,8 @@ public class MapPanel extends JPanel {
 		g2d.drawRect(1, 1, this.getWidth() - 18, this.getHeight() - 41);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawRect(3, 3, this.getWidth() - 22, this.getHeight() - 45);
+		
+		//g2d.drawImage(nameCollisionImage, null, 0, 0);
 	}
 
 	private void drawPaths(Graphics2D g2d) {
