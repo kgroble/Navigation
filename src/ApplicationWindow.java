@@ -67,6 +67,7 @@ public class ApplicationWindow extends JFrame {
 				containerPanel.remove(mapPanel);
 				citiesList.clear();
 				displayList.clear();
+				controlPanel.clearTxtBoxes();
 
 				listBox.updateUI();
 				displayBox.updateUI();
@@ -352,6 +353,12 @@ public class ApplicationWindow extends JFrame {
 
 			this.setBackground(Color.GRAY);
 			this.setOpaque(true);
+		}
+		
+		public void clearTxtBoxes(){
+			this.cityName.setText("");
+			this.distance.setText("");
+			this.time.setText("");
 		}
 
 	}
