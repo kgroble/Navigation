@@ -90,8 +90,8 @@ public class Path implements Comparable<Path>
 	public int compareTo(Path otherPath)
 	{
 		if (this.usingTimeHeuristic)
-			return (int)(this.approximatedTimeTaken - otherPath.getApproximatedTimeTaken());
-		return (int)(this.approximatedPathLength - otherPath.getApproximatedPathLength());
+			return (this.approximatedTimeTaken - otherPath.getApproximatedTimeTaken()) > 0 ? 1 : -1;
+		return (this.approximatedPathLength - otherPath.getApproximatedPathLength()) > 0 ? 1 : -1;
 	}
 	
 	private double getApproximatedTimeTaken()
