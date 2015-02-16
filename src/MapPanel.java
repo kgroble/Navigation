@@ -4,7 +4,6 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
-import java.awt.Stroke;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
@@ -18,17 +17,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.BorderFactory;
 import javax.swing.JButton;
 import javax.swing.JPanel;
-import javax.swing.border.Border;
-import javax.swing.border.TitledBorder;
-
-import org.junit.experimental.max.MaxCore;
-
-import sun.reflect.generics.tree.Tree;
-
-import com.sun.javafx.tk.FontMetrics;
 
 /**
  * 
@@ -39,22 +29,21 @@ import com.sun.javafx.tk.FontMetrics;
  */
 public class MapPanel extends JPanel {
 
-	static final float ZOOM_SPEED = 1.05f;
-	static final float ZOOM_MAX = 30.0f;
-	static final float ZOOM_MIN = 0.1f;
-	static final float ZOOM_NAME_POINT = 0.1f;
+	private static final float ZOOM_SPEED = 1.05f;
+	private static final float ZOOM_MAX = 30.0f;
+	private static final float ZOOM_MIN = 0.1f;
 
-	static final float SELECTED_CITY_SIZE = 3.0f;
-	static final float CITY_SIZE = 2.5f;
-	static final float CONNECTION_CITY_SIZE = 2.8f;
+	private static final float SELECTED_CITY_SIZE = 3.0f;
+	private static final float CITY_SIZE = 2.5f;
+	private static final float CONNECTION_CITY_SIZE = 3.0f;
 
-	static final float CONNECTION_WIDTH = .2f;
-	static final float PATH_CONNECTION_WIDTH = .3f;
+	private static final float CONNECTION_WIDTH = .2f;
+	private static final float PATH_CONNECTION_WIDTH = .3f;
 
-	static final Color SELECTED_CITY_COLOR = Color.RED;
-	static final Color CITY_COLOR = Color.BLACK;
-	static final Color CONNECTION_COLOR = Color.GRAY;
-	static final Color PATH_COLOR = Color.BLUE;
+	private static final Color SELECTED_CITY_COLOR = Color.RED;
+	private static final Color CITY_COLOR = Color.BLACK;
+	private static final Color CONNECTION_COLOR = Color.GRAY;
+	private static final Color PATH_COLOR = Color.BLUE;
 
 	private static final long serialVersionUID = 1L;
 
@@ -63,16 +52,20 @@ public class MapPanel extends JPanel {
 	private HashMap<Integer, ArrayList<City>> clickMap = new HashMap<Integer, ArrayList<City>>();
 	private JButton addCityButton;
 
-	int partitionWidth;
-	final int partitionCount = 300;
-	final int selectionMaxRadius = 40;
+	private int partitionWidth;
+	private final int partitionCount = 300;
+	private final int selectionMaxRadius = 40;
+	private int biggestStringWidth = 0;
 
 	private int xMin, xMax, yMin, yMax;
 
-	double zoom = 1.0;
-	double centerX = 0.0;
-	double centerY = 0.0;
+	private double zoom = 1.0;
+	private double centerX = 0.0;
+	private double centerY = 0.0;
 	private ArrayList<Path> pathsToDraw;
+
+	private double xDrawPoint = 0;
+	private double yDrawPoint = 0;
 
 	public MapPanel(Graph<City, Connection, String> map, ApplicationWindow app) {
 		super();
@@ -110,13 +103,6 @@ public class MapPanel extends JPanel {
 		this.addMouseListener(aHandler);
 		this.addMouseWheelListener(aHandler);
 		this.addMouseMotionListener(aHandler);
-
-		// add border
-		// Border border = BorderFactory.createLineBorder(Color.BLACK, 3);
-		// TitledBorder border = BorderFactory.createTitledBorder(
-		// BorderFactory.createLoweredBevelBorder(), "MAP");
-		// border.setTitleJustification(TitledBorder.LEFT);
-		// this.setBorder(border);
 
 		this.pathsToDraw = new ArrayList<Path>();
 
@@ -226,7 +212,6 @@ public class MapPanel extends JPanel {
 
 		@Override
 		public void mouseWheelMoved(MouseWheelEvent arg0) {
-			// TODO Auto-generated method stub
 			if (arg0.getScrollType() == MouseWheelEvent.WHEEL_UNIT_SCROLL) {
 
 				int mouseDirection = 0;
@@ -277,8 +262,6 @@ public class MapPanel extends JPanel {
 				this.getHeight(), BufferedImage.TYPE_BYTE_GRAY);
 		Graphics2D nameMask = (Graphics2D) nameCollisionImage.getGraphics();
 		nameMask.setColor(Color.WHITE);
-		nameMask.drawLine(0, 0, 100, 100);
-	
 
 		g2d.setRenderingHint(RenderingHints.KEY_STROKE_CONTROL,
 				RenderingHints.VALUE_STROKE_PURE);
@@ -288,6 +271,8 @@ public class MapPanel extends JPanel {
 		// Translate for pan
 		g2d.translate(centerX, centerY);
 		nameMask.translate(centerX, centerY);
+		xDrawPoint = centerX;
+		yDrawPoint = centerY;
 
 		// Draw links
 		g2d.setColor(CONNECTION_COLOR);
@@ -314,18 +299,48 @@ public class MapPanel extends JPanel {
 
 		// Draw cities and names
 		for (City city : cities) {
+
 			double translateX = city.getXCoord() * zoom;
 			double translateY = city.getYCoord() * zoom;
 			g2d.translate(translateX, translateY);
 			nameMask.translate(translateX, translateY);
+			xDrawPoint += translateX;
+			yDrawPoint += translateY;
 
 			// Draw city names:
 			java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
 			int stringWidth = fontMetric.stringWidth(city.getName());
-			g2d.drawString(city.getName(), (int) (-stringWidth / 2),
-					(int) (CITY_SIZE * zoom + 10));
-			
-			nameMask.fillRect(0, 0, stringWidth, 10);
+			if (stringWidth > biggestStringWidth)
+				biggestStringWidth = stringWidth;
+			int stringHeight = 15;
+
+			Point[] checkPoints = new Point[4];
+			checkPoints[0] = new Point((int) xDrawPoint, (int) yDrawPoint);
+			checkPoints[1] = new Point((int) xDrawPoint + stringWidth,
+					(int) yDrawPoint);
+			checkPoints[2] = new Point((int) xDrawPoint, (int) yDrawPoint
+					+ stringHeight);
+			checkPoints[3] = new Point((int) xDrawPoint + stringWidth,
+					(int) yDrawPoint + stringHeight);
+
+			boolean isBlocked = false;
+			for (Point p : checkPoints) {
+				if (p.x > 0 && p.x < nameCollisionImage.getWidth()) {
+					if (p.y > 0 && p.y < nameCollisionImage.getHeight()) {
+						int greyColor = nameCollisionImage.getRGB((int) p.x,
+								(int) p.y);
+						if (greyColor > -10) {
+							isBlocked = true;
+						}
+					}
+				}
+			}
+
+			if (!isBlocked) {
+				g2d.drawString(city.getName(), (int) (-stringWidth / 2),
+						(int) (CITY_SIZE * zoom + 10));
+				nameMask.fillRect(0, 0, biggestStringWidth, stringHeight);
+			}
 
 			// Draw city
 			Ellipse2D.Double circle = new Ellipse2D.Double();
@@ -337,6 +352,8 @@ public class MapPanel extends JPanel {
 			g2d.fill(circle);
 			g2d.translate(centerLinks, centerLinks);
 
+			xDrawPoint -= translateX;
+			yDrawPoint -= translateY;
 			g2d.translate(-translateX, -translateY);
 			nameMask.translate(-translateX, -translateY);
 		}
@@ -356,8 +373,8 @@ public class MapPanel extends JPanel {
 		g2d.drawRect(1, 1, this.getWidth() - 18, this.getHeight() - 41);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawRect(3, 3, this.getWidth() - 22, this.getHeight() - 45);
-		
-		//g2d.drawImage(nameCollisionImage, null, 0, 0);
+
+//		g2d.drawImage(nameCollisionImage, null, 0, 0);
 	}
 
 	private void drawPaths(Graphics2D g2d) {
@@ -372,8 +389,8 @@ public class MapPanel extends JPanel {
 				g2d.translate(translateX, translateY);
 
 				Ellipse2D.Double circle = new Ellipse2D.Double();
-				circle.height = CITY_SIZE * zoom;
-				circle.width = CITY_SIZE * zoom;
+				circle.height = CONNECTION_CITY_SIZE * zoom;
+				circle.width = CONNECTION_CITY_SIZE * zoom;
 				double centerLinks = CITY_SIZE * zoom / 2;
 				g2d.translate(-centerLinks, -centerLinks);
 				g2d.fill(circle);
