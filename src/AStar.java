@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 public class AStar
 {
 	private Graph<City, Connection, String> graph;
-	private double maxSpeed = 1;
+	private double maxSpeed = 100;
 
 	public AStar(Graph<City, Connection, String> graph)
 	{
@@ -28,7 +28,10 @@ public class AStar
 					waypoints.get(i + 1)));
 		}
 
-		System.out.println((System.currentTimeMillis() - start));
+//		System.out.println((System.currentTimeMillis() - start));
+		System.out.println(path);
+		System.out.println("Length: " + path.getPathLength());
+		System.out.println("Time: " + path.getPathTravelTime());
 		return path;
 	}
 
@@ -49,7 +52,10 @@ public class AStar
 					waypoints.get(i + 1)));
 		}
 
-		System.out.println((System.currentTimeMillis() - start));
+//		System.out.println((System.currentTimeMillis() - start));
+		System.out.println(path);
+		System.out.println("Length: " + path.getPathLength());
+		System.out.println("Time: " + path.getPathTravelTime());
 		return path;
 	}
 
@@ -71,8 +77,8 @@ public class AStar
 	public ArrayList<Path> findNShortestPaths(String start, String end,
 			int number)
 	{
-		System.out
-				.printf("Searching for path between %s and %s.%n", start, end);
+//		System.out
+//				.printf("Searching for path between %s and %s.%n", start, end);
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
@@ -89,16 +95,14 @@ public class AStar
 		{
 
 			current = open.remove();
-//			closed.add(current); // So the path is not checked twice. But when
-									// would that happen?
 
 			if (current.getEndpoint().equals(endCity))
 			{
-				System.out.println("Path found.");
-				System.out.printf("Path is %.1f units long%n",
-						current.getPathLength());
-				System.out.printf("Path will take %.1f units of time.%n",
-						current.getPathTravelTime());
+//				System.out.println("Path found.");
+//				System.out.printf("Path is %.1f units long%n",
+//						current.getPathLength());
+//				System.out.printf("Path will take %.1f units of time.%n",
+//						current.getPathTravelTime());
 				possiblePaths.add(current);
 				continue;
 			}
@@ -116,11 +120,7 @@ public class AStar
 				closed.add(city);
 				newPath = current.copy();
 				newPath.addToPath(city, connections.get(city));
-				newPath.setApproximatedPathLength(endCity); // for
-																			// the
-																			// heuristic
-																			// if
-																			// (!(closed.contains(newPath)))
+				newPath.setApproximatedPathLength(endCity);
 				open.add(newPath); // TODO Is this actually necessary?
 			}
 		}
@@ -140,8 +140,8 @@ public class AStar
 	public ArrayList<Path> findNFastestPaths(String start, String end,
 			int number)
 	{
-		System.out
-				.printf("Searching for path between %s and %s.%n", start, end);
+//		System.out
+//				.printf("Searching for path between %s and %s.%n", start, end);
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
@@ -161,11 +161,11 @@ public class AStar
 
 			if (current.getEndpoint().equals(endCity))
 			{
-				System.out.println("Path found.");
-				System.out.printf("Path is %.1f units long%n",
-						current.getPathLength());
-				System.out.printf("Path will take %.1f units of time.%n",
-						current.getPathTravelTime());
+//				System.out.println("Path found.");
+//				System.out.printf("Path is %.1f units long%n",
+//						current.getPathLength());
+//				System.out.printf("Path will take %.1f units of time.%n",
+//						current.getPathTravelTime());
 				possiblePaths.add(current);
 				continue;
 			}
@@ -183,11 +183,7 @@ public class AStar
 				closed.add(city);
 				newPath = current.copy();
 				newPath.addToPath(city, connections.get(city));
-				newPath.setApproximatedPathTime(endCity, this.maxSpeed); // for
-																			// the
-																			// heuristic
-																			// if
-																			// (!(closed.contains(newPath)))
+				newPath.setApproximatedPathTime(endCity, this.maxSpeed);
 				open.add(newPath);
 			}
 		}
