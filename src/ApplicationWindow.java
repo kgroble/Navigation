@@ -320,9 +320,9 @@ public class ApplicationWindow extends JFrame {
 						ArrayList<Path> paths = mapPanel.getPaths();
 						double distance=0;
 						double time=0;
-						for(Path i:paths){
-							distance+=i.getPathLength();
-							time+=i.getPathTravelTime();
+						for(Path p:paths){
+							distance+=p.getPathLength();
+							time+=p.getPathTravelTime();
 						}
 						
 						addToDisplay("distance = "+(float)distance);
@@ -375,9 +375,9 @@ public class ApplicationWindow extends JFrame {
 						ArrayList<Path> paths = mapPanel.getPaths();
 						double distance=0;
 						double time=0;
-						for(Path i:paths){
-							distance+=i.getPathLength();
-							time+=i.getPathTravelTime();
+						for(Path p:paths){
+							distance+=p.getPathLength();
+							time+=p.getPathTravelTime();
 						}
 						
 						addToDisplay("distance = "+(float)distance);
