@@ -14,6 +14,8 @@ public class AStar
 
 	public Path findFastestPathWithWayPoints(ArrayList<String> waypoints)
 	{
+		long start = System.currentTimeMillis();
+		
 		if (waypoints.size() < 2)
 			return null;
 
@@ -27,11 +29,14 @@ public class AStar
 					(waypoints.get(i), waypoints.get(i + 1)));
 		}
 
+		System.out.println((System.currentTimeMillis() - start));
 		return path;
 	}
 	
 	public Path findShortestPathWithWayPoints(ArrayList<String> waypoints)
 	{
+		long start = System.currentTimeMillis();
+		
 		if (waypoints.size() < 2)
 			return null;
 
@@ -45,6 +50,7 @@ public class AStar
 					(waypoints.get(i), waypoints.get(i + 1)));
 		}
 
+		System.out.println((System.currentTimeMillis() - start));
 		return path;
 	}
 	
@@ -87,7 +93,7 @@ public class AStar
 			current = open.remove();
 			closed.add(current); // So the path is not checked twice. But when
 									// would that happen?
-
+			
 			if (current.getEndpoint().equals(endCity))
 			{
 				System.out.println("Path found.");
@@ -108,6 +114,9 @@ public class AStar
 			// Adding possible paths to the PriorityQueue
 			for (City city : connections.keySet())
 			{
+				if (current.containsCity(city.getName()))
+					continue;
+				
 				newPath = current.copy(); // TODO fix this. No good. Bad.
 											// Baaaaad.
 				newPath.addToPath(city, connections.get(city));
@@ -149,13 +158,10 @@ public class AStar
 
 		while (!open.isEmpty() && possiblePaths.size() < number)
 		{
-			System.out.println("Iteration");
 			
 			current = open.remove();
 			closed.add(current); // So the path is not checked twice. But when
 									// would that happen?
-			
-			System.out.println(current);
 
 			if (current.getEndpoint().equals(endCity))
 			{
@@ -183,7 +189,6 @@ public class AStar
 				newPath.setApproximatedPathTime(endCity, this.maxSpeed); // for
 																			// the
 																			// heuristic
-
 				if (!(closed.contains(newPath)))
 					open.add(newPath); // TODO Is this actually necessary?
 			}
