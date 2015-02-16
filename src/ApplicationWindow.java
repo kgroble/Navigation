@@ -151,6 +151,7 @@ public class ApplicationWindow extends JFrame {
 				break;
 			}
 		}
+		mapPanel.clearPaths();
 	}
 
 	/**
@@ -174,6 +175,7 @@ public class ApplicationWindow extends JFrame {
 			citiesList.remove(index);
 			listBox.updateUI();
 		}
+		mapPanel.clearPaths();
 	}
 
 	/**
@@ -225,6 +227,7 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					citiesList.clear();
+					mapPanel.clearPaths();
 					listBox.updateUI();
 				}
 			});
@@ -280,6 +283,7 @@ public class ApplicationWindow extends JFrame {
 						return;
 					}
 
+					mapPanel.clearPaths();
 					clearDisplay();
 
 					if (time.getText().equals("")) {
@@ -318,6 +322,7 @@ public class ApplicationWindow extends JFrame {
 						return;
 					}
 
+					mapPanel.clearPaths();
 					clearDisplay();
 
 					if (distance.getText().equals("")) {
