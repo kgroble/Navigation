@@ -69,10 +69,10 @@ public class ApplicationWindow extends JFrame {
 
 				// create and add mapPanel
 				mapPanel = new MapPanel(map, ApplicationWindow.this);
-				mapPanel.setBounds(0, CONTROL_PANEL_WIDTH, FRAME_WIDTH,
-						FRAME_HEIGHT - CONTROL_PANEL_WIDTH);
-				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH,
-						FRAME_HEIGHT - CONTROL_PANEL_WIDTH));
+				mapPanel.setBounds(CONTROL_PANEL_WIDTH, 0, FRAME_WIDTH
+						- CONTROL_PANEL_WIDTH, FRAME_HEIGHT);
+				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH
+						- CONTROL_PANEL_WIDTH, FRAME_HEIGHT));
 				containerPanel.add(mapPanel);
 
 				setSize(FRAME_WIDTH, FRAME_HEIGHT);
@@ -208,37 +208,6 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					addToList(cityName.getText());
-					// //Take input from the user
-					// String toS = to.getText().toLowerCase().trim();
-					// String fromS = from.getText().toLowerCase().trim();
-					// City toCity = null;
-					// City fromCity = null;
-					//
-
-					// if(cityName.equals(toS)){
-					// toCity = city;
-					// toS = toCity.getName();
-					// }
-					// if(cityName.equals(fromS)){
-					// fromCity = city;
-					// fromS = fromCity.getName();
-					// }
-					//
-					// }
-					// if(toCity != null && fromCity != null){
-					// ApplicationWindow.this.mapPanel.addPath(a.findShortestPathBetween(fromS,
-					// toS));
-					// } else {
-					// System.out.println("Please make sure you entered valid city names.");
-					// }
-					//
-					// //send input to the map panel and receive informative
-					// string
-					// //String a=mapPanel.fromTo(toSt, fromS);
-					//
-					// //display output
-					// //distance.setText(toS);
-					// //time.setText(fromS);
 				}
 
 			});
@@ -309,3 +278,4 @@ public class ApplicationWindow extends JFrame {
 
 	}
 }
+
