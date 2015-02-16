@@ -25,8 +25,8 @@ public class ApplicationWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1100;
-	private static final int FRAME_HEIGHT = 600;
-	private static final int CONTROL_PANEL_WIDTH = 150;
+	private static final int FRAME_HEIGHT = 700;
+	private static final int CONTROL_PANEL_WIDTH = 180;
 
 	// Serves as the 'background' that the other two panels will be added to:
 	private JPanel containerPanel;
@@ -36,12 +36,13 @@ public class ApplicationWindow extends JFrame {
 	private Graph<City, Connection, String> map;
 	private AStar aStar;
 	private ActionListener restartListen;
-	private MyDataList<String> citiesList;
-	private JList<String> listBox;
+	private MyDataList<String> citiesList, displayList;
+	private JList<String> listBox, displayBox;
 
 	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
 		this.aStar = a;
 		this.citiesList = new MyDataList<String>();
+		this.displayList= new MyDataList<String>();
 
 		// Set up jframe
 		this.setTitle("Navigation");
@@ -54,9 +55,9 @@ public class ApplicationWindow extends JFrame {
 
 		this.listBox = new JList<String>(citiesList);
 		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		this.listBox.setBounds(ControlPanel.MARGIN,
-				ControlPanel.MARGIN * 2 + 20, CONTROL_PANEL_WIDTH
-						- ControlPanel.MARGIN * 2, 200);
+		
+		this.displayBox= new JList<String>(displayList);
+		this.displayBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
 		restartListen = new ActionListener() {
 
@@ -64,8 +65,10 @@ public class ApplicationWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				containerPanel.remove(mapPanel);
 				citiesList.clear();
+				displayList.clear();
 
 				listBox.updateUI();
+				displayBox.updateUI();
 
 				// create and add mapPanel
 				mapPanel = new MapPanel(map, ApplicationWindow.this);
@@ -171,7 +174,8 @@ public class ApplicationWindow extends JFrame {
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
-		private JTextArea cityName;
+		private JTextArea cityName, distance, time;
+		private JScrollPane listScroller, displayScroller;
 		private final static int MARGIN = 10;
 
 		public ControlPanel(int height, ActionListener ab) {
@@ -182,9 +186,19 @@ public class ApplicationWindow extends JFrame {
 					* MARGIN, 20);
 			this.cityName.setBorder(new BevelBorder(1));
 			this.add(this.cityName);
+			
+			this.time = new JTextArea();
+			this.time.setBounds(MARGIN, MARGIN*6+240, CONTROL_PANEL_WIDTH-2*MARGIN,20);
+			this.time.setBorder(new BevelBorder(1));
+			this.add(this.time);
+			
+			this.displayScroller= new JScrollPane(displayBox);
+			this.displayScroller.setBounds(MARGIN, MARGIN * 3 + 330, CONTROL_PANEL_WIDTH
+					- MARGIN * 2, 260);
+			this.add(displayScroller);
 
-			JScrollPane listScroller = new JScrollPane(listBox);
-			listScroller.setBounds(MARGIN, MARGIN * 3 + 40, CONTROL_PANEL_WIDTH
+			this.listScroller = new JScrollPane(listBox);
+			this.listScroller.setBounds(MARGIN, MARGIN * 3 + 40, CONTROL_PANEL_WIDTH
 					- MARGIN * 2, 100);
 			this.add(listScroller);
 
@@ -242,10 +256,12 @@ public class ApplicationWindow extends JFrame {
 					ApplicationWindow.this.mapPanel.addPath(path);
 				}
 			});
-			pathTime.setBounds(MARGIN, MARGIN * 7 + 200, CONTROL_PANEL_WIDTH
+			pathTime.setBounds(MARGIN, MARGIN * 6 + 270, CONTROL_PANEL_WIDTH
 					- MARGIN * 2, 20);
 			pathTime.setText("Path Time");
 			this.add(pathTime);
+			
+			
 
 			pathDistance = new JButton();
 			pathDistance.addActionListener(new ActionListener() {
@@ -260,10 +276,16 @@ public class ApplicationWindow extends JFrame {
 				}
 			});
 
-			pathDistance.setBounds(MARGIN, MARGIN * 6 + 180,
+			pathDistance.setBounds(MARGIN, MARGIN * 6 + 210,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);
+			
+			this.distance= new JTextArea();
+			this.distance.setBounds(MARGIN, MARGIN * 6 + 180,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
+			this.distance.setBorder(new BevelBorder(1));
+			this.add(this.distance);
 
 			restart = new JButton();
 			restart.setBounds(MARGIN, FRAME_HEIGHT - 58 - MARGIN,
