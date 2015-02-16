@@ -43,7 +43,7 @@ public class ApplicationWindow extends JFrame {
 	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
 		this.aStar = a;
 		this.citiesList = new MyDataList<String>();
-		this.displayList= new MyDataList<String>();
+		this.displayList = new MyDataList<String>();
 
 		// Set up jframe
 		this.setTitle("Navigation");
@@ -56,8 +56,8 @@ public class ApplicationWindow extends JFrame {
 
 		this.listBox = new JList<String>(citiesList);
 		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		
-		this.displayBox= new JList<String>(displayList);
+
+		this.displayBox = new JList<String>(displayList);
 		this.displayBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
 		restartListen = new ActionListener() {
@@ -153,6 +153,16 @@ public class ApplicationWindow extends JFrame {
 	}
 
 	/**
+	 * adds string to the display list
+	 * 
+	 * @param string
+	 */
+	public void addToDisplay(String string) {
+		displayList.add(string);
+		displayBox.updateUI();
+	}
+
+	/**
 	 * removes an element from the specified index if that index is in myList's
 	 * range
 	 * 
@@ -172,6 +182,10 @@ public class ApplicationWindow extends JFrame {
 		return (String[]) this.citiesList.toArray();
 	}
 
+	public void clearDisplay() {
+		this.displayList.clear();
+	}
+
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
@@ -181,26 +195,27 @@ public class ApplicationWindow extends JFrame {
 
 		public ControlPanel(int height, ActionListener ab) {
 			super();
-					
+
 			this.cityName = new JTextArea();
 			this.cityName.setBounds(MARGIN, MARGIN, CONTROL_PANEL_WIDTH - 2
 					* MARGIN, 20);
 			this.cityName.setBorder(new BevelBorder(1));
 			this.add(this.cityName);
-			
+
 			this.time = new JTextArea();
-			this.time.setBounds(MARGIN, MARGIN*6+240, CONTROL_PANEL_WIDTH-2*MARGIN,20);
+			this.time.setBounds(MARGIN, MARGIN * 6 + 240, CONTROL_PANEL_WIDTH
+					- 2 * MARGIN, 20);
 			this.time.setBorder(new BevelBorder(1));
 			this.add(this.time);
-			
-			this.displayScroller= new JScrollPane(displayBox);
-			this.displayScroller.setBounds(MARGIN, MARGIN * 3 + 330, CONTROL_PANEL_WIDTH
-					- MARGIN * 2, 260);
+
+			this.displayScroller = new JScrollPane(displayBox);
+			this.displayScroller.setBounds(MARGIN, MARGIN * 3 + 330,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 260);
 			this.add(displayScroller);
 
 			this.listScroller = new JScrollPane(listBox);
-			this.listScroller.setBounds(MARGIN, MARGIN * 3 + 40, CONTROL_PANEL_WIDTH
-					- MARGIN * 2, 100);
+			this.listScroller.setBounds(MARGIN, MARGIN * 3 + 40,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 100);
 			this.add(listScroller);
 
 			clear = new JButton();
@@ -250,49 +265,70 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					int size=citiesList.size();
-					if(size==0){
-						JOptionPane.showMessageDialog(ApplicationWindow.this,"ENTER CITIES", "error",JOptionPane.ERROR_MESSAGE);
+					int size = citiesList.size();
+					if (size == 0) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"ENTER CITIES", "error",
+								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-						
-					if((size!=1&&!time.getText().equals(""))){
-						JOptionPane.showMessageDialog(ApplicationWindow.this,"YOU CAN ONLY HAVE ONE CITY", "error",JOptionPane.ERROR_MESSAGE);
+					if ((size != 1 && !time.getText().equals(""))) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"YOU CAN ONLY HAVE ONE CITY", "error",
+								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					ArrayList<String> waypoints = new ArrayList<String>(
-							ApplicationWindow.this.citiesList);
-					Path path = ApplicationWindow.this.aStar
-							.findFastestPathWithWayPoints(waypoints);
-					ApplicationWindow.this.mapPanel.addPath(path);
+
+					clearDisplay();
+
+					if (time.getText().equals("")) {
+						ArrayList<String> waypoints = new ArrayList<String>(
+								ApplicationWindow.this.citiesList);
+						Path path = ApplicationWindow.this.aStar
+								.findFastestPathWithWayPoints(waypoints);
+						ApplicationWindow.this.mapPanel.addPath(path);
+					} else {
+						addToDisplay("ooo");
+						time.setText("");
+					}
 				}
 			});
 			pathTime.setBounds(MARGIN, MARGIN * 6 + 270, CONTROL_PANEL_WIDTH
 					- MARGIN * 2, 20);
 			pathTime.setText("Path Time");
 			this.add(pathTime);
-			
-			
 
 			pathDistance = new JButton();
 			pathDistance.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					int size= citiesList.size();
-					if(size==0){
-						JOptionPane.showMessageDialog(ApplicationWindow.this,"ENTER CITIES", "error",JOptionPane.ERROR_MESSAGE);
+					int size = citiesList.size();
+					if (size == 0) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"ENTER CITIES", "error",
+								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					if((size!=1&&!distance.getText().equals(""))){
-						JOptionPane.showMessageDialog(ApplicationWindow.this,"YOU CAN ONLY HAVE ONE CITY", "error",JOptionPane.ERROR_MESSAGE);
+					if ((size != 1 && !distance.getText().equals(""))) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"YOU CAN ONLY HAVE ONE CITY", "error",
+								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					ArrayList<String> waypoints = new ArrayList<String>(
-							ApplicationWindow.this.citiesList);
-					Path path = ApplicationWindow.this.aStar
-							.findShortestPathWithWayPoints(waypoints);
-					ApplicationWindow.this.mapPanel.addPath(path);
+
+					clearDisplay();
+
+					if (distance.getText().equals("")) {
+						ArrayList<String> waypoints = new ArrayList<String>(
+								ApplicationWindow.this.citiesList);
+						Path path = ApplicationWindow.this.aStar
+								.findShortestPathWithWayPoints(waypoints);
+						ApplicationWindow.this.mapPanel.addPath(path);
+					} else {
+						addToDisplay("ooo");
+						distance.setText("");
+					}
 				}
 			});
 
@@ -300,8 +336,8 @@ public class ApplicationWindow extends JFrame {
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);
-			
-			this.distance= new JTextArea();
+
+			this.distance = new JTextArea();
 			this.distance.setBounds(MARGIN, MARGIN * 6 + 180,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			this.distance.setBorder(new BevelBorder(1));
@@ -320,4 +356,3 @@ public class ApplicationWindow extends JFrame {
 
 	}
 }
-
