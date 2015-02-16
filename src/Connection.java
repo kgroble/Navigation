@@ -11,13 +11,13 @@ public class Connection
 	
 	public Connection(double length, double averageSpeed)
 	{
-		this.length = length;
+		this.length = Math.abs(length);
 		this.averageSpeed = averageSpeed;
 		
 		if (this.averageSpeed == 0)
 			throw new RuntimeException("Speed is equal to zero.");
-		if (this.length <= 0)
-			throw new RuntimeException("Length is either negative or zero.");
+//		if (this.length == 0)
+//			throw new RuntimeException("Length is either negative or zero.");
 		
 		this.timeTaken = this.length / this.averageSpeed;
 	

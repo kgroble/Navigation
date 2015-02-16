@@ -30,7 +30,7 @@ import javax.swing.JPanel;
 public class MapPanel extends JPanel {
 
 	private static final float ZOOM_SPEED = 1.05f;
-	private static final float ZOOM_MAX = 30.0f;
+	private static final float ZOOM_MAX = 30000.0f;
 	private static final float ZOOM_MIN = 0.1f;
 
 	private static final float SELECTED_CITY_SIZE = 3.0f;
@@ -44,7 +44,7 @@ public class MapPanel extends JPanel {
 	private static final Color CITY_COLOR = Color.BLACK;
 	private static final Color CONNECTION_COLOR = Color.GRAY;
 	private static final long serialVersionUID = 1L;
-	
+
 	private ArrayList<Color> connectionColors;
 
 	private Graph<City, Connection, String> map;
@@ -74,18 +74,19 @@ public class MapPanel extends JPanel {
 		this.setBackground(Color.WHITE);
 
 		this.connectionColors = new ArrayList<Color>();
-		
+
 		findBounds();
 		updateClickMap();
+		initColors();
 
-		addCityButton = new JButton();
-		addCityButton.setBounds(0, 0, 0, 0);
-		addCityButton.setText("Add City");
-		addCityButton.setBorderPainted(false);
-		addCityButton.setFocusPainted(false);
-		addCityButton.setBackground(Color.WHITE);
-		addCityButton.setContentAreaFilled(false);
-		addCityButton.addActionListener(new ActionListener() {
+		this.addCityButton = new JButton();
+		this.addCityButton.setBounds(0, 0, 0, 0);
+		this.addCityButton.setText("Add City");
+		this.addCityButton.setBorderPainted(false);
+		this.addCityButton.setFocusPainted(false);
+		this.addCityButton.setBackground(Color.WHITE);
+		this.addCityButton.setContentAreaFilled(false);
+		this.addCityButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -337,7 +338,8 @@ public class MapPanel extends JPanel {
 				}
 			}
 
-			if (!isBlocked || (selectedCity != null && selectedCity.equals(city))) {
+			if (!isBlocked
+					|| (selectedCity != null && selectedCity.equals(city))) {
 				g2d.drawString(city.getName(), (int) (-stringWidth / 2),
 						(int) (CITY_SIZE * zoom + 10));
 				nameMask.fillRect(0, 0, biggestStringWidth, stringHeight);
@@ -375,21 +377,19 @@ public class MapPanel extends JPanel {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawRect(3, 3, this.getWidth() - 22, this.getHeight() - 45);
 
-//		g2d.drawImage(nameCollisionImage, null, 0, 0);
+		// g2d.drawImage(nameCollisionImage, null, 0, 0);
 	}
 
 	private void drawPaths(Graphics2D g2d) {
 		int colorNumber = 0;
 		for (Path path : pathsToDraw) {
-			if (connectionColors.size() > 0)
-			{
+			if (connectionColors.size() > 0) {
 				g2d.setColor(connectionColors.get(colorNumber));
 				colorNumber++;
 				colorNumber = colorNumber % connectionColors.size();
-			}
-			else 
+			} else
 				g2d.setColor(CONNECTION_COLOR);
-			
+
 			ArrayList<Point> linkPoints = new ArrayList<Point>();
 			for (City city : path.getCities()) {
 				linkPoints.add(new Point((int) (city.getXCoord() * zoom),
@@ -401,7 +401,7 @@ public class MapPanel extends JPanel {
 				Ellipse2D.Double circle = new Ellipse2D.Double();
 				circle.height = CONNECTION_CITY_SIZE * zoom;
 				circle.width = CONNECTION_CITY_SIZE * zoom;
-				double centerLinks = CITY_SIZE * zoom / 2;
+				double centerLinks = CONNECTION_CITY_SIZE * zoom / 2;
 				g2d.translate(-centerLinks, -centerLinks);
 				g2d.fill(circle);
 				g2d.translate(centerLinks, centerLinks);
@@ -485,5 +485,17 @@ public class MapPanel extends JPanel {
 				partitionNumber = partitionCount - 1;
 			clickMap.get(partitionNumber).add(city);
 		}
+	}
+
+	private void initColors() {
+		if (connectionColors == null)
+			connectionColors = new ArrayList<Color>();
+		connectionColors.add(Color.BLUE);
+		connectionColors.add(Color.GREEN);
+		connectionColors.add(Color.RED);
+		connectionColors.add(Color.YELLOW);
+		connectionColors.add(Color.CYAN);
+		connectionColors.add(Color.PINK);
+
 	}
 }
