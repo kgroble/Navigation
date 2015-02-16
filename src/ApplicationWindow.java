@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -180,7 +181,7 @@ public class ApplicationWindow extends JFrame {
 
 		public ControlPanel(int height, ActionListener ab) {
 			super();
-
+					
 			this.cityName = new JTextArea();
 			this.cityName.setBounds(MARGIN, MARGIN, CONTROL_PANEL_WIDTH - 2
 					* MARGIN, 20);
@@ -268,6 +269,10 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					if(citiesList.size()!=1||citiesList.size()==0){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,"YOU CANT DO THAT", "",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					ArrayList<String> waypoints = new ArrayList<String>(
 							ApplicationWindow.this.citiesList);
 					Path path = ApplicationWindow.this.aStar
