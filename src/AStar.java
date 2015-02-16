@@ -122,7 +122,7 @@ public class AStar
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathLength(endCity); // for the heuristic
 
-				if (!(closed.contains(newPath)))
+//				if (!(closed.contains(newPath)))
 					open.add(newPath); // TODO Is this actually necessary?
 			}
 		}
@@ -189,7 +189,7 @@ public class AStar
 				newPath.setApproximatedPathTime(endCity, this.maxSpeed); // for
 																			// the
 																			// heuristic
-				if (!(closed.contains(newPath)))
+//				if (!(closed.contains(newPath)))
 					open.add(newPath); // TODO Is this actually necessary?
 			}
 		}
