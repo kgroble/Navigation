@@ -317,6 +317,16 @@ public class ApplicationWindow extends JFrame {
 						Path path = ApplicationWindow.this.aStar
 								.findFastestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
+						ArrayList<Path> paths = mapPanel.getPaths();
+						double distance=0;
+						double time=0;
+						for(Path i:paths){
+							distance+=i.getPathLength();
+							time+=i.getPathTravelTime();
+						}
+						
+						addToDisplay("distance = "+(float)distance);
+						addToDisplay("time = "+(float)time);
 					} else {
 						addToDisplay("ooo");
 						time.setText("");
