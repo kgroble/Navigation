@@ -13,6 +13,7 @@ import javax.swing.JButton;
 import javax.swing.JComponent;
 import javax.swing.JFrame;
 import javax.swing.JList;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
@@ -25,8 +26,8 @@ public class ApplicationWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1100;
-	private static final int FRAME_HEIGHT = 600;
-	private static final int CONTROL_PANEL_WIDTH = 150;
+	private static final int FRAME_HEIGHT = 700;
+	private static final int CONTROL_PANEL_WIDTH = 180;
 
 	// Serves as the 'background' that the other two panels will be added to:
 	private JPanel containerPanel;
@@ -36,12 +37,13 @@ public class ApplicationWindow extends JFrame {
 	private Graph<City, Connection, String> map;
 	private AStar aStar;
 	private ActionListener restartListen;
-	private MyDataList<String> citiesList;
-	private JList<String> listBox;
+	private MyDataList<String> citiesList, displayList;
+	private JList<String> listBox, displayBox;
 
 	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
 		this.aStar = a;
 		this.citiesList = new MyDataList<String>();
+		this.displayList = new MyDataList<String>();
 
 		// Set up jframe
 		this.setTitle("Navigation");
@@ -54,29 +56,32 @@ public class ApplicationWindow extends JFrame {
 
 		this.listBox = new JList<String>(citiesList);
 		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
-		this.listBox.setBounds(ControlPanel.MARGIN,
-				ControlPanel.MARGIN * 2 + 20, CONTROL_PANEL_WIDTH
-						- ControlPanel.MARGIN * 2, 200);
+
+		this.displayBox = new JList<String>(displayList);
+		this.displayBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
 		restartListen = new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//remove and clear components
 				containerPanel.remove(mapPanel);
 				citiesList.clear();
+				displayList.clear();
+				controlPanel.clearTxtBoxes();
 
+				//update boxes
 				listBox.updateUI();
+				displayBox.updateUI();
 
 				// create and add mapPanel
 				mapPanel = new MapPanel(map, ApplicationWindow.this);
-				mapPanel.setBounds(CONTROL_PANEL_WIDTH, 0, FRAME_WIDTH
-						- CONTROL_PANEL_WIDTH, FRAME_HEIGHT);
-				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH
-						- CONTROL_PANEL_WIDTH, FRAME_HEIGHT));
+				mapPanel.setBounds(CONTROL_PANEL_WIDTH, 0, getWidth()
+						- CONTROL_PANEL_WIDTH, getHeight());
+				mapPanel.setPreferredSize(new Dimension(getWidth()
+						- CONTROL_PANEL_WIDTH, getHeight()));
 				containerPanel.add(mapPanel);
 
-				setSize(FRAME_WIDTH, FRAME_HEIGHT);
-				setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 				repaint();
 			}
 
@@ -149,6 +154,16 @@ public class ApplicationWindow extends JFrame {
 	}
 
 	/**
+	 * adds string to the display list
+	 * 
+	 * @param string
+	 */
+	public void addToDisplay(String string) {
+		displayList.add(string);
+		displayBox.updateUI();
+	}
+
+	/**
 	 * removes an element from the specified index if that index is in myList's
 	 * range
 	 * 
@@ -168,10 +183,15 @@ public class ApplicationWindow extends JFrame {
 		return (String[]) this.citiesList.toArray();
 	}
 
+	public void clearDisplay() {
+		this.displayList.clear();
+	}
+
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
-		private JTextArea cityName;
+		private JTextArea cityName, distance, time;
+		private JScrollPane listScroller, displayScroller;
 		private final static int MARGIN = 10;
 
 		public ControlPanel(int height, ActionListener ab) {
@@ -183,9 +203,20 @@ public class ApplicationWindow extends JFrame {
 			this.cityName.setBorder(new BevelBorder(1));
 			this.add(this.cityName);
 
-			JScrollPane listScroller = new JScrollPane(listBox);
-			listScroller.setBounds(MARGIN, MARGIN * 3 + 40, CONTROL_PANEL_WIDTH
-					- MARGIN * 2, 100);
+			this.time = new JTextArea();
+			this.time.setBounds(MARGIN, MARGIN * 6 + 240, CONTROL_PANEL_WIDTH
+					- 2 * MARGIN, 20);
+			this.time.setBorder(new BevelBorder(1));
+			this.add(this.time);
+
+			this.displayScroller = new JScrollPane(displayBox);
+			this.displayScroller.setBounds(MARGIN, MARGIN * 3 + 330,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 260);
+			this.add(displayScroller);
+
+			this.listScroller = new JScrollPane(listBox);
+			this.listScroller.setBounds(MARGIN, MARGIN * 3 + 40,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 100);
 			this.add(listScroller);
 
 			clear = new JButton();
@@ -235,14 +266,35 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					ArrayList<String> waypoints = new ArrayList<String>(
-							ApplicationWindow.this.citiesList);
-					Path path = ApplicationWindow.this.aStar
-							.findFastestPathWithWayPoints(waypoints);
-					ApplicationWindow.this.mapPanel.addPath(path);
+					int size = citiesList.size();
+					if (size == 0) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"ENTER CITIES", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if ((size != 1 && !time.getText().equals(""))) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"YOU CAN ONLY HAVE ONE CITY", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+
+					clearDisplay();
+
+					if (time.getText().equals("")) {
+						ArrayList<String> waypoints = new ArrayList<String>(
+								ApplicationWindow.this.citiesList);
+						Path path = ApplicationWindow.this.aStar
+								.findFastestPathWithWayPoints(waypoints);
+						ApplicationWindow.this.mapPanel.addPath(path);
+					} else {
+						addToDisplay("ooo");
+						time.setText("");
+					}
 				}
 			});
-			pathTime.setBounds(MARGIN, MARGIN * 7 + 200, CONTROL_PANEL_WIDTH
+			pathTime.setBounds(MARGIN, MARGIN * 6 + 270, CONTROL_PANEL_WIDTH
 					- MARGIN * 2, 20);
 			pathTime.setText("Path Time");
 			this.add(pathTime);
@@ -252,18 +304,45 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					ArrayList<String> waypoints = new ArrayList<String>(
-							ApplicationWindow.this.citiesList);
-					Path path = ApplicationWindow.this.aStar
-							.findShortestPathWithWayPoints(waypoints);
-					ApplicationWindow.this.mapPanel.addPath(path);
+					int size = citiesList.size();
+					if (size == 0) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"ENTER CITIES", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if ((size != 1 && !distance.getText().equals(""))) {
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"YOU CAN ONLY HAVE ONE CITY", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+
+					clearDisplay();
+
+					if (distance.getText().equals("")) {
+						ArrayList<String> waypoints = new ArrayList<String>(
+								ApplicationWindow.this.citiesList);
+						Path path = ApplicationWindow.this.aStar
+								.findShortestPathWithWayPoints(waypoints);
+						ApplicationWindow.this.mapPanel.addPath(path);
+					} else {
+						addToDisplay("ooo");
+						distance.setText("");
+					}
 				}
 			});
 
-			pathDistance.setBounds(MARGIN, MARGIN * 6 + 180,
+			pathDistance.setBounds(MARGIN, MARGIN * 6 + 210,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);
+
+			this.distance = new JTextArea();
+			this.distance.setBounds(MARGIN, MARGIN * 6 + 180,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
+			this.distance.setBorder(new BevelBorder(1));
+			this.add(this.distance);
 
 			restart = new JButton();
 			restart.setBounds(MARGIN, FRAME_HEIGHT - 58 - MARGIN,
@@ -275,7 +354,12 @@ public class ApplicationWindow extends JFrame {
 			this.setBackground(Color.GRAY);
 			this.setOpaque(true);
 		}
+		
+		public void clearTxtBoxes(){
+			this.cityName.setText("");
+			this.distance.setText("");
+			this.time.setText("");
+		}
 
 	}
 }
-
