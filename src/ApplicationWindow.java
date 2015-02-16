@@ -211,31 +211,43 @@ public class ApplicationWindow extends JFrame {
 		private JScrollPane listScroller, displayScroller;
 		private final static int MARGIN = 10;
 
-		public ControlPanel(int height, ActionListener ab) {
+		public ControlPanel(int height, ActionListener restartListener) {
 			super();
 
+			//adds the city name txtbox to the panel
 			this.cityName = new JTextArea();
 			this.cityName.setBounds(MARGIN, MARGIN, CONTROL_PANEL_WIDTH - 2
 					* MARGIN, 20);
 			this.cityName.setBorder(new BevelBorder(1));
 			this.add(this.cityName);
 
+			//adds the time txtbox to the panel
 			this.time = new JTextArea();
 			this.time.setBounds(MARGIN, MARGIN * 6 + 240, CONTROL_PANEL_WIDTH
 					- 2 * MARGIN, 20);
 			this.time.setBorder(new BevelBorder(1));
 			this.add(this.time);
+			
+			//adds the distance txtbox to the panel
+			this.distance = new JTextArea();
+			this.distance.setBounds(MARGIN, MARGIN * 6 + 180,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
+			this.distance.setBorder(new BevelBorder(1));
+			this.add(this.distance);
 
+			//adds the display to the panel
 			this.displayScroller = new JScrollPane(displayBox);
 			this.displayScroller.setBounds(MARGIN, MARGIN * 3 + 330,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 260);
 			this.add(displayScroller);
 
+			//adds the list to the panel
 			this.listScroller = new JScrollPane(listBox);
 			this.listScroller.setBounds(MARGIN, MARGIN * 3 + 40,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 100);
 			this.add(listScroller);
 
+			//adds all the buttons
 			clear = new JButton();
 			clear.addActionListener(new ActionListener() {
 
@@ -388,23 +400,16 @@ public class ApplicationWindow extends JFrame {
 					}
 				}
 			});
-
 			pathDistance.setBounds(MARGIN, MARGIN * 6 + 210,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);
-
-			this.distance = new JTextArea();
-			this.distance.setBounds(MARGIN, MARGIN * 6 + 180,
-					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
-			this.distance.setBorder(new BevelBorder(1));
-			this.add(this.distance);
-
+			
 			restart = new JButton();
 			restart.setBounds(MARGIN, FRAME_HEIGHT - 58 - MARGIN,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			restart.setText("RESTART");
-			restart.addActionListener(ab);
+			restart.addActionListener(restartListener);
 			this.add(restart);
 
 			this.setBackground(Color.GRAY);
