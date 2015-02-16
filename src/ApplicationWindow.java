@@ -64,24 +64,24 @@ public class ApplicationWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
+				//remove and clear components
 				containerPanel.remove(mapPanel);
 				citiesList.clear();
 				displayList.clear();
 				controlPanel.clearTxtBoxes();
 
+				//update boxes
 				listBox.updateUI();
 				displayBox.updateUI();
 
 				// create and add mapPanel
 				mapPanel = new MapPanel(map, ApplicationWindow.this);
-				mapPanel.setBounds(CONTROL_PANEL_WIDTH, 0, FRAME_WIDTH
-						- CONTROL_PANEL_WIDTH, FRAME_HEIGHT);
-				mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH
-						- CONTROL_PANEL_WIDTH, FRAME_HEIGHT));
+				mapPanel.setBounds(CONTROL_PANEL_WIDTH, 0, getWidth()
+						- CONTROL_PANEL_WIDTH, getHeight());
+				mapPanel.setPreferredSize(new Dimension(getWidth()
+						- CONTROL_PANEL_WIDTH, getHeight()));
 				containerPanel.add(mapPanel);
 
-				setSize(FRAME_WIDTH, FRAME_HEIGHT);
-				setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 				repaint();
 			}
 
