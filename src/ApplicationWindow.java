@@ -54,9 +54,11 @@ public class ApplicationWindow extends JFrame {
 		this.containerPanel.setBackground(new Color(160, 160, 160));
 		this.add(containerPanel);
 
+		//set up box that displays the list in control panel
 		this.listBox = new JList<String>(citiesList);
 		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
+		//sets up the box that displays path info in control panel
 		this.displayBox = new JList<String>(displayList);
 		this.displayBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
@@ -175,7 +177,7 @@ public class ApplicationWindow extends JFrame {
 			citiesList.remove(index);
 			listBox.updateUI();
 		}
-		mapPanel.clearPaths();
+		this.clearMapPaths();
 	}
 
 	/**
@@ -185,10 +187,17 @@ public class ApplicationWindow extends JFrame {
 		return (String[]) this.citiesList.toArray();
 	}
 
+	/**
+	 * clears the display list
+	 * 
+	 */
 	public void clearDisplay() {
 		this.displayList.clear();
 	}
 	
+	/**
+	 * clears the highlighted paths from the map
+	 */
 	public void clearMapPaths(){
 		mapPanel.clearPaths();
 	}
@@ -231,7 +240,7 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					citiesList.clear();
-					mapPanel.clearPaths();
+					clearMapPaths();
 					listBox.updateUI();
 				}
 			});
@@ -293,7 +302,7 @@ public class ApplicationWindow extends JFrame {
 						return;
 					}
 
-					mapPanel.clearPaths();
+					clearMapPaths();
 					clearDisplay();
 
 					if (time.getText().equals("")) {
@@ -338,7 +347,7 @@ public class ApplicationWindow extends JFrame {
 						return;
 					}
 
-					mapPanel.clearPaths();
+					clearMapPaths();
 					clearDisplay();
 
 					if (distance.getText().equals("")) {
