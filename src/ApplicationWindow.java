@@ -188,6 +188,10 @@ public class ApplicationWindow extends JFrame {
 	public void clearDisplay() {
 		this.displayList.clear();
 	}
+	
+	public void clearMapPaths(){
+		mapPanel.clearPaths();
+	}
 
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
@@ -282,6 +286,12 @@ public class ApplicationWindow extends JFrame {
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
+					if(size==1&&time.getText().equals("")){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"YOU CAN ONLY ROUTE BETWEEN TWO OR MORE CITIES", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 
 					mapPanel.clearPaths();
 					clearDisplay();
@@ -318,6 +328,12 @@ public class ApplicationWindow extends JFrame {
 					if ((size != 1 && !distance.getText().equals(""))) {
 						JOptionPane.showMessageDialog(ApplicationWindow.this,
 								"YOU CAN ONLY HAVE ONE CITY", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if(size==1&&distance.getText().equals("")){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"YOU CAN ONLY ROUTE BETWEEN TWO OR MORE CITIES", "error",
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
