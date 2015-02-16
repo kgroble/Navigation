@@ -148,9 +148,9 @@ public class Path implements Comparable<Path>
 	{
 		ArrayList<City> cities = otherPath.getCities();
 		
-		for (City city : cities)
+		for (int i = 1; i < cities.size(); i++)
 		{
-			this.path.add(city);
+			this.path.add(cities.get(i));
 		}
 		
 		this.pathLength += otherPath.getPathLength();
