@@ -5,7 +5,7 @@ import java.util.PriorityQueue;
 public class AStar
 {
 	private Graph<City, Connection, String> graph;
-	private double maxSpeed = 100;
+	private double maxSpeed = 1;
 
 	public AStar(Graph<City, Connection, String> graph)
 	{
@@ -15,28 +15,27 @@ public class AStar
 	public Path findFastestPathWithWayPoints(ArrayList<String> waypoints)
 	{
 		long start = System.currentTimeMillis();
-		
+
 		if (waypoints.size() < 2)
 			return null;
 
 		// basically initializing the path
-		Path path = this.findFastestPath(waypoints.get(0),
-				waypoints.get(1));
+		Path path = this.findFastestPath(waypoints.get(0), waypoints.get(1));
 
-		for (int i = 1; i < waypoints.size()-1; i++)
+		for (int i = 1; i < waypoints.size() - 1; i++)
 		{
-			path.addToEndOfPath(this.findFastestPath
-					(waypoints.get(i), waypoints.get(i + 1)));
+			path.addToEndOfPath(this.findFastestPath(waypoints.get(i),
+					waypoints.get(i + 1)));
 		}
 
 		System.out.println((System.currentTimeMillis() - start));
 		return path;
 	}
-	
+
 	public Path findShortestPathWithWayPoints(ArrayList<String> waypoints)
 	{
 		long start = System.currentTimeMillis();
-		
+
 		if (waypoints.size() < 2)
 			return null;
 
@@ -44,16 +43,16 @@ public class AStar
 		Path path = this.findShortestPathBetween(waypoints.get(0),
 				waypoints.get(1));
 
-		for (int i = 1; i < waypoints.size()-1; i++)
+		for (int i = 1; i < waypoints.size() - 1; i++)
 		{
-			path.addToEndOfPath(this.findShortestPathBetween
-					(waypoints.get(i), waypoints.get(i + 1)));
+			path.addToEndOfPath(this.findShortestPathBetween(waypoints.get(i),
+					waypoints.get(i + 1)));
 		}
 
 		System.out.println((System.currentTimeMillis() - start));
 		return path;
 	}
-	
+
 	/**
 	 * Uses the A* pathfinding algorithm to find the shortest path between two
 	 * points. Throws a RuntimeException if no path is found.
@@ -69,7 +68,6 @@ public class AStar
 		return findNShortestPaths(start, end, 1).get(0);
 	}
 
-
 	public ArrayList<Path> findNShortestPaths(String start, String end,
 			int number)
 	{
@@ -78,10 +76,9 @@ public class AStar
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
-		ArrayList<Path> closed = new ArrayList<Path>();
+		ArrayList<City> closed = new ArrayList<City>();
 		ArrayList<Path> possiblePaths = new ArrayList<Path>();
-		Path current = new Path(startCity, false); // false means it isnt using
-													// a time heuristic
+		Path current = new Path(startCity, false);
 		Path newPath;
 		open.add(current);
 
@@ -90,14 +87,14 @@ public class AStar
 
 		while (!open.isEmpty() && possiblePaths.size() < number)
 		{
+
 			current = open.remove();
-			closed.add(current); // So the path is not checked twice. But when
+//			closed.add(current); // So the path is not checked twice. But when
 									// would that happen?
-			
+
 			if (current.getEndpoint().equals(endCity))
 			{
 				System.out.println("Path found.");
-				// System.out.printf("%d iterations.%n", iterations);
 				System.out.printf("Path is %.1f units long%n",
 						current.getPathLength());
 				System.out.printf("Path will take %.1f units of time.%n",
@@ -114,16 +111,17 @@ public class AStar
 			// Adding possible paths to the PriorityQueue
 			for (City city : connections.keySet())
 			{
-				if (current.containsCity(city.getName()))
+				if (closed.contains(city))
 					continue;
-				
-				newPath = current.copy(); // TODO fix this. No good. Bad.
-											// Baaaaad.
+				closed.add(city);
+				newPath = current.copy();
 				newPath.addToPath(city, connections.get(city));
-				newPath.setApproximatedPathLength(endCity); // for the heuristic
-
-//				if (!(closed.contains(newPath)))
-					open.add(newPath); // TODO Is this actually necessary?
+				newPath.setApproximatedPathLength(endCity); // for
+																			// the
+																			// heuristic
+																			// if
+																			// (!(closed.contains(newPath)))
+				open.add(newPath); // TODO Is this actually necessary?
 			}
 		}
 
@@ -138,7 +136,7 @@ public class AStar
 	{
 		return findNFastestPaths(start, end, 1).get(0);
 	}
-	
+
 	public ArrayList<Path> findNFastestPaths(String start, String end,
 			int number)
 	{
@@ -147,7 +145,7 @@ public class AStar
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
-		ArrayList<Path> closed = new ArrayList<Path>();
+		ArrayList<City> closed = new ArrayList<City>();
 		ArrayList<Path> possiblePaths = new ArrayList<Path>();
 		Path current = new Path(startCity, true);
 		Path newPath;
@@ -158,10 +156,8 @@ public class AStar
 
 		while (!open.isEmpty() && possiblePaths.size() < number)
 		{
-			
+
 			current = open.remove();
-			closed.add(current); // So the path is not checked twice. But when
-									// would that happen?
 
 			if (current.getEndpoint().equals(endCity))
 			{
@@ -182,15 +178,17 @@ public class AStar
 			// Adding possible paths to the PriorityQueue
 			for (City city : connections.keySet())
 			{
-				if (current.containsCity(city.getName()))
+				if (closed.contains(city))
 					continue;
+				closed.add(city);
 				newPath = current.copy();
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathTime(endCity, this.maxSpeed); // for
 																			// the
 																			// heuristic
-//				if (!(closed.contains(newPath)))
-					open.add(newPath); // TODO Is this actually necessary?
+																			// if
+																			// (!(closed.contains(newPath)))
+				open.add(newPath);
 			}
 		}
 
@@ -283,5 +281,12 @@ public class AStar
 		}
 	}
 	
-	
+	private class AStarNode
+	{
+		private AStarNode previousNode;
+	}
+
 }
+
+//TODO add node class to avoid copying the entire path
+//Add a reconstruct path method.
