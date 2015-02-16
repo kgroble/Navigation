@@ -43,9 +43,9 @@ public class MapPanel extends JPanel {
 	private static final Color SELECTED_CITY_COLOR = Color.RED;
 	private static final Color CITY_COLOR = Color.BLACK;
 	private static final Color CONNECTION_COLOR = Color.GRAY;
-	private static final Color PATH_COLOR = Color.BLUE;
-
 	private static final long serialVersionUID = 1L;
+	
+	private ArrayList<Color> connectionColors;
 
 	private Graph<City, Connection, String> map;
 	private City selectedCity = null;
@@ -73,6 +73,8 @@ public class MapPanel extends JPanel {
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
 
+		this.connectionColors = new ArrayList<Color>();
+		
 		findBounds();
 		updateClickMap();
 
@@ -171,7 +173,6 @@ public class MapPanel extends JPanel {
 			int closestCityDist = selectionMaxRadius;
 			City closestCity = null;
 			for (City city : citiesToSearch) {
-				System.out.println(city);
 				int xDistSquared = (int) Math.pow(city.getXCoord()
 						- clickPoint.x, 2);
 				int yDistSquared = (int) Math.pow(city.getYCoord()
@@ -336,7 +337,7 @@ public class MapPanel extends JPanel {
 				}
 			}
 
-			if (!isBlocked) {
+			if (!isBlocked || (selectedCity != null && selectedCity.equals(city))) {
 				g2d.drawString(city.getName(), (int) (-stringWidth / 2),
 						(int) (CITY_SIZE * zoom + 10));
 				nameMask.fillRect(0, 0, biggestStringWidth, stringHeight);
@@ -378,8 +379,17 @@ public class MapPanel extends JPanel {
 	}
 
 	private void drawPaths(Graphics2D g2d) {
-		g2d.setColor(PATH_COLOR);
+		int colorNumber = 0;
 		for (Path path : pathsToDraw) {
+			if (connectionColors.size() > 0)
+			{
+				g2d.setColor(connectionColors.get(colorNumber));
+				colorNumber++;
+				colorNumber = colorNumber % connectionColors.size();
+			}
+			else 
+				g2d.setColor(CONNECTION_COLOR);
+			
 			ArrayList<Point> linkPoints = new ArrayList<Point>();
 			for (City city : path.getCities()) {
 				linkPoints.add(new Point((int) (city.getXCoord() * zoom),
