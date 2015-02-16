@@ -250,6 +250,16 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					int size=citiesList.size();
+					if(size==0){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,"ENTER CITIES", "error",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+						
+					if((size!=1&&!time.getText().equals(""))){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,"YOU CAN ONLY HAVE ONE CITY", "error",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
 					ArrayList<String> waypoints = new ArrayList<String>(
 							ApplicationWindow.this.citiesList);
 					Path path = ApplicationWindow.this.aStar
@@ -269,8 +279,13 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(citiesList.size()!=1||citiesList.size()==0){
-						JOptionPane.showMessageDialog(ApplicationWindow.this,"YOU CANT DO THAT", "",JOptionPane.ERROR_MESSAGE);
+					int size= citiesList.size();
+					if(size==0){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,"ENTER CITIES", "error",JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					if((size!=1&&!distance.getText().equals(""))){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,"YOU CAN ONLY HAVE ONE CITY", "error",JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 					ArrayList<String> waypoints = new ArrayList<String>(
