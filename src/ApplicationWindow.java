@@ -178,6 +178,7 @@ public class ApplicationWindow extends JFrame {
 			listBox.updateUI();
 		}
 		this.clearMapPaths();
+		clearDisplay();
 	}
 
 	/**
@@ -193,6 +194,7 @@ public class ApplicationWindow extends JFrame {
 	 */
 	public void clearDisplay() {
 		this.displayList.clear();
+		this.displayBox.updateUI();
 	}
 	
 	/**
@@ -240,8 +242,10 @@ public class ApplicationWindow extends JFrame {
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					citiesList.clear();
+					displayList.clear();
 					clearMapPaths();
 					listBox.updateUI();
+					displayBox.updateUI();
 				}
 			});
 			clear.setBounds(MARGIN, MARGIN * 5 + 160, CONTROL_PANEL_WIDTH
@@ -268,6 +272,8 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					if(listBox.isSelectionEmpty())
+						return;
 					int cityIndex = listBox.getSelectedIndex();
 					removeFromList(cityIndex);
 				}
@@ -356,6 +362,16 @@ public class ApplicationWindow extends JFrame {
 						Path path = ApplicationWindow.this.aStar
 								.findShortestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
+						ArrayList<Path> paths = mapPanel.getPaths();
+						double distance=0;
+						double time=0;
+						for(Path i:paths){
+							distance+=i.getPathLength();
+							time+=i.getPathTravelTime();
+						}
+						
+						addToDisplay("distance = "+(float)distance);
+						addToDisplay("time = "+(float)time);
 					} else {
 						addToDisplay("ooo");
 						distance.setText("");
