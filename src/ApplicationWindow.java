@@ -411,6 +411,7 @@ public class ApplicationWindow extends JFrame {
 					}
 					else {
 						System.out.println("ooo");
+						distance.setText("");
 					}
 				}
 			});
