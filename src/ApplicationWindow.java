@@ -328,7 +328,7 @@ public class ApplicationWindow extends JFrame {
 						ArrayList<String> waypoints = new ArrayList<String>(
 								ApplicationWindow.this.citiesList);
 						Path path = ApplicationWindow.this.aStar
-								.findShortestPathWithWayPoints(waypoints);
+								.findFastestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
 						ArrayList<Path> paths = mapPanel.getPaths();
 						double distance=0;
