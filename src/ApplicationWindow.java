@@ -106,8 +106,8 @@ public class ApplicationWindow extends JFrame {
 		this.map = map;
 		this.containerPanel.add(this.mapPanel);
 
-		setSize(FRAME_WIDTH, FRAME_HEIGHT);
-		setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+		this.setSize(FRAME_WIDTH, FRAME_HEIGHT);
+		this.setMinimumSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
 		this.addComponentListener(new ComponentAdapter() {
 

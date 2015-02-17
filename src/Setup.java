@@ -10,9 +10,11 @@ import java.util.Scanner;
  */
 public class Setup {
 	private Graph<City, Connection, String> g;
+	private String txt;
 	
-	public Setup(Graph g){
+	public Setup(Graph g, String txt){
 		this.g = g;
+		this.txt=txt;
 		addCities();
 		addLinks();
 	}
@@ -23,7 +25,7 @@ public class Setup {
 	public void addCities(){
 		Scanner sc;
 		try {
-			sc = new Scanner(new File("cities.txt"));
+			sc = new Scanner(new File(txt+"cities.txt"));
 			while(sc.hasNextLine()){
 				String city = sc.nextLine();
 				String[] cityInfo = city.split("\\|\\|");
@@ -40,7 +42,7 @@ public class Setup {
 				}
 			}
 		} catch (FileNotFoundException e) {
-			System.out.println("cities.txt does not exist.");
+			System.out.println(txt+"cities.txt does not exist.");
 		}
 	}
 	
@@ -50,7 +52,7 @@ public class Setup {
 	public void addLinks(){
 		Scanner sc;
 		try{
-			sc = new Scanner(new File("links.txt"));
+			sc = new Scanner(new File(txt+"links.txt"));
 			while(sc.hasNextLine()){
 				String cityLink = sc.nextLine();
 				String[] linkInfo = cityLink.split("--");
@@ -67,7 +69,7 @@ public class Setup {
 			}
 
 		} catch (FileNotFoundException e) {
-			System.out.println("links.txt does not exist.");
+			System.out.println(txt+"links.txt does not exist.");
 		}
 	}
 	
