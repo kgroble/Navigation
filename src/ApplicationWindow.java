@@ -322,12 +322,13 @@ public class ApplicationWindow extends JFrame {
 
 					clearMapPaths();
 					clearDisplay();
+					String txt = time.getText(); 
 
-					if (time.getText().equals("")) {
+					if (txt.equals("")) {
 						ArrayList<String> waypoints = new ArrayList<String>(
 								ApplicationWindow.this.citiesList);
 						Path path = ApplicationWindow.this.aStar
-								.findFastestPathWithWayPoints(waypoints);
+								.findShortestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
 						ArrayList<Path> paths = mapPanel.getPaths();
 						double distance=0;
@@ -339,8 +340,14 @@ public class ApplicationWindow extends JFrame {
 						
 						addToDisplay("distance = "+(float)distance);
 						addToDisplay("time = "+(float)time);
-					} else {
-						addToDisplay("ooo");
+					} else if(!isInt(txt.trim())){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"ENTER IN AN INTEGER", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					else {
+						System.out.println("ooo");
 						time.setText("");
 					}
 				}
@@ -377,8 +384,10 @@ public class ApplicationWindow extends JFrame {
 
 					clearMapPaths();
 					clearDisplay();
+					
+					String txt = distance.getText(); 
 
-					if (distance.getText().equals("")) {
+					if (txt.equals("")) {
 						ArrayList<String> waypoints = new ArrayList<String>(
 								ApplicationWindow.this.citiesList);
 						Path path = ApplicationWindow.this.aStar
@@ -394,9 +403,14 @@ public class ApplicationWindow extends JFrame {
 						
 						addToDisplay("distance = "+(float)distance);
 						addToDisplay("time = "+(float)time);
-					} else {
-						addToDisplay("ooo");
-						distance.setText("");
+					} else if(!isInt(txt.trim())){
+						JOptionPane.showMessageDialog(ApplicationWindow.this,
+								"ENTER IN AN INTEGER", "error",
+								JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+					else {
+						System.out.println("ooo");
 					}
 				}
 			});
@@ -420,6 +434,16 @@ public class ApplicationWindow extends JFrame {
 			this.cityName.setText("");
 			this.distance.setText("");
 			this.time.setText("");
+		}
+		
+		public boolean isInt(String s) {
+			for (int i = 0; i < s.length() - 1; i++) {
+				char c = s.charAt(i);
+				if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5'
+						&& c != '6' && c != '7' && c != '8' && c != '9' && c != '0')
+					return false;
+			}
+			return true;
 		}
 
 	}
