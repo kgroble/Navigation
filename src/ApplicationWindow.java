@@ -54,11 +54,11 @@ public class ApplicationWindow extends JFrame {
 		this.containerPanel.setBackground(new Color(160, 160, 160));
 		this.add(containerPanel);
 
-		//set up box that displays the list in control panel
+		// set up box that displays the list in control panel
 		this.listBox = new JList<String>(citiesList);
 		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
-		//sets up the box that displays path info in control panel
+		// sets up the box that displays path info in control panel
 		this.displayBox = new JList<String>(displayList);
 		this.displayBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
 
@@ -66,13 +66,13 @@ public class ApplicationWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				//remove and clear components
+				// remove and clear components
 				containerPanel.remove(mapPanel);
 				citiesList.clear();
 				displayList.clear();
 				controlPanel.clearTxtBoxes();
 
-				//update boxes
+				// update boxes
 				listBox.updateUI();
 				displayBox.updateUI();
 
@@ -196,11 +196,11 @@ public class ApplicationWindow extends JFrame {
 		this.displayList.clear();
 		this.displayBox.updateUI();
 	}
-	
+
 	/**
 	 * clears the highlighted paths from the map
 	 */
-	public void clearMapPaths(){
+	public void clearMapPaths() {
 		mapPanel.clearPaths();
 	}
 
@@ -214,40 +214,40 @@ public class ApplicationWindow extends JFrame {
 		public ControlPanel(int height, ActionListener restartListener) {
 			super();
 
-			//adds the city name txtbox to the panel
+			// adds the city name txtbox to the panel
 			this.cityName = new JTextArea();
 			this.cityName.setBounds(MARGIN, MARGIN, CONTROL_PANEL_WIDTH - 2
 					* MARGIN, 20);
 			this.cityName.setBorder(new BevelBorder(1));
 			this.add(this.cityName);
 
-			//adds the time txtbox to the panel
+			// adds the time txtbox to the panel
 			this.time = new JTextArea();
 			this.time.setBounds(MARGIN, MARGIN * 6 + 240, CONTROL_PANEL_WIDTH
 					- 2 * MARGIN, 20);
 			this.time.setBorder(new BevelBorder(1));
 			this.add(this.time);
-			
-			//adds the distance txtbox to the panel
+
+			// adds the distance txtbox to the panel
 			this.distance = new JTextArea();
 			this.distance.setBounds(MARGIN, MARGIN * 6 + 180,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			this.distance.setBorder(new BevelBorder(1));
 			this.add(this.distance);
 
-			//adds the display to the panel
+			// adds the display to the panel
 			this.displayScroller = new JScrollPane(displayBox);
 			this.displayScroller.setBounds(MARGIN, MARGIN * 3 + 330,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 260);
 			this.add(displayScroller);
 
-			//adds the list to the panel
+			// adds the list to the panel
 			this.listScroller = new JScrollPane(listBox);
 			this.listScroller.setBounds(MARGIN, MARGIN * 3 + 40,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 100);
 			this.add(listScroller);
 
-			//adds all the buttons
+			// adds all the buttons
 			clear = new JButton();
 			clear.addActionListener(new ActionListener() {
 
@@ -284,7 +284,7 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					if(listBox.isSelectionEmpty())
+					if (listBox.isSelectionEmpty())
 						return;
 					int cityIndex = listBox.getSelectedIndex();
 					removeFromList(cityIndex);
@@ -313,16 +313,18 @@ public class ApplicationWindow extends JFrame {
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					if(size==1&&time.getText().equals("")){
-						JOptionPane.showMessageDialog(ApplicationWindow.this,
-								"YOU CAN ONLY ROUTE BETWEEN TWO OR MORE CITIES", "error",
-								JOptionPane.ERROR_MESSAGE);
+					if (size == 1 && time.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(
+										ApplicationWindow.this,
+										"YOU CAN ONLY ROUTE BETWEEN TWO OR MORE CITIES",
+										"error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 
 					clearMapPaths();
 					clearDisplay();
-					String txt = time.getText(); 
+					String txt = time.getText();
 
 					if (txt.equals("")) {
 						ArrayList<String> waypoints = new ArrayList<String>(
@@ -331,22 +333,21 @@ public class ApplicationWindow extends JFrame {
 								.findFastestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
 						ArrayList<Path> paths = mapPanel.getPaths();
-						double distance=0;
-						double time=0;
-						for(Path p:paths){
-							distance+=p.getPathLength();
-							time+=p.getPathTravelTime();
+						double distance = 0;
+						double time = 0;
+						for (Path p : paths) {
+							distance += p.getPathLength();
+							time += p.getPathTravelTime();
 						}
-						
-						addToDisplay("distance = "+(float)distance);
-						addToDisplay("time = "+(float)time);
-					} else if(!isInt(txt.trim())){
+
+						addToDisplay("distance = " + (float) distance);
+						addToDisplay("time = " + (float) time);
+					} else if (!isInt(txt.trim())) {
 						JOptionPane.showMessageDialog(ApplicationWindow.this,
 								"ENTER IN AN INTEGER", "error",
 								JOptionPane.ERROR_MESSAGE);
 						return;
-					}
-					else {
+					} else {
 						System.out.println("ooo");
 						time.setText("");
 					}
@@ -375,17 +376,19 @@ public class ApplicationWindow extends JFrame {
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					}
-					if(size==1&&distance.getText().equals("")){
-						JOptionPane.showMessageDialog(ApplicationWindow.this,
-								"YOU CAN ONLY ROUTE BETWEEN TWO OR MORE CITIES", "error",
-								JOptionPane.ERROR_MESSAGE);
+					if (size == 1 && distance.getText().equals("")) {
+						JOptionPane
+								.showMessageDialog(
+										ApplicationWindow.this,
+										"YOU CAN ONLY ROUTE BETWEEN TWO OR MORE CITIES",
+										"error", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 
 					clearMapPaths();
 					clearDisplay();
-					
-					String txt = distance.getText(); 
+
+					String txt = distance.getText();
 
 					if (txt.equals("")) {
 						ArrayList<String> waypoints = new ArrayList<String>(
@@ -394,23 +397,35 @@ public class ApplicationWindow extends JFrame {
 								.findShortestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
 						ArrayList<Path> paths = mapPanel.getPaths();
-						double distance=0;
-						double time=0;
-						for(Path p:paths){
-							distance+=p.getPathLength();
-							time+=p.getPathTravelTime();
+						double distance = 0;
+						double time = 0;
+						for (Path p : paths) {
+							distance += p.getPathLength();
+							time += p.getPathTravelTime();
 						}
-						
-						addToDisplay("distance = "+(float)distance);
-						addToDisplay("time = "+(float)time);
-					} else if(!isInt(txt.trim())){
+
+						addToDisplay("distance = " + (float) distance);
+						addToDisplay("time = " + (float) time);
+					} else if (!isInt(txt.trim())) {
 						JOptionPane.showMessageDialog(ApplicationWindow.this,
 								"ENTER IN AN INTEGER", "error",
 								JOptionPane.ERROR_MESSAGE);
 						return;
-					}
-					else {
-						System.out.println("ooo");
+					} else {
+						int range = Integer.parseInt(txt);
+
+						ArrayList<Path> paths = aStar
+								.findPathsWithTravelDistance(
+										ApplicationWindow.this.citiesList
+												.get(0), range * .9,
+										range * 1.1);
+						
+//						for (Path path : paths)
+//						{
+//							ApplicationWindow.this.mapPanel.addPath(path);
+//						}
+
+						System.out.println(paths.size());
 						distance.setText("");
 					}
 				}
@@ -419,7 +434,7 @@ public class ApplicationWindow extends JFrame {
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			pathDistance.setText("Path Distance");
 			this.add(pathDistance);
-			
+
 			restart = new JButton();
 			restart.setBounds(MARGIN, FRAME_HEIGHT - 58 - MARGIN,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
@@ -430,18 +445,19 @@ public class ApplicationWindow extends JFrame {
 			this.setBackground(Color.GRAY);
 			this.setOpaque(true);
 		}
-		
-		public void clearTxtBoxes(){
+
+		public void clearTxtBoxes() {
 			this.cityName.setText("");
 			this.distance.setText("");
 			this.time.setText("");
 		}
-		
+
 		public boolean isInt(String s) {
 			for (int i = 0; i < s.length() - 1; i++) {
 				char c = s.charAt(i);
 				if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5'
-						&& c != '6' && c != '7' && c != '8' && c != '9' && c != '0')
+						&& c != '6' && c != '7' && c != '8' && c != '9'
+						&& c != '0')
 					return false;
 			}
 			return true;
