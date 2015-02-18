@@ -70,7 +70,7 @@ public class Path implements Comparable<Path>
 	}
 	
 	/**
-	 * We will probably need to add some heuristic stuff here.
+	 * 
 	 * @param link
 	 * @param city
 	 */
@@ -87,9 +87,6 @@ public class Path implements Comparable<Path>
 		this.setApproximatedPathTime(endCity, maxSpeed);
 	}
 
-	/**
-	 * TODO does it make sense to have the approximation here?
-	 */
 	@Override
 	public int compareTo(Path otherPath)
 	{

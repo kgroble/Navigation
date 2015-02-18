@@ -14,7 +14,6 @@ public class AStar
 
 	public Path findFastestPathWithWayPoints(ArrayList<String> waypoints)
 	{
-		long start = System.currentTimeMillis();
 
 		if (waypoints.size() < 2)
 			return null;
@@ -27,18 +26,12 @@ public class AStar
 			path.addToEndOfPath(this.findFastestPath(waypoints.get(i),
 					waypoints.get(i + 1)));
 		}
-
-//		System.out.println((System.currentTimeMillis() - start));
-//		System.out.println(path);
-//		System.out.println("Length: " + path.getPathLength());
-//		System.out.println("Time: " + path.getPathTravelTime());
+		
 		return path;
 	}
 
 	public Path findShortestPathWithWayPoints(ArrayList<String> waypoints)
 	{
-		long start = System.currentTimeMillis();
-
 		if (waypoints.size() < 2)
 			return null;
 
@@ -52,10 +45,6 @@ public class AStar
 					waypoints.get(i + 1)));
 		}
 
-//		System.out.println((System.currentTimeMillis() - start));
-//		System.out.println(path);
-//		System.out.println("Length: " + path.getPathLength());
-//		System.out.println("Time: " + path.getPathTravelTime());
 		return path;
 	}
 
@@ -71,16 +60,12 @@ public class AStar
 	 */
 	public Path findShortestPathBetween(String start, String end)
 	{
-		ArrayList<Path> fuck = findNShortestPaths(start, end, 1);
-//		System.out.println(fuck); //TODO fix this
-		return fuck.get(0);
+		return findNShortestPaths(start, end, 1).get(0);
 	}
 
 	public ArrayList<Path> findNShortestPaths(String start, String end,
 			int number)
 	{
-//		System.out
-//				.printf("Searching for path between %s and %s.%n", start, end);
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
@@ -97,17 +82,10 @@ public class AStar
 
 		while (!open.isEmpty() && possiblePaths.size() < number)
 		{
-//			System.out.println("BEGINNING OF LOOP");
-
 			current = open.remove();
 
 			if (current.getEndpoint().equals(endCity))
 			{
-//				System.out.println("Path found.");
-//				System.out.printf("Path is %.1f units long%n",
-//						current.getPathLength());
-//				System.out.printf("Path will take %.1f units of time.%n",
-//						current.getPathTravelTime());
 				possiblePaths.add(current);
 				continue;
 			}
@@ -122,42 +100,19 @@ public class AStar
 			// Adding possible paths to the PriorityQueue
 			for (City city : connections.keySet())
 			{
-//				if (city.getName().equals("Ballymena"))
-//				{
-//					System.out.println("____________________________________________");
-//					System.out.println(current);
-//					System.out.println(connections.keySet());
-//					System.out.println("____________________________________________");
-//				}
 				if (closed.contains(city))
 					continue;
-//				closed.add(city);
 				newPath = current.copy();
 				
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathLength(endCity);
 				
 				open.add(newPath);
-				
-//				System.out.println("CURRENT");
-//				System.out.println(current);
-//				System.out.println("PRINTING PRIORITY QUEUE");
-//				System.out.println(open);
-//				System.out.println("END OF PRIORITY QUEUE");
-//				System.out.println("CITY ADDED");
-//				System.out.println(newPath);
 			}
 		}
 
 		if (possiblePaths.size() == 0)
 			throw new RuntimeException("Connection not found");
-
-		
-//		System.out.println("\n\nRemaining Paths");
-//		while (!open.isEmpty())
-//		{
-//			System.out.println(open.remove());
-//		}
 		
 		return possiblePaths;
 
@@ -171,8 +126,6 @@ public class AStar
 	public ArrayList<Path> findNFastestPaths(String start, String end,
 			int number)
 	{
-//		System.out
-//				.printf("Searching for path between %s and %s.%n", start, end);
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
@@ -192,11 +145,6 @@ public class AStar
 
 			if (current.getEndpoint().equals(endCity))
 			{
-//				System.out.println("Path found.");
-//				System.out.printf("Path is %.1f units long%n",
-//						current.getPathLength());
-//				System.out.printf("Path will take %.1f units of time.%n",
-//						current.getPathTravelTime());
 				possiblePaths.add(current);
 				continue;
 			}
@@ -213,15 +161,11 @@ public class AStar
 			{
 				if (closed.contains(city))
 					continue;
-//				closed.add(city);
 				newPath = current.copy();
 				
 				
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathTime(endCity, this.maxSpeed);
-				
-				
-//				System.out.println(newPath);
 				
 				
 				open.add(newPath);
