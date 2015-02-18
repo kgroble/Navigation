@@ -231,7 +231,7 @@ public class ApplicationWindow extends JFrame {
 					- 2 * MARGIN, 20);
 			this.time.setBorder(new BevelBorder(1));
 			this.add(this.time);
-			TextPrompt timePrompt = new TextPrompt("Distance from city (mi)", this.time);
+			TextPrompt timePrompt = new TextPrompt("Time from city (hr)", this.time);
 			timePrompt.setHorizontalAlignment(SwingConstants.CENTER);
 			
 			// adds the distance txtbox to the panel
@@ -240,7 +240,7 @@ public class ApplicationWindow extends JFrame {
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			this.distance.setBorder(new BevelBorder(1));
 			this.add(this.distance);
-			TextPrompt distancePrompt = new TextPrompt("Time from city (hr)", this.distance);
+			TextPrompt distancePrompt = new TextPrompt("Distance from city (mi)", this.distance);
 			distancePrompt.setHorizontalAlignment(SwingConstants.CENTER);
 
 			// adds the display to the panel
