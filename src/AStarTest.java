@@ -125,35 +125,17 @@ public class AStarTest {
 
 		ArrayList<City> elements = map.getElements();
 
-		for (int i = 0; i < 1000; i++) {
-			startIndex = rand.nextInt(150);
-			endIndex = rand.nextInt(150);
-
-			start = elements.get(startIndex);
-			end = elements.get(endIndex);
-
-			distPath = pathfinder.findShortestPathBetween(start.getName(),
-					end.getName());
-			timePath = pathfinder.findFastestPath(start.getName(),
-					end.getName());
-
-//			System.out.println("Distance path");
-//			System.out.println(distPath);
-//			System.out.println("Distance: " + distPath.getPathLength());
-//			System.out.println("Time: " + distPath.getPathTravelTime());
-//			System.out.println("Time path");
-//			System.out.println(timePath);
-//			System.out.println("Distance: " + timePath.getPathLength());
-//			System.out.println("Time: " + timePath.getPathTravelTime());
-
-			
-			if (distPath.getCities().size() < 5 && timePath.getCities().size() < 5)
+		for (int i = 0; i < 177; i++) 
+		{
+			for (int j = 0; j < 177; j++)
 			{
-				System.out.println(distPath);
-				System.out.println(timePath);
+				distPath = pathfinder.findShortestPathBetween(
+						elements.get(i).getName(), elements.get(j).getName());
+				timePath = pathfinder.findFastestPath(
+						elements.get(i).getName(), elements.get(j).getName());
 				assertTrue(distPath.getPathLength() <= timePath.getPathLength());
-//				assertTrue(distPath.getPathTravelTime() >= timePath
-//						.getPathTravelTime());
+				assertTrue(distPath.getPathTravelTime() >= timePath
+						.getPathTravelTime());
 			}
 		}
 	}

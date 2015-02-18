@@ -80,6 +80,12 @@ public class Path implements Comparable<Path>
 		this.pathLength += link.getConnectionDistance();
 		this.timeTaken += link.getConnectionTravelTime();
 	}
+	
+	public void updateHeuristic(City endCity, double maxSpeed)
+	{
+		this.setApproximatedPathLength(endCity);
+		this.setApproximatedPathTime(endCity, maxSpeed);
+	}
 
 	/**
 	 * TODO does it make sense to have the approximation here?
@@ -88,7 +94,9 @@ public class Path implements Comparable<Path>
 	public int compareTo(Path otherPath)
 	{
 		if (this.usingTimeHeuristic)
+		{
 			return (this.approximatedTimeTaken - otherPath.getApproximatedTimeTaken()) > 0 ? 1 : -1;
+		}
 		return (this.approximatedPathLength - otherPath.getApproximatedPathLength()) > 0 ? 1 : -1;
 	}
 	
@@ -127,8 +135,11 @@ public class Path implements Comparable<Path>
 	public Path copy()
 	{
 		Path copy = new Path(this.usingTimeHeuristic);
-		for (City city : this.path)
-			copy.addToPathForCopyingPurposes(city);
+//		for (City city : this.path)
+		for (int i = 0; i < this.path.size(); i++)
+		{
+			copy.addToPathForCopyingPurposes(this.path.get(i));
+		}
 		copy.pathLength = this.pathLength;
 		copy.timeTaken = this.timeTaken;
 		return copy;
@@ -153,9 +164,11 @@ public class Path implements Comparable<Path>
 	{
 		return String.format("Path start: %s%nPath Endpoint: %s%n"
 				+ "Path: %s%nPath Length: %.3f%nPath time: %.3f%n"
+				+ "Approximate Distance: %.3f%nApproximate Time: %.3f%n"
 				+ "Using time heuristic: %b%n", 
 				this.path.get(0).toString(), this.getEndpoint(), 
 				this.path.toString(), this.pathLength, 
-				this.timeTaken, this.usingTimeHeuristic);
+				this.timeTaken, this.approximatedPathLength,
+				this.approximatedTimeTaken, this.usingTimeHeuristic);
 	}
 }

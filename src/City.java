@@ -67,8 +67,11 @@ public class City{
 		return name;
 	}
 	
-	public boolean equals(City otherCity)
+	@Override
+	public boolean equals(Object otherCity)
 	{
-		return this.getName().equals(otherCity.getName());
+		if (!(otherCity instanceof City))
+			throw new RuntimeException("Somehow not a city was passed to the City.equals method");
+		return this.getName().equals(((City) otherCity).getName());
 	}
 }

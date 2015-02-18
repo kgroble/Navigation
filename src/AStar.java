@@ -29,9 +29,9 @@ public class AStar
 		}
 
 //		System.out.println((System.currentTimeMillis() - start));
-		System.out.println(path);
-		System.out.println("Length: " + path.getPathLength());
-		System.out.println("Time: " + path.getPathTravelTime());
+//		System.out.println(path);
+//		System.out.println("Length: " + path.getPathLength());
+//		System.out.println("Time: " + path.getPathTravelTime());
 		return path;
 	}
 
@@ -53,9 +53,9 @@ public class AStar
 		}
 
 //		System.out.println((System.currentTimeMillis() - start));
-		System.out.println(path);
-		System.out.println("Length: " + path.getPathLength());
-		System.out.println("Time: " + path.getPathTravelTime());
+//		System.out.println(path);
+//		System.out.println("Length: " + path.getPathLength());
+//		System.out.println("Time: " + path.getPathTravelTime());
 		return path;
 	}
 
@@ -71,7 +71,9 @@ public class AStar
 	 */
 	public Path findShortestPathBetween(String start, String end)
 	{
-		return findNShortestPaths(start, end, 1).get(0);
+		ArrayList<Path> fuck = findNShortestPaths(start, end, 1);
+//		System.out.println(fuck); //TODO fix this
+		return fuck.get(0);
 	}
 
 	public ArrayList<Path> findNShortestPaths(String start, String end,
@@ -86,13 +88,16 @@ public class AStar
 		ArrayList<Path> possiblePaths = new ArrayList<Path>();
 		Path current = new Path(startCity, false);
 		Path newPath;
+		
 		open.add(current);
+		closed.add(startCity);
 
 		// Not sure about this
 		HashMap<City, Connection> connections;
 
 		while (!open.isEmpty() && possiblePaths.size() < number)
 		{
+//			System.out.println("BEGINNING OF LOOP");
 
 			current = open.remove();
 
@@ -106,6 +111,8 @@ public class AStar
 				possiblePaths.add(current);
 				continue;
 			}
+			
+			closed.add(current.getEndpoint());
 
 			// Gets a hashmap of the connected cities and the associated
 			// Connection objects.
@@ -115,19 +122,43 @@ public class AStar
 			// Adding possible paths to the PriorityQueue
 			for (City city : connections.keySet())
 			{
+//				if (city.getName().equals("Ballymena"))
+//				{
+//					System.out.println("____________________________________________");
+//					System.out.println(current);
+//					System.out.println(connections.keySet());
+//					System.out.println("____________________________________________");
+//				}
 				if (closed.contains(city))
 					continue;
-				closed.add(city);
+//				closed.add(city);
 				newPath = current.copy();
+				
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathLength(endCity);
-				open.add(newPath); // TODO Is this actually necessary?
+				
+				open.add(newPath);
+				
+//				System.out.println("CURRENT");
+//				System.out.println(current);
+//				System.out.println("PRINTING PRIORITY QUEUE");
+//				System.out.println(open);
+//				System.out.println("END OF PRIORITY QUEUE");
+//				System.out.println("CITY ADDED");
+//				System.out.println(newPath);
 			}
 		}
 
 		if (possiblePaths.size() == 0)
 			throw new RuntimeException("Connection not found");
 
+		
+//		System.out.println("\n\nRemaining Paths");
+//		while (!open.isEmpty())
+//		{
+//			System.out.println(open.remove());
+//		}
+		
 		return possiblePaths;
 
 	}
@@ -169,6 +200,8 @@ public class AStar
 				possiblePaths.add(current);
 				continue;
 			}
+			
+			closed.add(current.getEndpoint());
 
 			// Gets a hashmap of the connected cities and the associated
 			// Connection objects.
@@ -180,10 +213,17 @@ public class AStar
 			{
 				if (closed.contains(city))
 					continue;
-				closed.add(city);
+//				closed.add(city);
 				newPath = current.copy();
+				
+				
 				newPath.addToPath(city, connections.get(city));
 				newPath.setApproximatedPathTime(endCity, this.maxSpeed);
+				
+				
+//				System.out.println(newPath);
+				
+				
 				open.add(newPath);
 			}
 		}
