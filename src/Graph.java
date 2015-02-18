@@ -42,35 +42,22 @@ public class Graph<T, L, K> {
 	 * @return True if the link is added
 	 */
 	public boolean addLink(K from, K to, L connection) {
-		
+
 		if (nodes.containsKey(from) && nodes.containsKey(to)) {
 			Link link = new Link(nodes.get(to), connection);
 			nodes.get(from).addLink(link);
-			return true; //I assume this should be here, it was not earlier.
+			return true; // I assume this should be here, it was not earlier.
 		}
 		return false;
 	}
 
-	public boolean remove(T element) {
-		throw new UnsupportedOperationException();
-	}
-
-	public boolean removeLink(K from, K to) {
-		throw new UnsupportedOperationException();
-	}
-
-//	public Collection<Node> getNodes() {
-//		return nodes.values();
-//	}
-	
 	/**
 	 * 
 	 * @return an arrayList of all the elements stored in this graph
 	 */
 	public ArrayList<T> getElements() {
 		ArrayList<T> elements = new ArrayList<T>();
-		for (Node node : nodes.values())
-		{
+		for (Node node : nodes.values()) {
 			elements.add(node.element);
 		}
 		return elements;
@@ -89,54 +76,27 @@ public class Graph<T, L, K> {
 		}
 		return null;
 	}
-	
-	
+
 	/**
-	 * @return a Hashmap of keys and links of elements connected to 
-	 * the element corresponding to the key passed
+	 * @return a Hashmap of keys and links of elements connected to the element
+	 *         corresponding to the key passed
 	 */
-	public HashMap<T, L> getConnectedElements(K key)
-	{
-		if (nodes.containsKey(key))
-		{
+	public HashMap<T, L> getConnectedElements(K key) {
+		if (nodes.containsKey(key)) {
 			HashMap<T, L> connectedElements = new HashMap<T, L>();
 			Node node = nodes.get(key);
-			
-			for (Link L : node.links)
-			{
+
+			for (Link L : node.links) {
 				connectedElements.put(L.connection.element, L.link);
 			}
 			return connectedElements;
 		}
 		return null;
 	}
-	
-	//TODO: This search is slow.  Might want to improve prerformance here
-	/**
-	 * 
-	 * throws an exception if there is no link between those two nodes if if one of the nodes doesn't exist
-	 * 
-	 * @param element1 the 'from' element
-	 * @param element2 the 'to' element
-	 * @return L object that links the two elements
-	 */
-	public L getConnectionBetween(K element1, K element2)
-	{
-		if (nodes.containsKey(element1) && nodes.containsKey(element2))
-		{
-			Node node1 = nodes.get(element1);
-			Node node2 = nodes.get(element2);
-			for (Link link : node1.links)
-			{
-				if (link.connection == node2)
-				{
-					return link.link;
-				}
-			}
-		}
-		throw new RuntimeException("No link between elements");
-	}
 
+	/**
+	 * Returns the graph as a string
+	 */
 	public String toString() {
 		String s = "";
 		String linkStr = " ---> ";
@@ -161,7 +121,7 @@ public class Graph<T, L, K> {
 		return s;
 	}
 
-	public class Node {
+	private class Node {
 		ArrayList<Link> links;
 		T element;
 
@@ -188,7 +148,7 @@ public class Graph<T, L, K> {
 		}
 	}
 
-	public class Link {
+	private class Link {
 		Node connection;
 		L link;
 

@@ -3,8 +3,6 @@ import java.util.ArrayList;
 
 public class Path implements Comparable<Path>
 {
-	private enum Heuristic {TIME, DISTANCE}
-	
 	private ArrayList<City> path;
 	private double pathLength;
 	private double approximatedPathLength;
