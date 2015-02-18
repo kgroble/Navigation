@@ -69,6 +69,7 @@ public class MapPanel extends JPanel {
 
 	public MapPanel(Graph<City, Connection, String> map, ApplicationWindow app) {
 		super();
+		
 		this.map = map;
 		this.setLayout(null);
 		this.setBackground(Color.WHITE);
@@ -363,11 +364,15 @@ public class MapPanel extends JPanel {
 
 		drawPaths(g2d);
 		drawSelectedCity(g2d);
+		drawScale(g2d);
 
 		// Translate for pan
 		g2d.translate(-centerX, -centerY);
 		nameMask.translate(-centerX, -centerY);
 
+		// draw scale
+		drawScale(g2d);
+		
 		// Draw border
 		g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING,
 				RenderingHints.VALUE_ANTIALIAS_OFF);
@@ -376,7 +381,7 @@ public class MapPanel extends JPanel {
 		g2d.drawRect(1, 1, this.getWidth() - 18, this.getHeight() - 41);
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawRect(3, 3, this.getWidth() - 22, this.getHeight() - 45);
-
+		
 		// g2d.drawImage(nameCollisionImage, null, 0, 0);
 	}
 
@@ -451,6 +456,36 @@ public class MapPanel extends JPanel {
 		}
 	}
 
+	private Double scaleUnit = 150.0;
+	private Double lineMultiplier = 150.0;
+	private void drawScale(Graphics2D g2d)
+	{
+		int margin = 10;
+		g2d.setColor(new Color(50, 50, 50));
+		g2d.translate(margin, this.getHeight() - margin - 38);
+		
+		int lineMin = 100;
+		int lineMax = 200;
+		Double lineWidth = ((zoom) * lineMultiplier);
+		if (lineWidth < lineMin)
+		{
+			scaleUnit *= 2;
+			lineMultiplier *= 2;
+		}
+		if (lineWidth > lineMax)
+		{
+			scaleUnit /= 2;
+			lineMultiplier /= 2;
+		}
+		String str = (int)Math.floor(scaleUnit) + " Miles";
+		g2d.drawString(str, 3, -5);
+		g2d.drawLine((int)Math.floor(lineWidth), 0, 0, 0);
+		g2d.drawLine(0, 0, 0, -5);
+		g2d.drawLine((int)Math.floor(lineWidth), 0, (int)Math.floor(lineWidth), -5);
+
+		g2d.translate(-margin, -(this.getHeight() - margin - 38));
+	}
+	
 	private void findBounds() {
 		xMin = Integer.MAX_VALUE;
 		xMax = Integer.MIN_VALUE;

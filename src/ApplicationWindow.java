@@ -17,6 +17,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
 
@@ -207,7 +209,7 @@ public class ApplicationWindow extends JFrame {
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
 		private JButton add, restart, pathDistance, pathTime, clear, remove;
-		private JTextArea cityName, distance, time;
+		private JTextField cityName, distance, time;
 		private JScrollPane listScroller, displayScroller;
 		private final static int MARGIN = 10;
 
@@ -215,25 +217,31 @@ public class ApplicationWindow extends JFrame {
 			super();
 
 			// adds the city name txtbox to the panel
-			this.cityName = new JTextArea();
+			this.cityName = new JTextField();
 			this.cityName.setBounds(MARGIN, MARGIN, CONTROL_PANEL_WIDTH - 2
 					* MARGIN, 20);
 			this.cityName.setBorder(new BevelBorder(1));
 			this.add(this.cityName);
+			TextPrompt cityNamePrompt = new TextPrompt("City Name", this.cityName);
+			cityNamePrompt.setHorizontalAlignment(SwingConstants.CENTER);
 
 			// adds the time txtbox to the panel
-			this.time = new JTextArea();
+			this.time = new JTextField();
 			this.time.setBounds(MARGIN, MARGIN * 6 + 240, CONTROL_PANEL_WIDTH
 					- 2 * MARGIN, 20);
 			this.time.setBorder(new BevelBorder(1));
 			this.add(this.time);
-
+			TextPrompt timePrompt = new TextPrompt("Distance from city (mi)", this.time);
+			timePrompt.setHorizontalAlignment(SwingConstants.CENTER);
+			
 			// adds the distance txtbox to the panel
-			this.distance = new JTextArea();
+			this.distance = new JTextField();
 			this.distance.setBounds(MARGIN, MARGIN * 6 + 180,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			this.distance.setBorder(new BevelBorder(1));
 			this.add(this.distance);
+			TextPrompt distancePrompt = new TextPrompt("Time from city (hr)", this.distance);
+			distancePrompt.setHorizontalAlignment(SwingConstants.CENTER);
 
 			// adds the display to the panel
 			this.displayScroller = new JScrollPane(displayBox);
