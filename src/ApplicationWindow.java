@@ -422,18 +422,18 @@ public class ApplicationWindow extends JFrame {
 					} else {
 						int range = Integer.parseInt(txt);
 
-						ArrayList<Path> paths = aStar
+						Path[] paths = aStar
 								.findPathsWithTravelDistance(
 										ApplicationWindow.this.citiesList
 												.get(0), range * .9,
-										range * 1.1);
+										range * 1.1, 10);
 						
-//						for (Path path : paths)
-//						{
-//							ApplicationWindow.this.mapPanel.addPath(path);
-//						}
+						for (Path path : paths)
+						{
+							ApplicationWindow.this.mapPanel.addPath(path);
+						}
 
-						System.out.println(paths.size());
+						System.out.println(paths.length);
 						distance.setText("");
 					}
 				}

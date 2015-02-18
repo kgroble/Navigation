@@ -63,6 +63,11 @@ public class City{
 		return Math.sqrt(Math.pow(c.xCoord - this.xCoord, 2) + Math.pow(c.yCoord - this.yCoord, 2));
 	}
 	
+	public double getInterest()
+	{
+		return this.interest;
+	}
+	
 	public String toString(){
 		return name;
 	}

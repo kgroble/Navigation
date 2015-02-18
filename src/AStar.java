@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 
@@ -71,7 +72,7 @@ public class AStar
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
 		ArrayList<City> closed = new ArrayList<City>();
 		ArrayList<Path> possiblePaths = new ArrayList<Path>();
-		Path current = new Path(startCity, false);
+		Path current = new Path(startCity, "Distance");
 		Path newPath;
 		
 		open.add(current);
@@ -131,7 +132,7 @@ public class AStar
 		PriorityQueue<Path> open = new PriorityQueue<Path>();
 		ArrayList<City> closed = new ArrayList<City>();
 		ArrayList<Path> possiblePaths = new ArrayList<Path>();
-		Path current = new Path(startCity, true);
+		Path current = new Path(startCity, "Time");
 		Path newPath;
 		open.add(current);
 
@@ -178,34 +179,47 @@ public class AStar
 		return possiblePaths;
 	}
 
-	public ArrayList<Path> findPathsWithTravelDistance(String startCity,
-			double bottomLimit, double topLimit)
+	public Path[] findPathsWithTravelDistance(String startCity,
+			double bottomLimit, double topLimit, int numberWanted)
 	{
+		Path[] returnPaths = new Path[numberWanted];
 		City startingPoint = (City) this.graph.get(startCity);
-		ArrayList<Path> possiblePaths = new ArrayList<Path>();
-		Path start = new Path(startingPoint, false);
+		PriorityQueue<Path> possiblePaths = new PriorityQueue<Path>();
+		Path start = new Path(startingPoint, "Interestingness");
 
 		breadthFirstSearchDistance(startCity, "DOES NOT EXIST", bottomLimit,
 				topLimit, possiblePaths, start);
 
-		return possiblePaths;
+		
+		for (int i = 0; i < numberWanted; i++)
+		{
+			returnPaths[i] = possiblePaths.remove();
+		}
+		
+		return returnPaths;
 	}
 
-	public ArrayList<Path> findPathsWithTravelTime(String startCity,
-			double bottomLimit, double topLimit)
+	public Path[] findPathsWithTravelTime(String startCity,
+			double bottomLimit, double topLimit, int numberWanted)
 	{
+		Path[] returnPaths = new Path[numberWanted];
 		City startingPoint = (City) this.graph.get(startCity);
-		ArrayList<Path> possiblePaths = new ArrayList<Path>();
-		Path start = new Path(startingPoint, true);
+		PriorityQueue<Path> possiblePaths = new PriorityQueue<Path>();
+		Path start = new Path(startingPoint, "Interestingness");
 		breadthFirstSearchTime(startCity, "DOES NOT EXIST", bottomLimit,
 				topLimit, possiblePaths, start);
 
-		return possiblePaths;
+		for (int i = 0; i < numberWanted; i++)
+		{
+			returnPaths[i] = possiblePaths.remove();
+		}
+		
+		return returnPaths;
 	}
 
 	private void breadthFirstSearchDistance(String cityName,
 			String previousCityName, double bottomLimit, double topLimit,
-			ArrayList<Path> possiblePaths, Path path)
+			PriorityQueue<Path> possiblePaths, Path path)
 	{
 		HashMap<City, Connection> connections = this.graph
 				.getConnectedElements(cityName);
@@ -234,7 +248,7 @@ public class AStar
 
 	private void breadthFirstSearchTime(String cityName,
 			String previousCityName, double bottomLimit, double topLimit,
-			ArrayList<Path> possiblePaths, Path path)
+			PriorityQueue<Path> possiblePaths, Path path)
 	{
 		HashMap<City, Connection> connections = this.graph
 				.getConnectedElements(cityName);

@@ -1,39 +1,54 @@
 import java.util.ArrayList;
+import java.util.Comparator;
 
 
 public class Path implements Comparable<Path>
 {
+	private enum Heuristic {DISTANCE, TIME, INTERESTINGNESS}
+	
 	private ArrayList<City> path;
 	private double pathLength;
 	private double approximatedPathLength;
 	private double timeTaken;
 	private double approximatedTimeTaken;
-	private boolean usingTimeHeuristic;
+	private Heuristic heuristic;
+	private double interestingness;
+	
 	
 	/**
 	 * Creates the beginning of a path.
 	 * 
 	 * @param startPoint the starting point
 	 */
-	public Path(City startPoint, boolean timeHeuristic)
+	public Path(City startPoint, String heuristic)
 	{
 		this.path = new ArrayList<City>();
 		this.path.add(startPoint);
 		this.pathLength = 0;
 		this.timeTaken = 0;
-		this.usingTimeHeuristic = timeHeuristic;
+		this.interestingness = startPoint.getInterest();
+		
+		heuristic = heuristic.toLowerCase();
+		
+		if (heuristic.equals("time"))
+			this.heuristic = Heuristic.TIME;
+		else if (heuristic.equals("distance"))
+			this.heuristic = Heuristic.DISTANCE;
+		else if (heuristic.equals("interestingness"))
+			this.heuristic = Heuristic.INTERESTINGNESS;
 	}
 	
 	/**
 	 * Creates an empty Path. Will really only be used if a copy
 	 * is being made. See copy method.
 	 */
-	private Path(boolean timeHeuristic)
+	private Path(Heuristic heuristic)
 	{
 		this.path = new ArrayList<City>();
 		this.pathLength = 0;
 		this.timeTaken = 0;
-		this.usingTimeHeuristic = timeHeuristic;
+		this.interestingness = 0;
+		this.heuristic = heuristic;
 	}
 	
 	public ArrayList<City> getCities()
@@ -90,11 +105,20 @@ public class Path implements Comparable<Path>
 	@Override
 	public int compareTo(Path otherPath)
 	{
-		if (this.usingTimeHeuristic)
+		if (this.heuristic == Heuristic.TIME)
 		{
 			return (this.approximatedTimeTaken - otherPath.getApproximatedTimeTaken()) > 0 ? 1 : -1;
 		}
-		return (this.approximatedPathLength - otherPath.getApproximatedPathLength()) > 0 ? 1 : -1;
+		else if (this.heuristic == Heuristic.DISTANCE)
+		{
+			return (this.approximatedPathLength - otherPath.getApproximatedPathLength()) > 0 ? 1 : -1;
+		}
+		else if (this.heuristic == Heuristic.INTERESTINGNESS)
+		{
+			return (this.interestingness - otherPath.interestingness) > 0 ? 1 : -1;
+		}
+		
+		throw new RuntimeException("Nonexistant heuristic in path");
 	}
 	
 	private double getApproximatedTimeTaken()
@@ -118,29 +142,27 @@ public class Path implements Comparable<Path>
 		return false;
 	}
 	
-	//TODO I guarantee there is a better way to do this nonsense.
-	private void addToPathForCopyingPurposes(City nextCity)
-	{
-		this.path.add(nextCity);
-	}
 	
-	private boolean isUsingTimeHeuristic()
-	{
-		return this.usingTimeHeuristic;
-	}
 	
 	public Path copy()
 	{
-		Path copy = new Path(this.usingTimeHeuristic);
-//		for (City city : this.path)
-		for (int i = 0; i < this.path.size(); i++)
+		Path copy = new Path(this.heuristic);
+		
+		for (City city : this.path)
 		{
-			copy.addToPathForCopyingPurposes(this.path.get(i));
+			copy.addToPathForCopyingPurposes(city);
 		}
+		
 		copy.pathLength = this.pathLength;
 		copy.timeTaken = this.timeTaken;
 		return copy;
 	}
+	
+	//TODO I guarantee there is a better way to do this nonsense.
+		private void addToPathForCopyingPurposes(City nextCity)
+		{
+			this.path.add(nextCity);
+		}
 
 	
 	
@@ -166,6 +188,6 @@ public class Path implements Comparable<Path>
 				this.path.get(0).toString(), this.getEndpoint(), 
 				this.path.toString(), this.pathLength, 
 				this.timeTaken, this.approximatedPathLength,
-				this.approximatedTimeTaken, this.usingTimeHeuristic);
+				this.approximatedTimeTaken, this.heuristic);
 	}
 }
