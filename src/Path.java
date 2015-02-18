@@ -96,12 +96,6 @@ public class Path implements Comparable<Path>
 	{
 		return this.approximatedTimeTaken;
 	}
-
-	@Override
-	public String toString()
-	{
-		return this.path.toString();
-	}
 	
 	public City getEndpoint()
 	{
@@ -153,5 +147,15 @@ public class Path implements Comparable<Path>
 		
 		this.pathLength += otherPath.getPathLength();
 		this.timeTaken += otherPath.getPathTravelTime();
+	}
+	
+	public String toString()
+	{
+		return String.format("Path start: %s%nPath Endpoint: %s%n"
+				+ "Path: %s%nPath Length: %.3f%nPath time: %.3f%n"
+				+ "Using time heuristic: %b%n", 
+				this.path.get(0).toString(), this.getEndpoint(), 
+				this.path.toString(), this.pathLength, 
+				this.timeTaken, this.usingTimeHeuristic);
 	}
 }
