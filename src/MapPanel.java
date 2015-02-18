@@ -52,20 +52,30 @@ public class MapPanel extends JPanel {
 	private HashMap<Integer, ArrayList<City>> clickMap = new HashMap<Integer, ArrayList<City>>();
 	private JButton addCityButton;
 
+	
 	private int partitionWidth;
-	private final int partitionCount = 300;
+	private final int partitionCount = 200;
 	private final int selectionMaxRadius = 40;
 	private int biggestStringWidth = 0;
 
+	// The bounds on the map
 	private int xMin, xMax, yMin, yMax;
 
+	// Used to pan and zoom
 	private double zoom = 1.0;
 	private double centerX = 0.0;
 	private double centerY = 0.0;
+	
+	// A list of all the paths currently being drawn by the panel
 	private ArrayList<Path> pathsToDraw;
 
+	// Used for the name mask
 	private double xDrawPoint = 0;
 	private double yDrawPoint = 0;
+	
+	// Used for the scale in the corner of the map
+	private Double scaleUnit = 150.0;
+	private Double lineMultiplier = 150.0;
 
 	public MapPanel(Graph<City, Connection, String> map, ApplicationWindow app) {
 		super();
@@ -151,13 +161,13 @@ public class MapPanel extends JPanel {
 
 			Point clickPoint = e.getPoint();
 
+			// Pan and zoom the click point
 			clickPoint.x -= centerX;
 			clickPoint.y -= centerY;
-
 			clickPoint.x /= zoom;
 			clickPoint.y /= zoom;
-
-			int partitionNumber = Math.floorDiv((int) clickPoint.x,
+			
+			int partitionNumber = Math.floorDiv((int) clickPoint.x - xMin,
 					partitionWidth);
 			if (partitionNumber < 0)
 				partitionNumber = 0;
@@ -175,6 +185,7 @@ public class MapPanel extends JPanel {
 			int closestCityDist = selectionMaxRadius;
 			City closestCity = null;
 			for (City city : citiesToSearch) {
+				System.out.println(city);
 				int xDistSquared = (int) Math.pow(city.getXCoord()
 						- clickPoint.x, 2);
 				int yDistSquared = (int) Math.pow(city.getYCoord()
@@ -456,8 +467,6 @@ public class MapPanel extends JPanel {
 		}
 	}
 
-	private Double scaleUnit = 150.0;
-	private Double lineMultiplier = 150.0;
 	private void drawScale(Graphics2D g2d)
 	{
 		int margin = 10;
@@ -508,13 +517,15 @@ public class MapPanel extends JPanel {
 	private void updateClickMap() {
 		clickMap.clear();
 
+		int mapWidth = xMax - xMin;
+		
 		// Prime the clickMap hashMap with emtpy arrayLists;
-		partitionWidth = xMax / partitionCount;
+		partitionWidth = mapWidth / partitionCount;
 		for (int i = 0; i < partitionCount; i++)
 			clickMap.put(i, new ArrayList<City>());
 
 		for (City city : map.getElements()) {
-			int partitionNumber = Math.floorDiv((int) city.getXCoord(),
+			int partitionNumber = Math.floorDiv((int) city.getXCoord() - xMin,
 					partitionWidth);
 			if (partitionNumber >= partitionCount)
 				partitionNumber = partitionCount - 1;
