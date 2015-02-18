@@ -393,7 +393,7 @@ public class MapPanel extends JPanel {
 		g2d.setColor(Color.LIGHT_GRAY);
 		g2d.drawRect(3, 3, this.getWidth() - 22, this.getHeight() - 45);
 		
-		// g2d.drawImage(nameCollisionImage, null, 0, 0);
+//		 g2d.drawImage(nameCollisionImage, null, 0, 0);
 	}
 
 	private void drawPaths(Graphics2D g2d) {
@@ -544,4 +544,6 @@ public class MapPanel extends JPanel {
 		connectionColors.add(Color.PINK);
 
 	}
+
+	
 }
