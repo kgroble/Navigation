@@ -55,8 +55,10 @@ public class Setup {
 	 */
 	public void addLinks(){
 		Scanner sc;
+	
+		int count = 0;
 		try{
-			sc = new Scanner(new File(txt+"links.txt"));
+			sc = new Scanner(new File(txt+"links.txt"), "Cp1252");
 			while(sc.hasNextLine()){
 				String cityLink = sc.nextLine();
 				String[] linkInfo = cityLink.split("--");
@@ -69,12 +71,15 @@ public class Setup {
 					double distance = Double.parseDouble(linkInfo[2]);
 					double speed = Double.parseDouble(linkInfo[3]);
 					addLink(startCity, endCity, distance, speed);
+					count++;
 				}
 			}
 
 		} catch (FileNotFoundException e) {
 			System.out.println(txt+"links.txt does not exist.");
 		}
+		
+		System.out.println("Loaded " + count + " links");
 	}
 	
 	/**

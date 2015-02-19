@@ -54,7 +54,7 @@ public class MapPanel extends JPanel {
 
 	
 	private int partitionWidth;
-	private final int partitionCount = 200;
+	private int partitionCount = 200;
 	private final int selectionMaxRadius = 40;
 	private int biggestStringWidth = 0;
 
@@ -521,6 +521,13 @@ public class MapPanel extends JPanel {
 		
 		// Prime the clickMap hashMap with emtpy arrayLists;
 		partitionWidth = mapWidth / partitionCount;
+		
+		if (partitionWidth == 0)
+		{
+			partitionCount = 1;
+			partitionWidth = mapWidth / partitionCount;
+		}
+		
 		for (int i = 0; i < partitionCount; i++)
 			clickMap.put(i, new ArrayList<City>());
 
