@@ -6,7 +6,7 @@ import java.util.PriorityQueue;
 public class AStar
 {
 	private Graph<City, Connection, String> graph;
-	private double maxSpeed = 100;
+	private double maxSpeed = 60;
 	private final int REASONABLE_LIMIT = 500000;
 
 	public AStar(Graph<City, Connection, String> graph)

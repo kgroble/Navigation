@@ -93,10 +93,10 @@ public class MapPanel extends JPanel {
 		this.addCityButton = new JButton();
 		this.addCityButton.setBounds(0, 0, 0, 0);
 		this.addCityButton.setText("Add City");
-		this.addCityButton.setBorderPainted(false);
-		this.addCityButton.setFocusPainted(false);
-		this.addCityButton.setBackground(Color.WHITE);
-		this.addCityButton.setContentAreaFilled(false);
+//		this.addCityButton.setBorderPainted(false);
+//		this.addCityButton.setFocusPainted(false);
+//		this.addCityButton.setBackground(Color.WHITE);
+//		this.addCityButton.setContentAreaFilled(false);
 		this.addCityButton.addActionListener(new ActionListener() {
 
 			@Override

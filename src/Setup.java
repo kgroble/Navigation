@@ -1,5 +1,9 @@
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -16,7 +20,12 @@ public class Setup {
 		this.g = g;
 		this.txt=txt;
 		addCities();
-		addLinks();
+		try {
+			addLinks();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	/**
@@ -24,6 +33,7 @@ public class Setup {
 	 */
 	public void addCities(){
 		Scanner sc = null;
+		int count = 0;
 		try {
 			sc = new Scanner(new File(txt+"cities.txt"));
 			while(sc.hasNextLine()){
@@ -39,6 +49,7 @@ public class Setup {
 					double xCoord = Double.parseDouble(cityInfo[3]);
 					double yCoord = Double.parseDouble(cityInfo[4]);
 					addCity(name, population, interest, xCoord, yCoord);
+					count++;
 				}
 			}
 		} catch (FileNotFoundException e) {
@@ -46,21 +57,24 @@ public class Setup {
 			if (sc != null)
 				sc.close();
 		}
+		System.out.println("Loaded " + count + " cities");
 		if (sc != null)
 			sc.close();
 	}
 	
 	/**
 	 * Loads links from file.
+	 * @throws IOException 
 	 */
-	public void addLinks(){
-		Scanner sc;
-	
+	public void addLinks() throws IOException{
+		BufferedReader sc = null;
+		
 		int count = 0;
 		try{
-			sc = new Scanner(new File(txt+"links.txt"), "Cp1252");
-			while(sc.hasNextLine()){
-				String cityLink = sc.nextLine();
+			sc = new BufferedReader(new FileReader(txt+"links.txt"));
+			String cityLink = sc.readLine();
+			while(cityLink != null){
+				System.out.println(cityLink);
 				String[] linkInfo = cityLink.split("--");
 				if(linkInfo.length != 4){
 					System.out.println("The line \"" + cityLink + "\" is of invalid format.");
@@ -73,13 +87,18 @@ public class Setup {
 					addLink(startCity, endCity, distance, speed);
 					count++;
 				}
+				cityLink = sc.readLine();
 			}
+			if (sc != null)
+				sc.close();
 
 		} catch (FileNotFoundException e) {
 			System.out.println(txt+"links.txt does not exist.");
 		}
 		
 		System.out.println("Loaded " + count + " links");
+		if (sc != null)
+			sc.close();
 	}
 	
 	/**
