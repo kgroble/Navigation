@@ -1,3 +1,4 @@
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
@@ -7,6 +8,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -19,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 import javax.swing.SwingConstants;
 import javax.swing.border.BevelBorder;
 import javax.swing.border.Border;
@@ -59,11 +62,13 @@ public class ApplicationWindow extends JFrame {
 
 		// set up box that displays the list in control panel
 		this.listBox = new JList<String>(citiesList);
-		this.listBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		this.listBox.setLayoutOrientation(JList.VERTICAL_WRAP);
+		this.listBox.setVisibleRowCount(100);
 
 		// sets up the box that displays path info in control panel
 		this.displayBox = new JList<String>(displayList);
-		this.displayBox.setLayoutOrientation(JList.HORIZONTAL_WRAP);
+		this.displayBox.setLayoutOrientation(JList.VERTICAL_WRAP);
+		this.displayBox.setVisibleRowCount(11);
 
 		restartListen = new ActionListener() {
 
@@ -256,12 +261,16 @@ public class ApplicationWindow extends JFrame {
 			this.displayScroller = new JScrollPane(displayBox);
 			this.displayScroller.setBounds(MARGIN, MARGIN * 3 + 330,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 260);
+			this.displayScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			this.displayScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			this.add(displayScroller);
 
 			// adds the list to the panel
 			this.listScroller = new JScrollPane(listBox);
 			this.listScroller.setBounds(MARGIN, MARGIN * 3 + 40,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 100);
+			this.listScroller.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_AS_NEEDED);
+			this.listScroller.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
 			this.add(listScroller);
 
 			// adds all the buttons
@@ -431,15 +440,32 @@ public class ApplicationWindow extends JFrame {
 					} else {
 						int range = Integer.parseInt(txt);
 
-						Path[] paths = aStar
+						Path[] paths=null;
+						
+						try{
+						paths = aStar
 								.findPathsWithTravelDistance(
 										ApplicationWindow.this.citiesList
 												.get(0), range * .9,
 										range * 1.1, 10);
+						}catch(Exception ex){
+							if(ex instanceof NoSuchElementException){
+								JOptionPane
+								.showMessageDialog(
+										ApplicationWindow.this,
+										"ROUTE IS NOT POSSIBLE",
+										"error", JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
 						
+						displayList.add("path name = (distance,time)");
+						int i=1;
 						for (Path path : paths)
 						{
+							displayList.add("path "+i+" = ("+Math.round(path.getPathLength())+", "+Math.round(path.getPathTravelTime())+")");
 							ApplicationWindow.this.mapPanel.addPath(path);
+							i++;
 						}
 
 						System.out.println(paths.length);
