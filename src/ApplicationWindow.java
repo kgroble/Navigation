@@ -33,7 +33,7 @@ public class ApplicationWindow extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1100;
 	private static final int FRAME_HEIGHT = 700;
-	private static final int CONTROL_PANEL_WIDTH = 180;
+	private static final int CONTROL_PANEL_WIDTH = 220;
 
 	// Serves as the 'background' that the other two panels will be added to:
 	private JPanel containerPanel;
@@ -463,7 +463,7 @@ public class ApplicationWindow extends JFrame {
 						int i=1;
 						for (Path path : paths)
 						{
-							displayList.add("path "+i+" = ("+Math.round(path.getPathLength())+", "+Math.round(path.getPathTravelTime())+")");
+							displayList.add("path "+i+ " to " + path.getEndpoint() + ": ("+Math.round(path.getPathLength())+", "+Math.round(path.getPathTravelTime())+")");
 							ApplicationWindow.this.mapPanel.addPath(path);
 							i++;
 						}
