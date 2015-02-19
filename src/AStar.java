@@ -7,6 +7,7 @@ public class AStar
 {
 	private Graph<City, Connection, String> graph;
 	private double maxSpeed = 100;
+	private final int REASONABLE_LIMIT = 500000;
 
 	public AStar(Graph<City, Connection, String> graph)
 	{
@@ -224,6 +225,9 @@ public class AStar
 		HashMap<City, Connection> connections = this.graph
 				.getConnectedElements(cityName);
 		Path newPath;
+		
+		if (path.getPathLength() > topLimit || possiblePaths.size() > REASONABLE_LIMIT)
+			return;
 
 		if (path.getPathLength() <= topLimit)
 		{
@@ -253,7 +257,10 @@ public class AStar
 		HashMap<City, Connection> connections = this.graph
 				.getConnectedElements(cityName);
 		Path newPath;
-
+		
+		if (path.getPathTravelTime() > topLimit || possiblePaths.size() > REASONABLE_LIMIT)
+			return;
+		
 		if (path.getPathTravelTime() <= topLimit)
 		{
 			if (path.getPathTravelTime() >= bottomLimit)
