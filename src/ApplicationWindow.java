@@ -162,6 +162,7 @@ public class ApplicationWindow extends JFrame {
 				break;
 			}
 		}
+		clearDisplay();
 		mapPanel.clearPaths();
 	}
 
