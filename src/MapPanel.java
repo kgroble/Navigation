@@ -93,14 +93,10 @@ public class MapPanel extends JPanel {
 		this.addCityButton = new JButton();
 		this.addCityButton.setBounds(0, 0, 0, 0);
 		this.addCityButton.setText("Add City");
-//		this.addCityButton.setBorderPainted(false);
-//		this.addCityButton.setFocusPainted(false);
-//		this.addCityButton.setBackground(Color.WHITE);
-//		this.addCityButton.setContentAreaFilled(false);
 		this.addCityButton.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+		public void actionPerformed(ActionEvent e) {
 				if (selectedCity != null) {
 					app.addToList(selectedCity.getName());
 					// System.out.println("You want to add: " +
@@ -185,7 +181,6 @@ public class MapPanel extends JPanel {
 			int closestCityDist = selectionMaxRadius;
 			City closestCity = null;
 			for (City city : citiesToSearch) {
-				System.out.println(city);
 				int xDistSquared = (int) Math.pow(city.getXCoord()
 						- clickPoint.x, 2);
 				int yDistSquared = (int) Math.pow(city.getYCoord()

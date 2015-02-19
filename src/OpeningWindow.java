@@ -9,11 +9,12 @@ import javax.swing.JPanel;
 
 public class OpeningWindow extends JFrame {
 
-	private static final int HEIGHT = 400, WIDTH = 400;
+	private static final int HEIGHT = 200, WIDTH = 400;
+	private static final int FRAME_WIDTH = 16, FRAME_HEIGHT = 39;
 
 	public OpeningWindow() {
-		this.setMinimumSize(new Dimension(HEIGHT, WIDTH));
-		this.setMaximumSize(new Dimension(HEIGHT, WIDTH));
+		this.setMinimumSize(new Dimension(WIDTH + FRAME_WIDTH, HEIGHT + FRAME_HEIGHT));
+		this.setMaximumSize(new Dimension(WIDTH + FRAME_WIDTH, HEIGHT + FRAME_HEIGHT));
 
 		// this.setLayout(null);
 
@@ -22,8 +23,8 @@ public class OpeningWindow extends JFrame {
 
 		JButton ireland = new JButton();
 		panel.add(ireland);
-		ireland.setBounds(0, 0, HEIGHT / 2, WIDTH / 2);
-		ireland.setText("ireland");
+		ireland.setBounds(0, 0, WIDTH / 2, HEIGHT);
+		ireland.setText("Map of Ireland");
 		ireland.addActionListener(new ActionListener() {
 
 			@Override
@@ -39,8 +40,8 @@ public class OpeningWindow extends JFrame {
 
 		JButton texas = new JButton();
 		panel.add(texas);
-		texas.setBounds(WIDTH / 2, 0, HEIGHT / 2, WIDTH / 2);
-		texas.setText("texas");
+		texas.setBounds(WIDTH / 2, 0, WIDTH / 2, HEIGHT);
+		texas.setText("Map of Texas");
 		texas.addActionListener(new ActionListener() {
 
 			@Override
@@ -54,7 +55,7 @@ public class OpeningWindow extends JFrame {
 			}
 		});
 
-		panel.setBounds(0, 0, HEIGHT, WIDTH);
+		panel.setBounds(0, 0, WIDTH, HEIGHT);
 		this.add(panel);
 
 		setVisible(true);

@@ -57,7 +57,6 @@ public class Setup {
 			if (sc != null)
 				sc.close();
 		}
-		System.out.println("Loaded " + count + " cities");
 		if (sc != null)
 			sc.close();
 	}
@@ -94,9 +93,10 @@ public class Setup {
 
 		} catch (FileNotFoundException e) {
 			System.out.println(txt+"links.txt does not exist.");
+			if (sc != null)
+				sc.close();
 		}
 		
-		System.out.println("Loaded " + count + " links");
 		if (sc != null)
 			sc.close();
 	}
