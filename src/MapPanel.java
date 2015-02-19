@@ -547,20 +547,20 @@ public class MapPanel extends JPanel {
 
 	public void centerMap()
 	{
-		int mapWidth = xMax - xMin;
-		int mapHeight = yMax - yMin;
+		int margin = 40;
 		
-		double xZoom = this.getWidth() / mapWidth;
-		double yZoom = this.getHeight() / mapHeight;
+		double mapWidth = Math.abs(xMax - xMin);
+		double mapHeight = Math.abs(yMax - yMin);
 		
-		System.out.println("XZoom: " + xZoom);
-		System.out.println("YZoom: " + yZoom);
+		double xZoom = (this.getWidth() - margin * 2) / mapWidth;
+		double yZoom = (this.getHeight() - margin * 2) / mapHeight;
 		
 		zoom = (xZoom < yZoom ? xZoom : yZoom);
-		//zoom = xZoom;
-		//zoom = 1.1;
 		
-		centerX = -xMin * zoom;
-		centerY = -yMin * zoom;
+		double offSetX = (this.getWidth() - (mapWidth * zoom)) / 2;
+		double offSetY = (this.getHeight() - (mapHeight * zoom)) / 2;
+		
+		centerX = -xMin * zoom + offSetX;
+		centerY = -yMin * zoom + offSetY - 20;
 	}
 }
