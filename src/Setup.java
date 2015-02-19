@@ -23,7 +23,7 @@ public class Setup {
 	 * Loads cities from file.
 	 */
 	public void addCities(){
-		Scanner sc;
+		Scanner sc = null;
 		try {
 			sc = new Scanner(new File(txt+"cities.txt"));
 			while(sc.hasNextLine()){
@@ -43,7 +43,11 @@ public class Setup {
 			}
 		} catch (FileNotFoundException e) {
 			System.out.println(txt+"cities.txt does not exist.");
+			if (sc != null)
+				sc.close();
 		}
+		if (sc != null)
+			sc.close();
 	}
 	
 	/**
