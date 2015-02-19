@@ -105,6 +105,7 @@ public class ApplicationWindow extends JFrame {
 				- CONTROL_PANEL_WIDTH, FRAME_HEIGHT);
 		this.mapPanel.setPreferredSize(new Dimension(FRAME_WIDTH
 				- CONTROL_PANEL_WIDTH, FRAME_HEIGHT));
+		this.mapPanel.centerMap();
 		this.map = map;
 		this.containerPanel.add(this.mapPanel);
 

@@ -545,5 +545,22 @@ public class MapPanel extends JPanel {
 
 	}
 
-	
+	public void centerMap()
+	{
+		int mapWidth = xMax - xMin;
+		int mapHeight = yMax - yMin;
+		
+		double xZoom = this.getWidth() / mapWidth;
+		double yZoom = this.getHeight() / mapHeight;
+		
+		System.out.println("XZoom: " + xZoom);
+		System.out.println("YZoom: " + yZoom);
+		
+		zoom = (xZoom < yZoom ? xZoom : yZoom);
+		//zoom = xZoom;
+		//zoom = 1.1;
+		
+		centerX = -xMin * zoom;
+		centerY = -yMin * zoom;
+	}
 }
