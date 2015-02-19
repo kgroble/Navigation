@@ -1,6 +1,7 @@
 import java.awt.Color;
 import java.awt.Container;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
@@ -223,8 +224,11 @@ public class ApplicationWindow extends JFrame {
 					* MARGIN, 20);
 			this.cityName.setBorder(new BevelBorder(1));
 			this.add(this.cityName);
+			this.cityName.setForeground(Color.gray);
 			TextPrompt cityNamePrompt = new TextPrompt("City Name", this.cityName);
 			cityNamePrompt.setHorizontalAlignment(SwingConstants.CENTER);
+			this.cityName.setForeground(Color.black);
+
 
 			// adds the time txtbox to the panel
 			this.time = new JTextField();
@@ -232,8 +236,10 @@ public class ApplicationWindow extends JFrame {
 					- 2 * MARGIN, 20);
 			this.time.setBorder(new BevelBorder(1));
 			this.add(this.time);
+			this.time.setForeground(Color.gray);
 			TextPrompt timePrompt = new TextPrompt("Time from city (hr)", this.time);
 			timePrompt.setHorizontalAlignment(SwingConstants.CENTER);
+			this.time.setForeground(Color.black);
 			
 			// adds the distance txtbox to the panel
 			this.distance = new JTextField();
@@ -241,8 +247,10 @@ public class ApplicationWindow extends JFrame {
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			this.distance.setBorder(new BevelBorder(1));
 			this.add(this.distance);
+			this.distance.setForeground(Color.gray);
 			TextPrompt distancePrompt = new TextPrompt("Distance from city (mi)", this.distance);
 			distancePrompt.setHorizontalAlignment(SwingConstants.CENTER);
+			this.distance.setForeground(Color.black);
 
 			// adds the display to the panel
 			this.displayScroller = new JScrollPane(displayBox);
