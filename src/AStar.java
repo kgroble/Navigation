@@ -284,7 +284,33 @@ public class AStar
 	
 	private class AStarNode
 	{
+		private City city;
 		private AStarNode previousNode;
+		HashMap<City, Connection> connections;
+		private double pathLength;
+		private double interestingness;
+		private double travelTime;
+		private String heuristic;
+		
+		private AStarNode()
+		{
+			this.connections = AStar.this.graph.getConnectedElements(this.city.getName());
+		}
+		
+		private Path reconstructPath()
+		{
+			if (previousNode == null)
+			{
+				return new Path(this.city, this.heuristic);
+			}
+			
+			Path path = this.previousNode.reconstructPath();
+			path.addToPath(this.city, this.connections.get(this.previousNode.city));
+			
+			return path;
+			
+			
+		}
 	}
 
 }
