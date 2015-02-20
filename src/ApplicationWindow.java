@@ -383,8 +383,8 @@ public class ApplicationWindow extends JFrame {
 						paths = aStar
 								.findPathsWithTravelTime(
 										ApplicationWindow.this.citiesList
-												.get(0), time * .9,
-												time * 1.1, 10);
+												.get(0), time * .95,
+												time * 1.05, 10);
 						}catch(Exception ex){
 							if(ex instanceof NoSuchElementException){
 								JOptionPane
@@ -406,7 +406,7 @@ public class ApplicationWindow extends JFrame {
 						}
 
 						System.out.println(paths.length);
-						distance.setText("");
+						ControlPanel.this.time.setText("");
 					}
 				}
 			});
@@ -477,17 +477,15 @@ public class ApplicationWindow extends JFrame {
 						paths = aStar
 								.findPathsWithTravelDistance(
 										ApplicationWindow.this.citiesList
-												.get(0), range * .9,
-										range * 1.1, 10);
-						}catch(Exception ex){
-							if(ex instanceof NoSuchElementException){
+												.get(0), range * .95,
+										range * 1.05, 10);
+						}catch(NoSuchElementException ex){
 								JOptionPane
 								.showMessageDialog(
 										ApplicationWindow.this,
 										"ROUTE IS NOT POSSIBLE",
 										"error", JOptionPane.ERROR_MESSAGE);
 								return;
-							}
 						}
 						
 						displayList.add("path name = (distance,time)");

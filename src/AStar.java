@@ -1,13 +1,15 @@
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
+import java.util.Random;
 
 public class AStar
 {
 	private Graph<City, Connection, String> graph;
 	private double maxSpeed = 60;
-	private final int REASONABLE_LIMIT = 500000;
+	private final int REASONABLE_LIMIT = 10000;
 
 	public AStar(Graph<City, Connection, String> graph)
 	{
@@ -184,13 +186,12 @@ public class AStar
 			double bottomLimit, double topLimit, int numberWanted)
 	{
 		Path[] returnPaths = new Path[numberWanted];
-		City startingPoint = (City) this.graph.get(startCity);
+		City startingPoint = this.graph.get(startCity);
 		PriorityQueue<Path> possiblePaths = new PriorityQueue<Path>();
-		Path start = new Path(startingPoint, "Interestingness");
 
-		breadthFirstSearchDistance(startCity, "DOES NOT EXIST", bottomLimit,
-				topLimit, possiblePaths, start);
-
+		for(int i = 0; i < REASONABLE_LIMIT; i++){
+			possiblePaths.add(getRandomPathDistance(startingPoint, bottomLimit));
+		}
 		
 		for (int i = 0; i < numberWanted; i++)
 		{
@@ -203,13 +204,15 @@ public class AStar
 	public Path[] findPathsWithTravelTime(String startCity,
 			double bottomLimit, double topLimit, int numberWanted)
 	{
+		
 		Path[] returnPaths = new Path[numberWanted];
-		City startingPoint = (City) this.graph.get(startCity);
+		City startingPoint = this.graph.get(startCity);
 		PriorityQueue<Path> possiblePaths = new PriorityQueue<Path>();
-		Path start = new Path(startingPoint, "Interestingness");
-		breadthFirstSearchTime(startCity, "DOES NOT EXIST", bottomLimit,
-				topLimit, possiblePaths, start);
 
+		for(int i = 0; i < REASONABLE_LIMIT; i++){
+			possiblePaths.add(getRandomPathTime(startingPoint, bottomLimit));
+		}
+		
 		for (int i = 0; i < numberWanted; i++)
 		{
 			returnPaths[i] = possiblePaths.remove();
@@ -218,69 +221,35 @@ public class AStar
 		return returnPaths;
 	}
 
-	private void breadthFirstSearchDistance(String cityName,
-			String previousCityName, double bottomLimit, double topLimit,
-			PriorityQueue<Path> possiblePaths, Path path)
-	{
-		HashMap<City, Connection> connections = this.graph
-				.getConnectedElements(cityName);
-		Path newPath;
-		
-		if (path.getPathLength() > topLimit || possiblePaths.size() > REASONABLE_LIMIT)
-			return;
-
-		if (path.getPathLength() <= topLimit)
-		{
-			if (path.getPathLength() >= bottomLimit)
-			{
-				possiblePaths.add(path);
-			}
-
-			for (City nextCity : connections.keySet())
-			{
-				if (path.containsCity(nextCity.getName()))
-					continue;
-
-				newPath = path.copy();
-
-				newPath.addToPath(nextCity, connections.get(nextCity));
-				breadthFirstSearchDistance(nextCity.getName(), cityName,
-						bottomLimit, topLimit, possiblePaths, newPath);
-			}
+	private Path getRandomPathDistance(City start, double distance){
+		Path path = new Path(start, "Interestingness");
+		Random r = new Random();
+		while(path.getPathLength() < distance){
+			City currentCity = path.getEndpoint();
+			HashMap<City, Connection> connectedCities = this.graph.getConnectedElements(currentCity.getName());
+			Object[] citiesArray = connectedCities.keySet().toArray();
+			int next = r.nextInt(citiesArray.length);
+			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
 		}
+		return path;
+		
 	}
-
-	private void breadthFirstSearchTime(String cityName,
-			String previousCityName, double bottomLimit, double topLimit,
-			PriorityQueue<Path> possiblePaths, Path path)
-	{
-		HashMap<City, Connection> connections = this.graph
-				.getConnectedElements(cityName);
-		Path newPath;
-		
-		if (path.getPathTravelTime() > topLimit || possiblePaths.size() > REASONABLE_LIMIT)
-			return;
-		
-		if (path.getPathTravelTime() <= topLimit)
-		{
-			if (path.getPathTravelTime() >= bottomLimit)
-			{
-				possiblePaths.add(path);
-			}
-
-			for (City nextCity : connections.keySet())
-			{
-				if (path.containsCity(nextCity.getName()))
-					continue;
-
-				newPath = path.copy();
-
-				newPath.addToPath(nextCity, connections.get(nextCity));
-				breadthFirstSearchTime(nextCity.getName(), cityName,
-						bottomLimit, topLimit, possiblePaths, newPath);
-			}
+	
+	private Path getRandomPathTime(City start, double time){
+		Path path = new Path(start, "Interestingness");
+		Random r = new Random();
+		while(path.getPathTravelTime() < time){
+			City currentCity = path.getEndpoint();
+			HashMap<City, Connection> connectedCities = this.graph.getConnectedElements(currentCity.getName());
+			Object[] citiesArray = connectedCities.keySet().toArray();
+			int next = r.nextInt(citiesArray.length);
+			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
 		}
+		return path;
+		
 	}
+	
+	
 	
 	private class AStarNode
 	{
