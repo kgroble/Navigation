@@ -73,7 +73,7 @@ public class Setup {
 			sc = new BufferedReader(new FileReader(txt+"links.txt"));
 			String cityLink = sc.readLine();
 			while(cityLink != null){
-				System.out.println(cityLink);
+//				System.out.println(cityLink);
 				String[] linkInfo = cityLink.split("--");
 				if(linkInfo.length != 4){
 					System.out.println("The line \"" + cityLink + "\" is of invalid format.");

@@ -67,45 +67,33 @@ public class AStar
 	 */
 	public Path findShortestPathBetween(String start, String end)
 	{
-		return findNShortestPaths(start, end, 1).get(0);
-	}
-	
-	public Path findShortestPathBetweenV2(String start, String end)
-	{
-		return findNShortestPathsV2(start, end);
-	}
-
-	public ArrayList<Path> findNShortestPaths(String start, String end,
-			int number)
-	{
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
-		PriorityQueue<Path> open = new PriorityQueue<Path>();
+		
+		PriorityQueue<AStarNode> open = new PriorityQueue<AStarNode>();
 		ArrayList<City> closed = new ArrayList<City>();
-		ArrayList<Path> possiblePaths = new ArrayList<Path>();
-		Path current = new Path(startCity, "Distance");
-		Path newPath;
+		AStarNode current = new AStarNode(startCity, null, Heuristic.DISTANCE, null);
+		AStarNode next;
 		
 		open.add(current);
 		closed.add(startCity);
 
 		HashMap<City, Connection> connections;
 
-		while (!open.isEmpty() && possiblePaths.size() < number)
+		while (!open.isEmpty())
 		{
 			current = open.remove();
 
-			if (current.getEndpoint().equals(endCity))
+			if (current.city.equals(endCity))
 			{
-				possiblePaths.add(current);
-				continue;
+				return current.reconstructPath();
 			}
 			
-			closed.add(current.getEndpoint());
+			closed.add(current.city);
 
 			// Gets a hashmap of the connected cities and the associated
 			// Connection objects.
-			connections = this.graph.getConnectedElements(current.getEndpoint()
+			connections = this.graph.getConnectedElements(current.city
 					.getName());
 
 			// Adding possible paths to the PriorityQueue
@@ -113,23 +101,20 @@ public class AStar
 			{
 				if (closed.contains(city))
 					continue;
-				newPath = current.copy();
 				
-				newPath.addToPath(city, connections.get(city));
-				newPath.setApproximatedPathLength(endCity);
 				
-				open.add(newPath);
+				next = new AStarNode(city, current, Heuristic.DISTANCE, connections.get(city));
+				
+				next.setApproximatedPathLength(endCity);
+				
+				open.add(next);
 			}
 		}
 
-		if (possiblePaths.size() == 0)
-			throw new RuntimeException("Connection not found");
-		
-		return possiblePaths;
-
+		throw new RuntimeException("Connection not found");
 	}
-	
-	public Path findNShortestPathsV2(String start, String end)
+
+	public Path findFastestPath(String start, String end)
 	{
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
@@ -166,80 +151,16 @@ public class AStar
 				if (closed.contains(city))
 					continue;
 				
-//				newPath = current.copy();
 				
-				next = new AStarNode(city, current, Heuristic.DISTANCE, connections.get(city));
+				next = new AStarNode(city, current, Heuristic.TIME, connections.get(city));
 				
-//				newPath.addToPath(city, connections.get(city));
-				next.setApproximatedPathLength(endCity);
+				next.setApproximatedPathTime(endCity, this.maxSpeed);
 				
 				open.add(next);
 			}
 		}
 
 		throw new RuntimeException("Connection not found");
-		
-
-	}
-
-	public Path findFastestPath(String start, String end)
-	{
-		return findNFastestPaths(start, end, 1).get(0);
-	}
-
-	public ArrayList<Path> findNFastestPaths(String start, String end,
-			int number)
-	{
-		City startCity = (City) this.graph.get(start);
-		City endCity = (City) this.graph.get(end);
-		PriorityQueue<Path> open = new PriorityQueue<Path>();
-		ArrayList<City> closed = new ArrayList<City>();
-		ArrayList<Path> possiblePaths = new ArrayList<Path>();
-		Path current = new Path(startCity, "Time");
-		Path newPath;
-		open.add(current);
-
-		// Not sure about this
-		HashMap<City, Connection> connections;
-
-		while (!open.isEmpty() && possiblePaths.size() < number)
-		{
-
-			current = open.remove();
-
-			if (current.getEndpoint().equals(endCity))
-			{
-				possiblePaths.add(current);
-				continue;
-			}
-			
-			closed.add(current.getEndpoint());
-
-			// Gets a hashmap of the connected cities and the associated
-			// Connection objects.
-			connections = this.graph.getConnectedElements(current.getEndpoint()
-					.getName());
-
-			// Adding possible paths to the PriorityQueue
-			for (City city : connections.keySet())
-			{
-				if (closed.contains(city))
-					continue;
-				newPath = current.copy();
-				
-				
-				newPath.addToPath(city, connections.get(city));
-				newPath.setApproximatedPathTime(endCity, this.maxSpeed);
-				
-				
-				open.add(newPath);
-			}
-		}
-
-		if (possiblePaths.size() == 0)
-			throw new RuntimeException("Connection not found");
-
-		return possiblePaths;
 	}
 
 	public Path[] findPathsWithTravelDistance(String startCity,
