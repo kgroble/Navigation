@@ -4,7 +4,7 @@ import java.util.Comparator;
 
 public class Path implements Comparable<Path>
 {
-	private enum Heuristic {DISTANCE, TIME, INTERESTINGNESS}
+//	private enum Heuristic {DISTANCE, TIME, INTERESTINGNESS}
 	
 	private ArrayList<City> path;
 	private double pathLength;
@@ -36,6 +36,24 @@ public class Path implements Comparable<Path>
 			this.heuristic = Heuristic.DISTANCE;
 		else if (heuristic.equals("interestingness"))
 			this.heuristic = Heuristic.INTERESTINGNESS;
+	}
+	
+	/**
+	 * TODO see if the one above this is even needed, I don't think
+	 * paths are really made outside of AStar which I just gave heuristic.
+	 * 
+	 * 
+	 * @param startPoint
+	 * @param heuristic
+	 */
+	public Path(City startPoint, Heuristic heuristic)
+	{
+		this.path = new ArrayList<City>();
+		this.path.add(startPoint);
+		this.pathLength = 0;
+		this.timeTaken = 0;
+		this.interestingness = startPoint.getInterest();
+		this.heuristic = heuristic;
 	}
 	
 	/**

@@ -110,7 +110,7 @@ public class AStarTest {
 	//
 	// }
 
-	@Test
+//	@Test
 	public void stressTest() {
 		Graph<City, Connection, String> map = new Graph<City, Connection, String>();
 		Setup setup = new Setup(map, "ireland");
@@ -138,6 +138,49 @@ public class AStarTest {
 						.getPathTravelTime());
 			}
 		}
+	}
+	
+	@Test
+	public void stressTestNodeMethod() {
+		Graph<City, Connection, String> map = new Graph<City, Connection, String>();
+		Setup setup = new Setup(map, "ireland");
+		AStar pathfinder = new AStar(map);
+		City start;
+		City end;
+		Path distPath;
+		Path distPath2;
+		int startIndex;
+		int endIndex;
+		Random rand = new Random();
+		
+		long v1Time = 0;
+		long v2Time = 0;
+		long temp;
+
+		ArrayList<City> elements = map.getElements();
+
+		for (int i = 0; i < 177; i++) 
+		{
+			for (int j = 0; j < 177; j++)
+			{
+				temp = System.currentTimeMillis();
+				distPath = pathfinder.findShortestPathBetween(
+						elements.get(i).getName(), elements.get(j).getName());
+				v1Time += System.currentTimeMillis() - temp;
+				
+				temp = System.currentTimeMillis();
+				distPath2 = pathfinder.findShortestPathBetweenV2(
+						elements.get(i).getName(), elements.get(j).getName());
+				v1Time += System.currentTimeMillis() - temp;
+				
+				assertTrue(distPath.getPathLength() == distPath2.getPathLength());
+			}
+		}
+		
+		System.out.printf("Total Time: %d milliseconds", (v1Time + v2Time));
+		System.out.printf("Time spent on V1: %d milliseconds", v1Time);
+		System.out.printf("Time spent on V2: %d milliseconds", v2Time);
+		
 	}
 
 }

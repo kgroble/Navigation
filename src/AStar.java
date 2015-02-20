@@ -5,8 +5,11 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Random;
 
+
 public class AStar
 {
+//	private enum Heuristic {DISTANCE, TIME, INTERESTINGNESS}
+	
 	private Graph<City, Connection, String> graph;
 	private double maxSpeed = 60;
 	private final int REASONABLE_LIMIT = 10000;
@@ -66,6 +69,11 @@ public class AStar
 	{
 		return findNShortestPaths(start, end, 1).get(0);
 	}
+	
+	public Path findShortestPathBetweenV2(String start, String end)
+	{
+		return findNShortestPathsV2(start, end);
+	}
 
 	public ArrayList<Path> findNShortestPaths(String start, String end,
 			int number)
@@ -81,7 +89,6 @@ public class AStar
 		open.add(current);
 		closed.add(startCity);
 
-		// Not sure about this
 		HashMap<City, Connection> connections;
 
 		while (!open.isEmpty() && possiblePaths.size() < number)
@@ -119,6 +126,59 @@ public class AStar
 			throw new RuntimeException("Connection not found");
 		
 		return possiblePaths;
+
+	}
+	
+	public Path findNShortestPathsV2(String start, String end)
+	{
+		City startCity = (City) this.graph.get(start);
+		City endCity = (City) this.graph.get(end);
+		
+		PriorityQueue<AStarNode> open = new PriorityQueue<AStarNode>();
+		ArrayList<City> closed = new ArrayList<City>();
+		AStarNode current = new AStarNode(startCity, null, Heuristic.DISTANCE, null);
+		AStarNode next;
+		
+		open.add(current);
+		closed.add(startCity);
+
+		HashMap<City, Connection> connections;
+
+		while (!open.isEmpty())
+		{
+			current = open.remove();
+
+			if (current.city.equals(endCity))
+			{
+				return current.reconstructPath();
+			}
+			
+			closed.add(current.city);
+
+			// Gets a hashmap of the connected cities and the associated
+			// Connection objects.
+			connections = this.graph.getConnectedElements(current.city
+					.getName());
+
+			// Adding possible paths to the PriorityQueue
+			for (City city : connections.keySet())
+			{
+				if (closed.contains(city))
+					continue;
+				
+//				newPath = current.copy();
+				
+				next = new AStarNode(city, current, Heuristic.DISTANCE, connections.get(city));
+				
+//				newPath.addToPath(city, connections.get(city));
+				next.setApproximatedPathLength(endCity);
+				
+				open.add(next);
+			}
+		}
+
+		throw new RuntimeException("Connection not found");
+		
 
 	}
 
@@ -251,38 +311,88 @@ public class AStar
 	
 	
 	
-	private class AStarNode
-	{
+	private class AStarNode implements Comparable<AStarNode>
+	{		
 		private City city;
 		private AStarNode previousNode;
-		HashMap<City, Connection> connections;
+		private HashMap<City, Connection> connections;
+		private double approximatedPathLength;
+		private double approximatedTimeTaken;
 		private double pathLength;
 		private double interestingness;
 		private double travelTime;
-		private String heuristic;
+		private Heuristic heuristic;
 		
-		private AStarNode()
+		private AStarNode(City city, AStarNode previousNode, Heuristic heuristic, Connection connection)
 		{
-			this.connections = AStar.this.graph.getConnectedElements(this.city.getName());
+			this.previousNode = previousNode;
+			this.heuristic = heuristic;
+			this.city = city;
+			
+			if (previousNode != null)
+			{
+				this.pathLength = this.previousNode.pathLength + 
+						connection.getConnectionDistance();
+				this.travelTime = this.previousNode.travelTime + 
+						connection.getConnectionTravelTime();
+				this.interestingness = this.previousNode.interestingness + 
+						this.city.getInterestingness();
+				this.connections = AStar.this.graph.getConnectedElements(this.city.getName());
+			}
+			else
+			{
+				this.pathLength = 0;
+				this.travelTime = 0;
+				this.interestingness = this.city.getInterestingness();
+			}
 		}
 		
 		private Path reconstructPath()
 		{
-			if (previousNode == null)
+			if (this.previousNode == null)
 			{
 				return new Path(this.city, this.heuristic);
 			}
 			
 			Path path = this.previousNode.reconstructPath();
+			
 			path.addToPath(this.city, this.connections.get(this.previousNode.city));
 			
+			
 			return path;
+		}
+		
+		@Override
+		public int compareTo(AStarNode otherPath)
+		{
+			if (this.heuristic == Heuristic.TIME)
+			{
+				return (this.approximatedTimeTaken - otherPath.approximatedTimeTaken) > 0 ? 1 : -1;
+			}
+			else if (this.heuristic == Heuristic.DISTANCE)
+			{
+				return (this.approximatedPathLength - otherPath.approximatedPathLength) > 0 ? 1 : -1;
+			}
+			else if (this.heuristic == Heuristic.INTERESTINGNESS)
+			{
+				return (this.interestingness - otherPath.interestingness) > 0 ? 1 : -1;
+			}
 			
-			
+			throw new RuntimeException("Nonexistant heuristic in AStarNode");
+		}
+		
+		
+		private void setApproximatedPathLength(City endPoint)
+		{
+			this.approximatedPathLength = this.pathLength + 
+					this.city.distanceTo(endPoint);
+		}
+		
+		private void setApproximatedPathTime(City endCity, double maxSpeed)
+		{
+			double dist = this.city.distanceTo(endCity);
+			this.approximatedTimeTaken = this.travelTime + dist / maxSpeed;
 		}
 	}
 
 }
-
-//TODO add node class to avoid copying the entire path
-//Add a reconstruct path method.
