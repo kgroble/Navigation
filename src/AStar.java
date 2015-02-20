@@ -8,8 +8,6 @@ import java.util.Random;
 
 public class AStar
 {
-//	private enum Heuristic {DISTANCE, TIME, INTERESTINGNESS}
-	
 	private Graph<City, Connection, String> graph;
 	private double maxSpeed = 60;
 	private final int REASONABLE_LIMIT = 10000;
@@ -203,7 +201,7 @@ public class AStar
 	}
 
 	private Path getRandomPathDistance(City start, double distance){
-		Path path = new Path(start, "Interestingness");
+		Path path = new Path(start, Heuristic.INTERESTINGNESS);
 		Random r = new Random();
 		while(path.getPathLength() < distance){
 			City currentCity = path.getEndpoint();
@@ -217,7 +215,7 @@ public class AStar
 	}
 	
 	private Path getRandomPathTime(City start, double time){
-		Path path = new Path(start, "Interestingness");
+		Path path = new Path(start, Heuristic.INTERESTINGNESS);
 		Random r = new Random();
 		while(path.getPathTravelTime() < time){
 			City currentCity = path.getEndpoint();

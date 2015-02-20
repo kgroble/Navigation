@@ -1,5 +1,4 @@
 import java.util.ArrayList;
-import java.util.Comparator;
 
 
 public class Path implements Comparable<Path>
@@ -13,31 +12,7 @@ public class Path implements Comparable<Path>
 	private double approximatedTimeTaken;
 	private Heuristic heuristic;
 	private double interestingness;
-	
-	
-	/**
-	 * Creates the beginning of a path.
-	 * 
-	 * @param startPoint the starting point
-	 */
-	public Path(City startPoint, String heuristic)
-	{
-		this.path = new ArrayList<City>();
-		this.path.add(startPoint);
-		this.pathLength = 0;
-		this.timeTaken = 0;
-		this.interestingness = startPoint.getInterest();
 		
-		heuristic = heuristic.toLowerCase();
-		
-		if (heuristic.equals("time"))
-			this.heuristic = Heuristic.TIME;
-		else if (heuristic.equals("distance"))
-			this.heuristic = Heuristic.DISTANCE;
-		else if (heuristic.equals("interestingness"))
-			this.heuristic = Heuristic.INTERESTINGNESS;
-	}
-	
 	/**
 	 * TODO see if the one above this is even needed, I don't think
 	 * paths are really made outside of AStar which I just gave heuristic.
@@ -56,19 +31,6 @@ public class Path implements Comparable<Path>
 		this.heuristic = heuristic;
 	}
 	
-	/**
-	 * Creates an empty Path. Will really only be used if a copy
-	 * is being made. See copy method.
-	 */
-	private Path(Heuristic heuristic)
-	{
-		this.path = new ArrayList<City>();
-		this.pathLength = 0;
-		this.timeTaken = 0;
-		this.interestingness = 0;
-		this.heuristic = heuristic;
-	}
-	
 	public ArrayList<City> getCities()
 	{
 		return path;
@@ -84,24 +46,6 @@ public class Path implements Comparable<Path>
 		return this.timeTaken;
 	}
 	
-	
-	public double getApproximatedPathLength()
-	{
-		return this.approximatedPathLength;
-	}
-	
-	public void setApproximatedPathLength(City endPoint)
-	{
-		this.approximatedPathLength = this.pathLength + 
-				this.getEndpoint().distanceTo(endPoint);
-	}
-	
-	public void setApproximatedPathTime(City endCity, double maxSpeed)
-	{
-		double dist = this.getEndpoint().distanceTo(endCity);
-		this.approximatedTimeTaken = this.timeTaken + dist / maxSpeed;
-	}
-	
 	/**
 	 * 
 	 * @param link
@@ -113,23 +57,17 @@ public class Path implements Comparable<Path>
 		this.pathLength += link.getConnectionDistance();
 		this.timeTaken += link.getConnectionTravelTime();
 	}
-	
-	public void updateHeuristic(City endCity, double maxSpeed)
-	{
-		this.setApproximatedPathLength(endCity);
-		this.setApproximatedPathTime(endCity, maxSpeed);
-	}
 
 	@Override
 	public int compareTo(Path otherPath)
 	{
 		if (this.heuristic == Heuristic.TIME)
 		{
-			return (this.approximatedTimeTaken - otherPath.getApproximatedTimeTaken()) > 0 ? 1 : -1;
+			return (this.timeTaken - otherPath.timeTaken) > 0 ? 1 : -1;
 		}
 		else if (this.heuristic == Heuristic.DISTANCE)
 		{
-			return (this.approximatedPathLength - otherPath.getApproximatedPathLength()) > 0 ? 1 : -1;
+			return (this.pathLength - otherPath.pathLength) > 0 ? 1 : -1;
 		}
 		else if (this.heuristic == Heuristic.INTERESTINGNESS)
 		{
@@ -137,11 +75,6 @@ public class Path implements Comparable<Path>
 		}
 		
 		throw new RuntimeException("Nonexistant heuristic in path");
-	}
-	
-	private double getApproximatedTimeTaken()
-	{
-		return this.approximatedTimeTaken;
 	}
 	
 	public City getEndpoint()
@@ -158,31 +91,7 @@ public class Path implements Comparable<Path>
 				return true;
 		}
 		return false;
-	}
-	
-	
-	
-	public Path copy()
-	{
-		Path copy = new Path(this.heuristic);
-		
-		for (City city : this.path)
-		{
-			copy.addToPathForCopyingPurposes(city);
-		}
-		
-		copy.pathLength = this.pathLength;
-		copy.timeTaken = this.timeTaken;
-		return copy;
-	}
-	
-	//TODO I guarantee there is a better way to do this nonsense.
-		private void addToPathForCopyingPurposes(City nextCity)
-		{
-			this.path.add(nextCity);
-		}
-
-	
+	}	
 	
 	public void addToEndOfPath(Path otherPath)
 	{

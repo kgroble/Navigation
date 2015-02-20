@@ -163,16 +163,16 @@ public class AStarTest {
 		{
 			for (int j = 0; j < 177; j++)
 			{
-				temp = System.currentTimeMillis();
-				distPath = pathfinder.findShortestPathBetween(
-						elements.get(i).getName(), elements.get(j).getName());
-				v1Time += System.currentTimeMillis() - temp;
-				
+//				temp = System.currentTimeMillis();
+//				distPath = pathfinder.findShortestPathBetween(
+//						elements.get(i).getName(), elements.get(j).getName());
+//				v1Time += System.currentTimeMillis() - temp;
+//				
 //				temp = System.currentTimeMillis();
 //				distPath2 = pathfinder.findShortestPathBetweenV2(
 //						elements.get(i).getName(), elements.get(j).getName());
-				v1Time += System.currentTimeMillis() - temp;
-				
+//				v2Time += System.currentTimeMillis() - temp;
+//				
 //				assertTrue(distPath.getPathLength() == distPath2.getPathLength());
 			}
 		}
