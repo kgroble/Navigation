@@ -35,9 +35,9 @@ public class MapPanel extends JPanel {
 
 	private static final float SELECTED_CITY_SIZE = 3.0f;
 	private static final float CITY_SIZE = 2.5f;
-	private static final float CONNECTION_CITY_SIZE = 3.0f;
+	private static final float CONNECTION_CITY_SIZE = 3.5f;
 
-	private static final float CONNECTION_WIDTH = .2f;
+	private static final float CONNECTION_WIDTH = .3f;
 	private static final float PATH_CONNECTION_WIDTH = .3f;
 
 	private static final Color SELECTED_CITY_COLOR = Color.RED;

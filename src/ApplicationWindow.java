@@ -375,8 +375,38 @@ public class ApplicationWindow extends JFrame {
 								JOptionPane.ERROR_MESSAGE);
 						return;
 					} else {
-						System.out.println("ooo");
-						time.setText("");
+						int time = Integer.parseInt(txt);
+
+						Path[] paths=null;
+						
+						try{
+						paths = aStar
+								.findPathsWithTravelTime(
+										ApplicationWindow.this.citiesList
+												.get(0), time * .9,
+												time * 1.1, 10);
+						}catch(Exception ex){
+							if(ex instanceof NoSuchElementException){
+								JOptionPane
+								.showMessageDialog(
+										ApplicationWindow.this,
+										"ROUTE IS NOT POSSIBLE",
+										"error", JOptionPane.ERROR_MESSAGE);
+								return;
+							}
+						}
+						
+						displayList.add("path name = (distance,time)");
+						int i=1;
+						for (Path path : paths)
+						{
+							displayList.add("path "+i+ " to " + path.getEndpoint() + ": ("+Math.round(path.getPathLength())+", "+Math.round(path.getPathTravelTime())+")");
+							ApplicationWindow.this.mapPanel.addPath(path);
+							i++;
+						}
+
+						System.out.println(paths.length);
+						distance.setText("");
 					}
 				}
 			});
