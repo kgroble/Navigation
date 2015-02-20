@@ -208,6 +208,10 @@ public class AStar
 			HashMap<City, Connection> connectedCities = this.graph.getConnectedElements(currentCity.getName());
 			Object[] citiesArray = connectedCities.keySet().toArray();
 			int next = r.nextInt(citiesArray.length);
+			
+			if (path.containsCity(citiesArray[next].toString()))
+				continue;
+			
 			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
 		}
 		return path;
@@ -222,6 +226,10 @@ public class AStar
 			HashMap<City, Connection> connectedCities = this.graph.getConnectedElements(currentCity.getName());
 			Object[] citiesArray = connectedCities.keySet().toArray();
 			int next = r.nextInt(citiesArray.length);
+			
+			if (path.containsCity(citiesArray[next].toString()))
+				continue;
+			
 			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
 		}
 		return path;
