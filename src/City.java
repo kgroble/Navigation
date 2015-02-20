@@ -79,4 +79,9 @@ public class City{
 			throw new RuntimeException("Somehow not a city was passed to the City.equals method");
 		return this.getName().equals(((City) otherCity).getName());
 	}
+	
+	public double getInterestingness()
+	{
+		return this.interest;
+	}
 }

@@ -175,8 +175,9 @@ public class Path implements Comparable<Path>
 			this.path.add(cities.get(i));
 		}
 		
-		this.pathLength += otherPath.getPathLength();
-		this.timeTaken += otherPath.getPathTravelTime();
+		this.pathLength += otherPath.pathLength;
+		this.timeTaken += otherPath.timeTaken;
+		this.interestingness += otherPath.interestingness;
 	}
 	
 	public String toString()
