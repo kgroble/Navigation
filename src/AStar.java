@@ -1,6 +1,4 @@
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Random;
@@ -336,7 +334,6 @@ public class AStar
 		return path;
 		
 	}
-	
 	
 	/**
 	 * A class containing path information and the ability to reconstruct a path.
