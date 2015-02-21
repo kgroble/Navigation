@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 import javax.swing.JButton;
@@ -36,11 +37,16 @@ public class ApplicationWindow extends JFrame {
 	private ActionListener restartListen;
 	private MyDataList<String> citiesList, displayList;
 	private JList<String> listBox, displayBox;
+	private ArrayList<City> citiesByRank;
 
 	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
 		this.aStar = a;
 		this.citiesList = new MyDataList<String>();
 		this.displayList = new MyDataList<String>();
+		
+		citiesByRank=map.getElements();
+		citiesByRank.sort(new Compareor());
+		
 
 		// Set up jframe
 		this.setTitle("Navigation");
@@ -59,7 +65,7 @@ public class ApplicationWindow extends JFrame {
 		// sets up the box that displays path info in control panel
 		this.displayBox = new JList<String>(displayList);
 		this.displayBox.setLayoutOrientation(JList.VERTICAL_WRAP);
-		this.displayBox.setVisibleRowCount(11);
+		this.displayBox.setVisibleRowCount(citiesByRank.size());
 
 		restartListen = new ActionListener() {
 
@@ -428,8 +434,12 @@ public class ApplicationWindow extends JFrame {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
-					
+					int i=1;
+					clearDisplay();
+					for(City c:citiesByRank){
+						addToDisplay(i+". "+c.getName()+"- "+(float)c.getInterest());
+						i++;
+					}
 				}
 				
 			});
@@ -573,5 +583,14 @@ public class ApplicationWindow extends JFrame {
 			return true;
 		}
 
+	}
+	
+	public class Compareor implements Comparator<City>{
+
+		@Override
+		public int compare(City o1, City o2) {
+			return o1.compareTo(o2);
+		}
+		
 	}
 }
