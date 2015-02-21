@@ -375,7 +375,7 @@ public class ApplicationWindow extends JFrame {
 								.findPathsWithTravelTime(
 										ApplicationWindow.this.citiesList
 												.get(0), time * .95,
-												time * 1.05, 10);
+												time * 1.05, 5);
 						}catch(Exception ex){
 							if(ex instanceof NoSuchElementException){
 								JOptionPane

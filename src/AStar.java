@@ -14,7 +14,7 @@ public class AStar
 {
 	private Graph<City, Connection, String> graph;
 	private double maxSpeed = 60;
-	private final int REASONABLE_LIMIT = 10000;
+	private final int REASONABLE_LIMIT = 100000;
 
 	public AStar(Graph<City, Connection, String> graph)
 	{
