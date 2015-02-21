@@ -209,8 +209,8 @@ public class AStar
 			Object[] citiesArray = connectedCities.keySet().toArray();
 			int next = r.nextInt(citiesArray.length);
 			
-			if (path.containsCity(citiesArray[next].toString()))
-				continue;
+//			if (path.containsCity(citiesArray[next].toString()))
+//				continue;
 			
 			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
 		}
@@ -227,8 +227,8 @@ public class AStar
 			Object[] citiesArray = connectedCities.keySet().toArray();
 			int next = r.nextInt(citiesArray.length);
 			
-			if (path.containsCity(citiesArray[next].toString()))
-				continue;
+//			if (path.containsCity(citiesArray[next].toString()))
+//				continue;
 			
 			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
 		}
