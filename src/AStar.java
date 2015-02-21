@@ -14,7 +14,7 @@ public class AStar
 {
 	private Graph<City, Connection, String> graph;
 	private double maxSpeed = 60;
-	private final int REASONABLE_LIMIT = 100000;
+	private final int REASONABLE_LIMIT = 10000;
 
 	public AStar(Graph<City, Connection, String> graph)
 	{
@@ -281,14 +281,18 @@ public class AStar
 			}
 			
 			if (open.size() == 0)
-				return null;
-			
-			next = r.nextInt(open.size());
-			
-			closed.add(open.get(next));
-			
-			path.addToPath(open.get(next), 
-					connectedCities.get(this.graph.get(open.get(next).toString())));
+			{
+				next = r.nextInt(citiesArray.length);
+				path.addToPath((City)citiesArray[next], 
+						connectedCities.get(this.graph.get(((City)(citiesArray[next])).toString())));
+			}
+			else
+			{
+				next = r.nextInt(open.size());
+				closed.add(open.get(next));
+				path.addToPath(open.get(next), 
+						connectedCities.get(this.graph.get(open.get(next).toString())));
+			}			
 		}
 				
 		return path;
@@ -321,14 +325,18 @@ public class AStar
 			}
 			
 			if (open.size() == 0)
-				return null;
-			
-			next = r.nextInt(open.size());
-			
-			closed.add(open.get(next));
-			
-			path.addToPath(open.get(next), 
-					connectedCities.get(this.graph.get(open.get(next).toString())));
+			{
+				next = r.nextInt(citiesArray.length);
+				path.addToPath((City)citiesArray[next], 
+						connectedCities.get(this.graph.get(((City)(citiesArray[next])).toString())));
+			}
+			else
+			{
+				next = r.nextInt(open.size());
+				closed.add(open.get(next));
+				path.addToPath(open.get(next), 
+						connectedCities.get(this.graph.get(open.get(next).toString())));
+			}
 		}
 				
 		return path;
