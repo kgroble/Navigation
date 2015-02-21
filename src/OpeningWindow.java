@@ -1,4 +1,3 @@
-import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -9,6 +8,10 @@ import javax.swing.JPanel;
 
 public class OpeningWindow extends JFrame {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -6297715645298420697L;
 	private static final int HEIGHT = 200, WIDTH = 400;
 	private static final int FRAME_WIDTH = 16, FRAME_HEIGHT = 39;
 
@@ -29,7 +32,6 @@ public class OpeningWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				Graph<City, Connection, String> map = new Graph<City, Connection, String>();
 				new Setup(map, "ireland");
 				AStar a = new AStar(map);
@@ -46,7 +48,6 @@ public class OpeningWindow extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				Graph<City, Connection, String> map = new Graph<City, Connection, String>();
 				new Setup(map, "texas");
 				AStar a = new AStar(map);
