@@ -209,14 +209,17 @@ public class AStar
 		Path[] returnPaths = new Path[numberWanted];
 		City startingPoint = this.graph.get(startCity);
 		PriorityQueue<Path> possiblePaths = new PriorityQueue<Path>();
+		Path path;
 
 		for(int i = 0; i < REASONABLE_LIMIT; i++){
-			possiblePaths.add(getRandomPathDistance(startingPoint, bottomLimit));
+			path = getRandomPathDistance(startingPoint, bottomLimit);
+			if (path != null) //returns null if it fails
+				possiblePaths.add(path);
 		}
 		
 		for (int i = 0; i < numberWanted; i++)
 		{
-			returnPaths[i] = possiblePaths.remove();
+			returnPaths[i] = possiblePaths.poll();
 		}
 		
 		return returnPaths;
@@ -233,37 +236,63 @@ public class AStar
 	public Path[] findPathsWithTravelTime(String startCity,
 			double bottomLimit, double topLimit, int numberWanted)
 	{
-		
+		Path path;
 		Path[] returnPaths = new Path[numberWanted];
 		City startingPoint = this.graph.get(startCity);
 		PriorityQueue<Path> possiblePaths = new PriorityQueue<Path>();
 
 		for(int i = 0; i < REASONABLE_LIMIT; i++){
-			possiblePaths.add(getRandomPathTime(startingPoint, bottomLimit));
+			path = getRandomPathTime(startingPoint, bottomLimit);
+			if (path != null) //returns null if it fails
+				possiblePaths.add(path);
 		}
 		
 		for (int i = 0; i < numberWanted; i++)
 		{
-			returnPaths[i] = possiblePaths.remove();
+			returnPaths[i] = possiblePaths.poll();
 		}
 		
 		return returnPaths;
 	}
 
 	private Path getRandomPathDistance(City start, double distance){
+		
+		
 		Path path = new Path(start, Heuristic.INTERESTINGNESS);
 		Random r = new Random();
-		while(path.getPathLength() < distance){
-			City currentCity = path.getEndpoint();
-			HashMap<City, Connection> connectedCities = this.graph.getConnectedElements(currentCity.getName());
-			Object[] citiesArray = connectedCities.keySet().toArray();
-			int next = r.nextInt(citiesArray.length);
+		HashMap<City, Connection> connectedCities;
+		City currentCity;
+		Object[] citiesArray;
+		int next;
+		ArrayList<City> closed = new ArrayList<City>();
+		closed.add(start);
+		ArrayList<City> open;
+		
+		while(path.getPathLength() < distance){	
+			open = new ArrayList<City>();
+			currentCity = path.getEndpoint();
+			connectedCities = this.graph.getConnectedElements(currentCity.getName());
+			citiesArray = connectedCities.keySet().toArray();
 			
-//			if (path.containsCity(citiesArray[next].toString()))
-//				continue;
+			for (int i = 0; i < citiesArray.length; i++)
+			{
+				if (!(closed.contains((City)citiesArray[i])))
+				{
+					open.add((City)citiesArray[i]);
+				}
+			}
 			
-			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
+			if (open.size() == 0)
+				return null;
+			
+			next = r.nextInt(open.size());
+			
+			closed.add(open.get(next));
+			
+			path.addToPath(open.get(next), 
+					connectedCities.get(this.graph.get(open.get(next).toString())));
 		}
+				
 		return path;
 		
 	}
@@ -271,17 +300,39 @@ public class AStar
 	private Path getRandomPathTime(City start, double time){
 		Path path = new Path(start, Heuristic.INTERESTINGNESS);
 		Random r = new Random();
-		while(path.getPathTravelTime() < time){
-			City currentCity = path.getEndpoint();
-			HashMap<City, Connection> connectedCities = this.graph.getConnectedElements(currentCity.getName());
-			Object[] citiesArray = connectedCities.keySet().toArray();
-			int next = r.nextInt(citiesArray.length);
+		HashMap<City, Connection> connectedCities;
+		City currentCity;
+		Object[] citiesArray;
+		int next;
+		ArrayList<City> closed = new ArrayList<City>();
+		closed.add(start);
+		ArrayList<City> open;
+		
+		while(path.getPathTravelTime() < time){	
+			open = new ArrayList<City>();
+			currentCity = path.getEndpoint();
+			connectedCities = this.graph.getConnectedElements(currentCity.getName());
+			citiesArray = connectedCities.keySet().toArray();
 			
-//			if (path.containsCity(citiesArray[next].toString()))
-//				continue;
+			for (int i = 0; i < citiesArray.length; i++)
+			{
+				if (!(closed.contains((City)citiesArray[i])))
+				{
+					open.add((City)citiesArray[i]);
+				}
+			}
 			
-			path.addToPath(this.graph.get(citiesArray[next].toString()), connectedCities.get(this.graph.get(citiesArray[next].toString())));
+			if (open.size() == 0)
+				return null;
+			
+			next = r.nextInt(open.size());
+			
+			closed.add(open.get(next));
+			
+			path.addToPath(open.get(next), 
+					connectedCities.get(this.graph.get(open.get(next).toString())));
 		}
+				
 		return path;
 		
 	}

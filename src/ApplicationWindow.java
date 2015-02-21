@@ -389,14 +389,31 @@ public class ApplicationWindow extends JFrame {
 						
 						displayList.add("path name = (distance,time)");
 						int i=1;
+						
+						int counter = 0;
+						
 						for (Path path : paths)
 						{
+							if (path == null)
+							{
+								counter ++;
+								continue;
+							}
+							
 							displayList.add("path "+i+ " to " + path.getEndpoint() + ": ("+Math.round(path.getPathLength())+", "+Math.round(path.getPathTravelTime())+")");
 							ApplicationWindow.this.mapPanel.addPath(path);
 							i++;
 						}
 
-						System.out.println(paths.length);
+						if (counter == paths.length)
+						{
+							JOptionPane
+							.showMessageDialog(
+									ApplicationWindow.this,
+									"ROUTE NOT FOUND",
+									"error", JOptionPane.ERROR_MESSAGE);
+						}
+						
 						ControlPanel.this.time.setText("");
 					}
 				}
@@ -469,7 +486,7 @@ public class ApplicationWindow extends JFrame {
 								.findPathsWithTravelDistance(
 										ApplicationWindow.this.citiesList
 												.get(0), range * .95,
-										range * 1.05, 10);
+										range * 1.05, 5);
 						}catch(NoSuchElementException ex){
 								JOptionPane
 								.showMessageDialog(
@@ -481,14 +498,29 @@ public class ApplicationWindow extends JFrame {
 						
 						displayList.add("path name = (distance,time)");
 						int i=1;
+						int counter = 0;
 						for (Path path : paths)
 						{
+							if (path == null)
+							{
+								counter++;
+								continue;
+							}
+								
 							displayList.add("path "+i+ " to " + path.getEndpoint() + ": ("+Math.round(path.getPathLength())+", "+Math.round(path.getPathTravelTime())+")");
 							ApplicationWindow.this.mapPanel.addPath(path);
 							i++;
 						}
+						
+						if (counter == paths.length)
+						{
+							JOptionPane
+							.showMessageDialog(
+									ApplicationWindow.this,
+									"ROUTE NOT FOUND",
+									"error", JOptionPane.ERROR_MESSAGE);
+						}
 
-						System.out.println(paths.length);
 						distance.setText("");
 					}
 				}
