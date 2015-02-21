@@ -589,7 +589,7 @@ public class ApplicationWindow extends JFrame {
 
 		@Override
 		public int compare(City o1, City o2) {
-			return o1.compareTo(o2);
+			return -1*o1.compareTo(o2);
 		}
 		
 	}
