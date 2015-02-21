@@ -22,6 +22,7 @@ public class City{
 		this.population = population;
 		this.xCoord = xCoord;
 		this.yCoord = yCoord;
+		this.interest=interest;
 	}
 	
 	/**
@@ -71,6 +72,15 @@ public class City{
 		return name;
 	}
 	
+	public int compareTo(City city){
+		if(this.interest>city.interest)
+			return 1;
+		else if(this.interest==city.interest)
+			return 0;
+		else
+			return -1;
+	}
+	
 	@Override
 	public boolean equals(Object otherCity)
 	{
@@ -83,4 +93,5 @@ public class City{
 	{
 		return this.interest;
 	}
+
 }
