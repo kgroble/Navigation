@@ -5,7 +5,13 @@ import java.util.HashMap;
 import java.util.PriorityQueue;
 import java.util.Random;
 
-
+/**
+ * The pathfinding class with the processing operations needed to get
+ * from point A to point B.
+ * 
+ * @author gibsonjc
+ *
+ */
 public class AStar
 {
 	private Graph<City, Connection, String> graph;
@@ -20,6 +26,7 @@ public class AStar
 	public Path findFastestPathWithWayPoints(ArrayList<String> waypoints)
 	{
 
+		//can't really find the shortest path with one point
 		if (waypoints.size() < 2)
 			return null;
 
@@ -41,12 +48,12 @@ public class AStar
 			return null;
 
 		// basically initializing the path
-		Path path = this.findShortestPathBetween(waypoints.get(0),
+		Path path = this.findShortestPath(waypoints.get(0),
 				waypoints.get(1));
 
 		for (int i = 1; i < waypoints.size() - 1; i++)
 		{
-			path.addToEndOfPath(this.findShortestPathBetween(waypoints.get(i),
+			path.addToEndOfPath(this.findShortestPath(waypoints.get(i),
 					waypoints.get(i + 1)));
 		}
 
@@ -61,23 +68,34 @@ public class AStar
 	 *            The name of the start point
 	 * @param end
 	 *            The name of the goal destination
+	 *            
 	 * @return A path object containing the shortest path.
 	 */
-	public Path findShortestPathBetween(String start, String end)
+	public Path findShortestPath(String start, String end)
 	{
+		//getting the cities once so I don't have to repeat this method call
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		
+		//where the possible nodes are stored, representing paths
 		PriorityQueue<AStarNode> open = new PriorityQueue<AStarNode>();
+		
+		//cities that have already been expanded
 		ArrayList<City> closed = new ArrayList<City>();
+		
+		//the node representing the current city
 		AStarNode current = new AStarNode(startCity, null, Heuristic.DISTANCE, null);
 		AStarNode next;
 		
+		//priming the method
 		open.add(current);
 		closed.add(startCity);
 
+		//the connections of a city, gotten from the graph.
 		HashMap<City, Connection> connections;
 
+		//if there are no available nodes left all have been visited and there
+		//is no possible path between the given cities.
 		while (!open.isEmpty())
 		{
 			current = open.remove();
@@ -87,10 +105,9 @@ public class AStar
 				return current.reconstructPath();
 			}
 			
+			//this is only added to the closed section AFTER it has been expanded
 			closed.add(current.city);
 
-			// Gets a hashmap of the connected cities and the associated
-			// Connection objects.
 			connections = this.graph.getConnectedElements(current.city
 					.getName());
 
@@ -99,7 +116,6 @@ public class AStar
 			{
 				if (closed.contains(city))
 					continue;
-				
 				
 				next = new AStarNode(city, current, Heuristic.DISTANCE, connections.get(city));
 				
@@ -112,8 +128,28 @@ public class AStar
 		throw new RuntimeException("Connection not found");
 	}
 
+	/**
+	 * Uses the A* pathfinding algorithm to find the fastest 
+	 * path between two points. Throws a RuntimeException if 
+	 * no path is found. Uses the distance approximation with
+	 * a maxiumum speed traveled to make sure the heuristic
+	 * is at worst an underestimate. Works exactly the same
+	 * as the findShortestPath method except for the heuristic.
+	 * It probably would have probably been better to combine 
+	 * them into a single method.
+	 * 
+	 * @param start
+	 *            The name of the start point
+	 * @param end
+	 *            The name of the goal destination
+	 *            
+	 * @return A path object containing the fastest path.
+	 */
 	public Path findFastestPath(String start, String end)
 	{
+		// Identical to the findShortestPath method besides the 
+		// heuristic. See that method for documentation. 
+		
 		City startCity = (City) this.graph.get(start);
 		City endCity = (City) this.graph.get(end);
 		
@@ -138,20 +174,18 @@ public class AStar
 			
 			closed.add(current.city);
 
-			// Gets a hashmap of the connected cities and the associated
-			// Connection objects.
 			connections = this.graph.getConnectedElements(current.city
 					.getName());
 
-			// Adding possible paths to the PriorityQueue
 			for (City city : connections.keySet())
 			{
 				if (closed.contains(city))
 					continue;
 				
-				
+				// Note time and not distance is given as the heuristic. 
 				next = new AStarNode(city, current, Heuristic.TIME, connections.get(city));
 				
+				// Setting the time heuristic instead of the distance heuristic. 
 				next.setApproximatedPathTime(endCity, this.maxSpeed);
 				
 				open.add(next);
@@ -161,6 +195,14 @@ public class AStar
 		throw new RuntimeException("Connection not found");
 	}
 
+	/**
+	 * 
+	 * @param startCity the starting point.
+	 * @param bottomLimit the bottom limit of path distance desired
+	 * @param topLimit the top limit desired
+	 * @param numberWanted how many options desired
+	 * @return an array containing the path options sorted by interestingness.
+	 */
 	public Path[] findPathsWithTravelDistance(String startCity,
 			double bottomLimit, double topLimit, int numberWanted)
 	{
@@ -180,6 +222,14 @@ public class AStar
 		return returnPaths;
 	}
 
+	/**
+	 * 
+	 * @param startCity the starting point.
+	 * @param bottomLimit the bottom limit of path time desired
+	 * @param topLimit the top limit desired
+	 * @param numberWanted how many options desired
+	 * @return an array containing the path options sorted by interestingness
+	 */
 	public Path[] findPathsWithTravelTime(String startCity,
 			double bottomLimit, double topLimit, int numberWanted)
 	{
@@ -237,7 +287,12 @@ public class AStar
 	}
 	
 	
-	
+	/**
+	 * A class containing path information and the ability to reconstruct a path.
+	 * This saves the computer the effort of copying Path objects which would be
+	 * needed due to pointer issues. 
+	 *
+	 */
 	private class AStarNode implements Comparable<AStarNode>
 	{		
 		private City city;
@@ -289,6 +344,9 @@ public class AStar
 			return path;
 		}
 		
+		/**
+		 * Needed so that the nodes can be sorted in a priority queue. 
+		 */
 		@Override
 		public int compareTo(AStarNode otherPath)
 		{
@@ -308,7 +366,9 @@ public class AStar
 			throw new RuntimeException("Nonexistant heuristic in AStarNode");
 		}
 		
-		
+		/**
+		 * This and setApproximatedPathTime are needed to set the heuristic for the algorithm.
+		 */
 		private void setApproximatedPathLength(City endPoint)
 		{
 			this.approximatedPathLength = this.pathLength + 

@@ -129,7 +129,7 @@ public class AStarTest {
 		{
 			for (int j = 0; j < 177; j++)
 			{
-				distPath = pathfinder.findShortestPathBetween(
+				distPath = pathfinder.findShortestPath(
 						elements.get(i).getName(), elements.get(j).getName());
 				timePath = pathfinder.findFastestPath(
 						elements.get(i).getName(), elements.get(j).getName());
