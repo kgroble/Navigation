@@ -16,14 +16,13 @@ public class Setup {
 	private Graph<City, Connection, String> g;
 	private String txt;
 	
-	public Setup(Graph g, String txt){
+	public Setup(Graph<City, Connection, String> g, String txt){
 		this.g = g;
 		this.txt=txt;
 		addCities();
 		try {
 			addLinks();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -33,7 +32,6 @@ public class Setup {
 	 */
 	public void addCities(){
 		Scanner sc = null;
-		int count = 0;
 		try {
 			sc = new Scanner(new File(txt+"cities.txt"));
 			while(sc.hasNextLine()){
@@ -49,13 +47,10 @@ public class Setup {
 					double xCoord = Double.parseDouble(cityInfo[3]);
 					double yCoord = Double.parseDouble(cityInfo[4]);
 					addCity(name, population, interest, xCoord, yCoord);
-					count++;
 				}
 			}
-		} catch (FileNotFoundException e) {
+		} catch (FileNotFoundException e) { 
 			System.out.println(txt+"cities.txt does not exist.");
-			if (sc != null)
-				sc.close();
 		}
 		if (sc != null)
 			sc.close();
@@ -68,7 +63,6 @@ public class Setup {
 	public void addLinks() throws IOException{
 		BufferedReader sc = null;
 		
-		int count = 0;
 		try{
 			sc = new BufferedReader(new FileReader(txt+"links.txt"));
 			String cityLink = sc.readLine();
@@ -84,7 +78,6 @@ public class Setup {
 					double distance = Double.parseDouble(linkInfo[2]);
 					double speed = Double.parseDouble(linkInfo[3]);
 					addLink(startCity, endCity, distance, speed);
-					count++;
 				}
 				cityLink = sc.readLine();
 			}
@@ -93,9 +86,8 @@ public class Setup {
 
 		} catch (FileNotFoundException e) {
 			System.out.println(txt+"links.txt does not exist.");
-			if (sc != null)
-				sc.close();
 		}
+		
 		
 		if (sc != null)
 			sc.close();
