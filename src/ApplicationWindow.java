@@ -23,7 +23,7 @@ public class ApplicationWindow extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private static final int FRAME_WIDTH = 1100;
-	private static final int FRAME_HEIGHT = 700;
+	private static final int FRAME_HEIGHT = 725;
 	private static final int CONTROL_PANEL_WIDTH = 220;
 
 	// Serves as the 'background' that the other two panels will be added to:
@@ -207,7 +207,7 @@ public class ApplicationWindow extends JFrame {
 
 	public class ControlPanel extends JComponent {
 		private static final long serialVersionUID = 7088760637095647696L;
-		private JButton add, restart, pathDistance, pathTime, clear, remove;
+		private JButton add, restart, pathDistance, pathTime, clear, remove, cityListRank;
 		private JTextField cityName, distance, time;
 		private JScrollPane listScroller, displayScroller;
 		private final static int MARGIN = 10;
@@ -422,6 +422,21 @@ public class ApplicationWindow extends JFrame {
 					- MARGIN * 2, 20);
 			pathTime.setText("Path Time");
 			this.add(pathTime);
+			
+			cityListRank = new JButton();
+			cityListRank.addActionListener(new ActionListener(){
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					
+				}
+				
+			});
+			cityListRank.setBounds(MARGIN, FRAME_HEIGHT - 55 - MARGIN,
+					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
+			cityListRank.setText("List cities by Rank");
+			this.add(cityListRank);
 
 			pathDistance = new JButton();
 			pathDistance.addActionListener(new ActionListener() {
@@ -531,7 +546,7 @@ public class ApplicationWindow extends JFrame {
 			this.add(pathDistance);
 
 			restart = new JButton();
-			restart.setBounds(MARGIN, FRAME_HEIGHT - 58 - MARGIN,
+			restart.setBounds(MARGIN, FRAME_HEIGHT - 58 - MARGIN-25,
 					CONTROL_PANEL_WIDTH - MARGIN * 2, 20);
 			restart.setText("RESTART");
 			restart.addActionListener(restartListener);
