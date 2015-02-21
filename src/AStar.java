@@ -211,7 +211,7 @@ public class AStar
 
 		for(int i = 0; i < REASONABLE_LIMIT; i++){
 			path = getRandomPathDistance(startingPoint, bottomLimit);
-			if (path != null) //returns null if it fails
+			if (path != null && !possiblePaths.contains(path)) //returns null if it fails
 				possiblePaths.add(path);
 		}
 		
@@ -241,7 +241,7 @@ public class AStar
 
 		for(int i = 0; i < REASONABLE_LIMIT; i++){
 			path = getRandomPathTime(startingPoint, bottomLimit);
-			if (path != null) //returns null if it fails
+			if (path != null && !possiblePaths.contains(path)) //returns null if it fails
 				possiblePaths.add(path);
 		}
 		

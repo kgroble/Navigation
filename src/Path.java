@@ -77,6 +77,14 @@ public class Path implements Comparable<Path>
 		throw new RuntimeException("Nonexistant heuristic in path");
 	}
 	
+	public boolean equals(Path otherPath){
+		if(this.path.size() == otherPath.path.size()) return false;
+		for(int i = 0; i < path.size(); i++){
+			if(!this.path.get(i).equals(otherPath.path.get(i))) return false;
+		}
+		return true;
+	}
+	
 	public City getEndpoint()
 	{
 		return this.path.get(this.path.size()-1);
@@ -106,6 +114,7 @@ public class Path implements Comparable<Path>
 		this.timeTaken += otherPath.timeTaken;
 		this.interestingness += otherPath.interestingness;
 	}
+	
 	
 	public String toString()
 	{
