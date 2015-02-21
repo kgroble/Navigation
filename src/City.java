@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 
 /**
  * A simplistic representation of a city on a 2-d coordinate system.

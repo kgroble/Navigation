@@ -1,9 +1,5 @@
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
-
-import com.sun.xml.internal.bind.v2.runtime.RuntimeUtil.ToStringAdapter;
 
 public class Graph<T, L, K> {
 
@@ -126,7 +122,7 @@ public class Graph<T, L, K> {
 		T element;
 
 		public Node(T element) {
-			links = new ArrayList();
+			links = new ArrayList<Link>();
 			this.element = element;
 		}
 
