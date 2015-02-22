@@ -283,6 +283,8 @@ public class MapPanel extends JPanel {
 		xDrawPoint = centerX;
 		yDrawPoint = centerY;
 
+		drawSelectedCity(g2d, nameMask);
+		
 		// Draw links
 		g2d.setColor(CONNECTION_COLOR);
 		g2d.setStroke(new BasicStroke((float) (CONNECTION_WIDTH * zoom)));
@@ -316,6 +318,16 @@ public class MapPanel extends JPanel {
 			xDrawPoint += translateX;
 			yDrawPoint += translateY;
 
+			// Draw city
+			Ellipse2D.Double circle = new Ellipse2D.Double();
+			circle.height = CITY_SIZE * zoom;
+			circle.width = CITY_SIZE * zoom;
+			g2d.setColor(CITY_COLOR);
+			double centerLinks = CITY_SIZE * zoom / 2;
+			g2d.translate(-centerLinks, -centerLinks);
+			g2d.fill(circle);
+			g2d.translate(centerLinks, centerLinks);
+			
 			// Draw city names:
 			java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
 			int stringWidth = fontMetric.stringWidth(city.getName());
@@ -348,20 +360,11 @@ public class MapPanel extends JPanel {
 			if (!isBlocked
 					|| (selectedCity != null && selectedCity.equals(city))) {
 				g2d.drawString(city.getName(), (int) (-stringWidth / 2),
-						(int) (CITY_SIZE * zoom + 10));
+						(int) ((CITY_SIZE) * zoom + 10));
 				nameMask.fillRect(0, 0, biggestStringWidth, stringHeight);
 			}
 
-			// Draw city
-			Ellipse2D.Double circle = new Ellipse2D.Double();
-			circle.height = CITY_SIZE * zoom;
-			circle.width = CITY_SIZE * zoom;
-			g2d.setColor(CITY_COLOR);
-			double centerLinks = CITY_SIZE * zoom / 2;
-			g2d.translate(-centerLinks, -centerLinks);
-			g2d.fill(circle);
-			g2d.translate(centerLinks, centerLinks);
-
+			
 			xDrawPoint -= translateX;
 			yDrawPoint -= translateY;
 			g2d.translate(-translateX, -translateY);
@@ -369,7 +372,7 @@ public class MapPanel extends JPanel {
 		}
 
 		drawPaths(g2d);
-		drawSelectedCity(g2d);
+		drawSelectedCity(g2d, nameMask);
 		drawScale(g2d);
 
 		// Translate for pan
@@ -435,7 +438,7 @@ public class MapPanel extends JPanel {
 	 * @param g2d
 	 *            the graphics object on which to draw
 	 */
-	private void drawSelectedCity(Graphics2D g2d) {
+	private void drawSelectedCity(Graphics2D g2d, Graphics2D nameMask) {
 		if (selectedCity != null) {
 			g2d.setColor(SELECTED_CITY_COLOR);
 			double translateX = selectedCity.getXCoord() * zoom;
@@ -449,13 +452,29 @@ public class MapPanel extends JPanel {
 			g2d.translate(-centerLinks, -centerLinks);
 			g2d.fill(circle);
 			g2d.translate(centerLinks, centerLinks);
+			
+			g2d.setColor(Color.BLACK);
+			
+			java.awt.FontMetrics fontMetric = g2d.getFontMetrics();
+			int stringWidth = fontMetric.stringWidth("Population: " + selectedCity.getPopulation());
+			if (stringWidth > biggestStringWidth)
+				biggestStringWidth = stringWidth;
+			int stringHeight = 15;
+			
+			g2d.drawString("Population: " + selectedCity.getPopulation(), (int) (-stringWidth / 2),
+					(int) ((-CITY_SIZE * zoom) - 10));
+			
+			nameMask.setColor(Color.GRAY);
+			nameMask.fillRect(0, -50, biggestStringWidth, stringHeight);
+			nameMask.setColor(Color.WHITE);
+			
 
 			g2d.translate(-translateX, -translateY);
 			g2d.setColor(CITY_COLOR);
 
 			Point buttonPoint = new Point((int) translateX, (int) translateY);
 			buttonPoint.x += centerX - 40;
-			buttonPoint.y += centerY + centerLinks + 20;
+			buttonPoint.y += centerY + CITY_SIZE * zoom + 20;
 			addCityButton.setBounds(buttonPoint.x, buttonPoint.y, 80, 20);
 		} else {
 			addCityButton.setBounds(0, 0, 0, 0);
