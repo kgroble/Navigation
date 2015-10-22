@@ -33,13 +33,13 @@ public class ApplicationWindow extends JFrame {
 	private ControlPanel controlPanel;
 
 	private Graph<City, Connection, String> map;
-	private AStar aStar;
+	private RouteFinder aStar;
 	private ActionListener restartListen;
 	private MyDataList<String> citiesList, displayList;
 	private JList<String> listBox, displayBox;
 	private ArrayList<City> citiesByRank;
 
-	public ApplicationWindow(Graph<City, Connection, String> map, AStar a) {
+	public ApplicationWindow(Graph<City, Connection, String> map, RouteFinder a) {
 		this.aStar = a;
 		this.citiesList = new MyDataList<String>();
 		this.displayList = new MyDataList<String>();

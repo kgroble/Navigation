@@ -34,7 +34,7 @@ public class OpeningWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Graph<City, Connection, String> map = new Graph<City, Connection, String>();
 				new Setup(map, "ireland");
-				AStar a = new AStar(map);
+				RouteFinder a = new RouteFinder(map);
 				new ApplicationWindow(map, a);
 				setVisible(false);
 			}
@@ -50,7 +50,7 @@ public class OpeningWindow extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				Graph<City, Connection, String> map = new Graph<City, Connection, String>();
 				new Setup(map, "texas");
-				AStar a = new AStar(map);
+				RouteFinder a = new RouteFinder(map);
 				new ApplicationWindow(map, a);
 				setVisible(false);
 			}
