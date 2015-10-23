@@ -33,14 +33,14 @@ public class ApplicationWindow extends JFrame {
 	private ControlPanel controlPanel;
 
 	private Graph<City, Connection, String> map;
-	private RouteFinder aStar;
+	private RouteFinder routeFinder;
 	private ActionListener restartListen;
 	private MyDataList<String> citiesList, displayList;
 	private JList<String> listBox, displayBox;
 	private ArrayList<City> citiesByRank;
 
 	public ApplicationWindow(Graph<City, Connection, String> map, RouteFinder a) {
-		this.aStar = a;
+		this.routeFinder = a;
 		this.citiesList = new MyDataList<String>();
 		this.displayList = new MyDataList<String>();
 		
@@ -353,7 +353,7 @@ public class ApplicationWindow extends JFrame {
 					if (txt.equals("")) {
 						ArrayList<String> waypoints = new ArrayList<String>(
 								ApplicationWindow.this.citiesList);
-						Path path = ApplicationWindow.this.aStar
+						Path path = ApplicationWindow.this.routeFinder
 								.findFastestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
 						ArrayList<Path> paths = mapPanel.getPaths();
@@ -377,7 +377,7 @@ public class ApplicationWindow extends JFrame {
 						Path[] paths=null;
 						
 						try{
-						paths = aStar
+						paths = routeFinder
 								.findPathsWithTravelTime(
 										ApplicationWindow.this.citiesList
 												.get(0), time * .95,
@@ -483,7 +483,7 @@ public class ApplicationWindow extends JFrame {
 					if (txt.equals("")) {
 						ArrayList<String> waypoints = new ArrayList<String>(
 								ApplicationWindow.this.citiesList);
-						Path path = ApplicationWindow.this.aStar
+						Path path = ApplicationWindow.this.routeFinder
 								.findShortestPathWithWayPoints(waypoints);
 						ApplicationWindow.this.mapPanel.addPath(path);
 						ArrayList<Path> paths = mapPanel.getPaths();
@@ -507,7 +507,7 @@ public class ApplicationWindow extends JFrame {
 						Path[] paths=null;
 						
 						try{
-						paths = aStar
+						paths = routeFinder
 								.findPathsWithTravelDistance(
 										ApplicationWindow.this.citiesList
 												.get(0), range * .95,
@@ -573,14 +573,12 @@ public class ApplicationWindow extends JFrame {
 		}
 
 		public boolean isInt(String s) {
-			for (int i = 0; i < s.length() - 1; i++) {
-				char c = s.charAt(i);
-				if (c != '1' && c != '2' && c != '3' && c != '4' && c != '5'
-						&& c != '6' && c != '7' && c != '8' && c != '9'
-						&& c != '0')
-					return false;
+			try {
+				int i = Integer.parseInt(s);
+				return true;
+			} catch (NumberFormatException e) {
+				return false;
 			}
-			return true;
 		}
 
 	}
